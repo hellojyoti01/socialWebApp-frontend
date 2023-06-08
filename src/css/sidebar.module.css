@@ -1,0 +1,26 @@
+/* -------------------------------------------------------------------------- */
+/*                              App Sidebar Left                              */
+/* -------------------------------------------------------------------------- */
+
+.sidebarLeft_container {
+  background-color: #be2323c8;
+  color: black;
+  position: fixed;
+  left: 0;
+  width: 19%;
+  height: 100%;
+}
+.sidebar_profile {
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              App Sidebar Right                            */
+/* -------------------------------------------------------------------------- */
+.sidebarRight_container {
+  background-color: #be2323c8;
+  color: black;
+  width: 19%;
+  position: fixed;
+  right: 0;
+  height: 100%;
+}
