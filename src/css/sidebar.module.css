@@ -5,9 +5,9 @@
 .sidebarLeft_container {
   background-color: #be2323c8;
   color: black;
-  position: fixed;
-  left: 0;
-  width: 19%;
+  /* position: fixed; */
+  /* left: 0; */
+  width: 22%;
   height: 100%;
 }
 .sidebar_profile {
@@ -20,7 +20,7 @@
   background-color: #be2323c8;
   color: black;
   width: 19%;
-  position: fixed;
-  right: 0;
+  /* position: fixed; */
+  /* right: 0; */
   height: 100%;
 }

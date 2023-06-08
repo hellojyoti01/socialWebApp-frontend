@@ -1,0 +1,62 @@
+.container {
+  width: 100%;
+  /* background-color: rebeccapurple; */
+  height: 200px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrapper {
+  width: 80%;
+  height: 90%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* background-color: aliceblue; */
+}
+
+.profile_info {
+  /* background-color: red; */
+}
+.profile_info > h4 {
+  font-size: 1rem;
+  text-align: center;
+  padding-top: 2px;
+  margin: 0;
+}
+
+.profile_info > p {
+  font-size: 0.6rem;
+  text-align: center;
+  padding-top: 1px;
+  margin: 0;
+}
+
+.followers {
+  width: 80%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /* background-color: blue; */
+}
+.followers > .posts,
+.followers > .friends {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0;
+  padding: 0;
+}
+
+.followers > .posts > span,
+.followers > .friends > span {
+  margin: 0;
+  padding: 0;
+
+  font-size: 0.4;
+  font-weight: 300;
+}
