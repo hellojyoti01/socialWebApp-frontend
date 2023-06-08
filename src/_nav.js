@@ -12,21 +12,22 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Feed',
-    to: '/',
-    icon: <CIcon icon={BsHouseDoor} customClassName="nav-icon" />,
+    to: '/feed',
+    icon: <BsHouseDoor />,
     // items: [],
   },
   {
-    component: CNavTitle,
+    component: CNavItem,
     name: 'Explore',
     to: '/explore',
-    icon: <CIcon icon={MdOutlineTravelExplore} customClassName="nav-icon" />,
+    icon: <MdOutlineTravelExplore />,
     //items: []
   },
   {
-    component: CNavTitle,
+    component: CNavItem,
     name: 'My Favorites',
-    icon: <CIcon icon={CiSaveDown2} customClassName="nav-icon" />,
+    to: '/favorites',
+    icon: <CiSaveDown2 />,
     // items: [
 
     // ],
@@ -35,18 +36,20 @@ const _nav = [
     component: CNavItem,
     name: 'Message',
     to: '/message',
-    icon: <CIcon icon={LuMessagesSquare} customClassName="nav-icon" />,
+    icon: <LuMessagesSquare />,
   },
   {
-    component: CNavTitle,
+    component: CNavItem,
     name: 'Trends',
-    icon: <CIcon icon={CgTrending} customClassName="nav-icon" />,
+    to: '/trends',
+    icon: <CgTrending />,
     //items:[]
   },
   {
-    component: CNavTitle,
+    component: CNavItem,
     name: 'setting',
-    icon: <CIcon icon={AiOutlineSetting} customClassName="nav-icon" />,
+    to: '/setting',
+    icon: <AiOutlineSetting />,
     //items:[]
   },
 ]
