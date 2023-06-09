@@ -41,10 +41,10 @@ function MessagePanel() {
             {/* <p>I'm doing great. How about you?</p> */}
           </div>
         </div>
-        <div className={s.message_input}>
+        {/* <div className={s.message_input}>
           <textarea placeholder="Type a message..." rows="1"></textarea>
           <button className={s.send_btn}>Send</button>
-        </div>
+        </div> */}
       </div>
     </div>
   )
