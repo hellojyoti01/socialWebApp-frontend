@@ -1,5 +1,7 @@
 import React from 'react'
 import s from './feed.module.css'
+import Posts from '../post/index'
+
 function Feed() {
   return (
     <div className={s.container}>
@@ -22,8 +24,13 @@ function Feed() {
           </button>
         </div>
       </div>
+      <div className={s.button}>
+        <Posts />
+      </div>
     </div>
   )
 }
 
 export default Feed
+
+//profile username post caption hashtag like comment total like tol

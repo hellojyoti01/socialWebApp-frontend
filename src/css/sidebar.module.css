@@ -7,7 +7,7 @@
   color: black;
   /* position: fixed; */
   /* left: 0; */
-  width: 22%;
+  width: 25%;
   height: 100%;
   overflow: hidden;
 }
@@ -20,7 +20,7 @@
 .sidebarRight_container {
   background-color: #be2323c8;
   color: black;
-  width: 22%;
+  width: 25%;
   /* position: fixed; */
   /* right: 0; */
   height: 100%;
