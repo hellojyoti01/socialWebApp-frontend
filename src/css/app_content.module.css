@@ -1,5 +1,5 @@
 .content_container {
-  background-color: aqua;
+  background-color: rgb(232, 234, 234);
   width: 50%;
   overflow-y: scroll;
 }

@@ -3,7 +3,7 @@
 /* -------------------------------------------------------------------------- */
 
 .sidebarLeft_container {
-  background-color: #be2323c8;
+  background-color: #efececc8;
   color: black;
   /* position: fixed; */
   /* left: 0; */
@@ -18,7 +18,7 @@
 /*                              App Sidebar Right                            */
 /* -------------------------------------------------------------------------- */
 .sidebarRight_container {
-  background-color: #be2323c8;
+  background-color: #e3e0e0c8;
   color: black;
   width: 25%;
   /* position: fixed; */
