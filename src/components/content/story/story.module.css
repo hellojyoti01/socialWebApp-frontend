@@ -1,0 +1,50 @@
+.container {
+  width: 100%;
+  overflow: hidden;
+  height: 150px;
+
+  /* background-color: rgb(187, 255, 0); */
+
+  display: flex;
+  align-items: center;
+}
+.own_wrapper {
+  width: 170px;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: blue; */
+}
+.friend_wrapper {
+  max-width: calc(100% - 170px);
+  height: 100%;
+
+  padding-left: 10px;
+  padding-top: 15px;
+
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 21%;
+
+  overflow-x: auto;
+
+  /* background-color: rgb(65, 187, 44); */
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+}
+.friend_wrapper > * {
+  scroll-snap-align: start;
+}
+/* .friend_wrapper::-webkit-scrollbar {
+  width: 10px;
+} */
+.story {
+  width: 110px;
+  height: 110px;
+  border-radius: 100%;
+  background-color: burlywood;
+  padding: 0;
+  margin: 0;
+}

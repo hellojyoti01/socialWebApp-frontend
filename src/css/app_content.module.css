@@ -1,5 +1,5 @@
 .content_container {
   background-color: aqua;
-  flex: 1;
+  width: 56%;
   height: 100%;
 }
