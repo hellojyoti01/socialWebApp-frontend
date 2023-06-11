@@ -5,6 +5,7 @@ import Story from 'src/components/content/story'
 import Feed from 'src/components/content/feed'
 import { Route, Routes } from 'react-router-dom'
 import MessagePanel from 'src/views/project-files/message-pannel'
+import Model from '../model'
 const AppContent = () => {
   return (
     <div className={s.content_container}>
@@ -21,7 +22,12 @@ const AppContent = () => {
             </>
           }
         />
-        <Route exact path="/message" name="Message Page " element={<MessagePanel />} />
+        <Route
+          exact
+          path="/message"
+          name="Message Page "
+          element={<Model rander={() => <MessagePanel />} />}
+        />
       </Routes>
     </div>
   )

@@ -30,7 +30,8 @@ function MessagePanel() {
         </div>
       </div>
       <div className={s.chat_area}>
-        <div className={s.friend}>
+        hello
+        {/* <div className={s.friend}>
           <div className={`${s.message} ${s.incoming}`}>
             <p>Hello!</p>
           </div>
@@ -39,8 +40,8 @@ function MessagePanel() {
           </div>
           <div className={`${s.message} ${s.incoming}`}>
             {/* <p>I'm doing great. How about you?</p> */}
-          </div>
-        </div>
+        {/* </div>
+        </div> */}
         {/* <div className={s.message_input}>
           <textarea placeholder="Type a message..." rows="1"></textarea>
           <button className={s.send_btn}>Send</button>

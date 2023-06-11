@@ -1,13 +1,23 @@
-.messaging-panel {
-  display: flex;
+.messaging_panel {
+  /* width: 100vw; */
+  width: 100vw;
   height: 100vh;
+  display: flex;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  background-color: #3897f0;
 }
 
-.user-list {
-  flex: 0 0 20%;
-  border-right: 1px solid #dbdbdb;
+.user_list {
+  width: 40%;
+  /* border-right: 1px solid #dbdbdb; */
   padding: 10px;
   overflow-y: auto;
+
+  background-color: cadetblue;
 }
 
 .user {
@@ -33,7 +43,8 @@
 }
 
 .chat_area {
-  flex-grow: 1;
+  width: 60%;
+  background-color: aquamarine;
   display: flex;
   flex-direction: column;
   padding: 10px;
