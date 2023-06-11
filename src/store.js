@@ -4,6 +4,7 @@ const initialState = {
   sidebarShow: true,
 }
 
+//store
 const changeState = (state = initialState, { type, ...rest }) => {
   switch (type) {
     case 'set':
