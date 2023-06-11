@@ -8,7 +8,7 @@ import { Store } from 'redux'
 import store from './store'
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    {' ==='}
+    {''}
     <App />
   </Provider>,
 )
