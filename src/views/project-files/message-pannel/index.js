@@ -4,6 +4,7 @@ import { BsCameraVideo } from 'react-icons/bs'
 function MessagePanel() {
   return (
     <div className={s.messaging_panel}>
+      {/* -------------------------------- userlist -------------------------------- */}
       <div className={s.user_list}>
         <div className={`${s.user} ${s.active}`}>
           <img
@@ -30,7 +31,10 @@ function MessagePanel() {
           <h3 className={s.username}>Lipi Roy</h3>
         </div>
       </div>
+
+      {/* ------------------------------ chat pannel----------------------------- */}
       <div className={s.chat_area}>
+        {/* ------------------------------ User Name Top ----------------------------- */}
         <div className={s.friend_name}>
           {' '}
           <div className={`${s.user}`}>
@@ -47,6 +51,8 @@ function MessagePanel() {
             </san>
           </div>
         </div>
+
+        {/* ------------------------------ Message Area ------------------------------ */}
         <div className={s.friend}>
           <div className={`${s.message} ${s.incoming}`}>
             <p>Hello!</p>
@@ -55,6 +61,8 @@ function MessagePanel() {
             <p>Hi! How are you?</p>
           </div>
         </div>
+
+        {/* ------------------------------- Message Box ------------------------------ */}
         <div className={s.message_input}>
           <textarea placeholder="Type a message..." rows="1" className={s.textarea}></textarea>
           <button className={s.send_btn}>Send</button>

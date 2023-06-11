@@ -1,12 +1,11 @@
 import React from 'react'
-import CIcon from '@coreui/icons-react'
 import { BsHouseDoor } from 'react-icons/bs'
 import { MdOutlineTravelExplore, MdOutlineNotificationsActive } from 'react-icons/md'
 import { CiSaveDown2 } from 'react-icons/ci'
 import { LuMessagesSquare } from 'react-icons/lu'
-import { CgTrending } from 'react-icons/cg'
+
 import { AiOutlineSetting } from 'react-icons/ai'
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import { CNavItem } from '@coreui/react'
 
 const _nav = [
   {

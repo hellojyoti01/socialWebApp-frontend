@@ -7,6 +7,7 @@ import s from '../css/app_sidebar_nav.module.css'
 export const AppSidebarNav = ({ items }) => {
   const navigate = useNavigate()
 
+  /* ------------------------ Side Bar Menu Url Modify ------------------------ */
   const navLink = (name, icon, to) => {
     return (
       <div className={s.item} onClick={() => navigate(to)}>
@@ -17,6 +18,7 @@ export const AppSidebarNav = ({ items }) => {
     )
   }
 
+  /* -------------------------------- Menu Item ------------------------------- */
   const navItem = (item, index) => {
     const { component, name, to, icon } = item
 

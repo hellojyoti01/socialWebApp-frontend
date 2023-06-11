@@ -1,45 +1,41 @@
-.item_list {
-  width: 50%;
-  list-style-type: none;
-  /* background-color: rgb(43, 233, 100); */
-
-  margin: 0;
-  padding: 0;
-  /* padding-top: 5px; */
-}
+/* ------------------------- side bar Menu Contaier ------------------------- */
 .container {
   width: 100%;
   height: 180px;
-  /* background-color: red; */
+
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
 
   margin: 0;
   padding: 0;
 }
+
+/* ------------------------ Left SideBar Menu Wrapper ----------------------- */
 .warper {
   width: 80%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* background-color: rgb(0, 255, 0); */
+
   align-items: center;
   justify-content: center;
   padding: 0;
   margin: 0;
 
   padding-top: 10px;
-  /* background-color: chartreuse; */
 }
-/* .item { */
-/* display: flex;
-  align-items: center;
-  justify-content: center; */
 
-/* background-color: blue; */
-/* } */
+/* ---------------------------- Menu Item List OL --------------------------- */
+.item_list {
+  width: 50%;
+  list-style-type: none;
+
+  margin: 0;
+  padding: 0;
+}
+
+/* ----------------------------- Menu Name Style ---------------------------- */
 .item > span {
   font-size: 0.8rem;
   font-weight: 300;

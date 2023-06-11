@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { HashRouter, Route, Routes, BrowserRouter } from 'react-router-dom'
+import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import './scss/style.scss'
 
 const loading = (
@@ -8,10 +8,11 @@ const loading = (
   </div>
 )
 
-// Containers
+/* -------------------------- App LayOut With Auth -------------------------- */
+
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
-// Pages
+/* ---------------------------- Page Without Auth --------------------------- */
 const Login = React.lazy(() => import('./views/pages/login/Login'))
 const Register = React.lazy(() => import('./views/pages/register/Register'))
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
