@@ -1,0 +1,292 @@
+.container {
+	/* background-color: red; */
+	height: 100vh;
+	width: 100vw;
+	/* position: relative; */
+	/* background-image: linear-gradient(
+			to bottom,
+			rgba(245, 246, 252, 0.52),
+			rgba(110, 55, 97, 0.73)
+		),
+		url("../asset/todo_back_ground.jpg"); */
+
+	color: #fef2f4;
+}
+
+.wave {
+	display: block;
+	height: 100%;
+
+	overflow: hidden;
+	object-fit: contain;
+}
+.bg {
+	display: inline-block;
+	width: 40%;
+	top: 100px;
+	left: 60px;
+	position: absolute;
+}
+.from_box {
+	width: 40%;
+	height: 70%;
+	position: absolute;
+	top: 100px;
+	right: 60px;
+	/* background-color: red; */
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* gap: 15px 0px; */
+}
+.avtar {
+	width: 80px;
+	height: 80px;
+}
+.sign_up_heading {
+	color: black;
+	font-size: 30px;
+	font-weight: auto;
+}
+.input_box {
+	width: 50%;
+	height: 40px;
+
+	margin-top: 20px;
+	/* background-color: blue; */
+	position: relative;
+}
+.input {
+	width: 100%;
+	height: 40px;
+	color: black;
+	background-color: transparent;
+	border-bottom: 2px solid black;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	outline: none;
+}
+.input:focus,
+.input:valid {
+	background-color: transparent;
+	border-bottom: 2px solid black;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	outline: none;
+	color: black;
+}
+.label {
+	position: absolute;
+	top: 10px;
+	left: 0;
+	color: black;
+	/* background-color: rgb(38, 0, 255); */
+
+	font-size: 13px;
+	font-weight: 700;
+
+	transition-property: all;
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+}
+.input:focus ~ .label,
+.input:valid ~ .label,
+.label:hover {
+	top: -10px;
+	left: 0;
+}
+.icon {
+	background-color: transparent;
+	color: black;
+
+	position: absolute;
+	top: 10px;
+	right: 5px;
+}
+.input:valid ~ .icon,
+.input:focus ~ .icon {
+	color: blue;
+}
+
+.btn_box {
+	width: 50%;
+	height: 10px;
+	margin-top: 10px;
+	/* background-color: aqua; */
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	font-size: 13px;
+	font-weight: 300;
+	color: black;
+}
+.btn_box > span {
+	width: 50%;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+.btn_box > span > input {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	background-color: transparent;
+	border: 2px solid black;
+	border-radius: 100%;
+}
+.btn {
+	width: 50%;
+	margin-top: 18px;
+	height: 30px;
+}
+
+.button {
+	display: inline-block;
+	border-radius: 4px;
+	background-color: #ffabab;
+	border: none;
+	border-radius: 100px;
+	color: rgb(43, 41, 41);
+	text-align: center;
+	font-size: 12px;
+	padding: 10px;
+	width: 100%;
+	height: 35px;
+	transition: all 0.5s;
+	cursor: pointer;
+	margin: 5px;
+}
+
+.button span {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
+}
+
+.button span:after {
+	content: "\00bb";
+	position: absolute;
+	opacity: 0;
+	top: 0;
+	right: -20px;
+	transition: 0.5s;
+}
+
+.button:hover span {
+	padding-right: 25px;
+}
+
+.button:hover span:after {
+	opacity: 1;
+	right: 0;
+}
+.acc_exist {
+	width: 100%;
+	margin-top: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	cursor: pointer;
+}
+.acc_exist > p {
+	font-size: 14px;
+	font-weight: 400;
+	color: black;
+}
+.acc_exist > p:hover {
+	color: blue;
+}
+
+/*Small Phone*/
+@media screen and (min-width: 280px) and (max-width: 389px) {
+	.container {
+		width: 100vw;
+		height: 100vh;
+		/* background-color: red; */
+	}
+	.wave {
+		display: none;
+	}
+	.bg {
+		display: none;
+	}
+	.wave {
+		display: none;
+	}
+	.bg {
+		display: none;
+	}
+	.from_box {
+		width: 100vw;
+		position: fixed;
+		right: 0;
+		top: 150px;
+		/* background-color: aqua; */
+	}
+}
+
+/*Mobile*/
+@media screen and (min-width: 390px) and (max-width: 767px) {
+	.container {
+		width: 100vw;
+		height: 100vh;
+		/* background-color: red; */
+	}
+	.wave {
+		display: none;
+	}
+	.bg {
+		display: none;
+	}
+	.wave {
+		display: none;
+	}
+	.bg {
+		display: none;
+	}
+	.from_box {
+		width: 100vw;
+		position: fixed;
+		right: 0;
+		top: 150px;
+		/* background-color: aqua; */
+	}
+}
+/*Tab*/
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+	.container {
+		width: 100vw;
+		height: 100vh;
+		/* background-color: red; */
+	}
+
+	.wave {
+		width: 100%;
+		height: 90%;
+		/* background-color: #ffabab; */
+		position: absolute;
+		top: 200px;
+		left: 0;
+	}
+	.bg {
+		/* background-color: #ffabab; */
+		top: 350px;
+		left: 0px;
+		overflow: hidden;
+	}
+	.from_box {
+		width: 100vw;
+
+		position: fixed;
+		right: 0;
+		top: 30%;
+		/* background-color: aqua; */
+	}
+}
