@@ -28,20 +28,18 @@ function FriendsList() {
       <div className={s.wrapper}>
         {arr.map((el) => {
           return (
-            <>
-              <div className={s.item}>
-                <div className={s.profile}>
-                  <li className={s.each_item}>
-                    {' '}
-                    <CAvatar src={src[el]} status="success" />
-                    <span>{name[el]}</span>
-                  </li>
-                </div>
-                <div className={s.icon}>
-                  <FiMessageCircle />
-                </div>
+            <div className={s.item} key={el}>
+              <div className={s.profile}>
+                <li className={s.each_item}>
+                  {' '}
+                  <CAvatar src={src[el]} status="success" />
+                  <span>{name[el]}</span>
+                </li>
               </div>
-            </>
+              <div className={s.icon}>
+                <FiMessageCircle />
+              </div>
+            </div>
           )
         })}
       </div>

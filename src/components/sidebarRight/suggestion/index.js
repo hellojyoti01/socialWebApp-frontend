@@ -28,20 +28,18 @@ function SuggestionFriendsList() {
       <div className={s.wrapper}>
         {arr.map((el) => {
           return (
-            <>
-              <div className={s.item}>
-                <div className={s.profile}>
-                  <li className={s.each_item}>
-                    {' '}
-                    <CAvatar src={src[el]} />
-                    <span>{name[el]}</span>
-                  </li>
-                </div>
-                <div className={s.icon}>
-                  <button className={s.success}>Request Sent</button>
-                </div>
+            <div className={s.item} key={el}>
+              <div className={s.profile}>
+                <li className={s.each_item}>
+                  {' '}
+                  <CAvatar src={src[el]} />
+                  <span>{name[el]}</span>
+                </li>
               </div>
-            </>
+              <div className={s.icon}>
+                <button className={s.success}>Request Sent</button>
+              </div>
+            </div>
           )
         })}
       </div>

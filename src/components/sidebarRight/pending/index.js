@@ -26,23 +26,21 @@ function PendingFriendsList() {
     <div className={s.container}>
       <h4>Request</h4>
       <div className={s.wrapper}>
-        {arr.map((el) => {
+        {arr.map((el, idx) => {
           return (
-            <>
-              <div className={s.item}>
-                <div className={s.profile}>
-                  <li className={s.each_item}>
-                    {' '}
-                    <CAvatar src={src[el]} />
-                    <span>{name[el]}</span>
-                  </li>
-                </div>
-                <div className={s.icon}>
-                  <button className={s.success}>Accept</button>
-                  <button className={s.reject}>Reject</button>
-                </div>
+            <div className={s.item} key={el}>
+              <div className={s.profile}>
+                <li className={s.each_item}>
+                  {' '}
+                  <CAvatar src={src[el]} />
+                  <span>{name[el]}</span>
+                </li>
               </div>
-            </>
+              <div className={s.icon}>
+                <button className={s.success}>Accept</button>
+                <button className={s.reject}>Reject</button>
+              </div>
+            </div>
           )
         })}
       </div>

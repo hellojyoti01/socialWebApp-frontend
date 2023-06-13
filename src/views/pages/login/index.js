@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { wave, bg, avtar } from '../../../assets'
+import { wave, bg, avatar } from '../../../assets'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineMail } from 'react-icons/ai'
 //@ts-ignore
@@ -82,7 +82,7 @@ function Index() {
       <img src={wave} alt="wave" className={s.wave} />
       <img src={bg} alt="bg" className={s.bg} />
       <div className={s.from_box}>
-        <img src={avtar} alt="avtar" className={s.avtar} />
+        <img src={avatar} alt="avatar" className={s.avatar} />
         <h1 className={s.sign_up_heading}>WELCOME</h1>
 
         <div className={s.input_box}>

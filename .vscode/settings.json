@@ -1,3 +1,8 @@
 {
-  "conventionalCommits.scopes": ["menu content ", "eslint proptype validation off", "AUTH SETUP"]
+  "conventionalCommits.scopes": [
+    "menu content ",
+    "eslint proptype validation off",
+    "AUTH SETUP",
+    "signUp UI "
+  ]
 }

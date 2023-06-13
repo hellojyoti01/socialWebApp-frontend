@@ -1,17 +1,19 @@
-import React, { useRef, useState } from 'react'
-import { wave, bg, avtar } from '../../../assets'
+import React, { useState } from 'react'
+import { wave, bg, avatar } from '../../../assets'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineMail, AiOutlineUserAdd } from 'react-icons/ai'
-//@ts-ignore
 import s from '../../../css/sign_up.module.css'
 import { Link } from 'react-router-dom'
-// import { useAuth } from "../../context/Auth.provider";
-// import { useToast } from "@chakra-ui/react";
-// import joi from "joi";
+import { BsFacebook } from 'react-icons/bs'
+import { AiFillGoogleCircle, AiFillLinkedin } from 'react-icons/ai'
+
 function Index() {
-  const nameRef = useRef('')
-  const passwordRef = useRef('')
-  const emailref = useRef('')
+  const [userInput, setUserInput] = useState({
+    name: '',
+    email: '',
+    password: '',
+  })
+  const [userProfileUrl, setUserProfileUrl] = useState('')
   const [error, setError] = useState({
     message: '',
   })
@@ -82,19 +84,27 @@ function Index() {
 
   return (
     <div className={s.container}>
+      {/* -------------Left Wave Image ---------------------- */}
       <img src={wave} alt="wave" className={s.wave} />
+      {/* -------------Middle Background Image ---------------------- */}
       <img src={bg} alt="bg" className={s.bg} />
+
+      {/* -------------Form Box Start---------------------- */}
       <div className={s.from_box}>
-        <img src={avtar} alt="avtar" className={s.avtar} />
+        {/* -------------User Profile Start---------------------- */}
+        <span className={s.user_profile}>
+          <input type="file" className={s.user_input_image} />
+          <img src={userProfileUrl ? userProfileUrl : avatar} alt="avatar" className={s.avatar} />
+        </span>
+        {/* -------------User Profile End ---------------------- */}
+
+        {/* -------------Sign Up Heading Start---------------------- */}
         <h1 className={s.sign_up_heading}>Create Account</h1>
+        {/* -------------Sign Up Heading End---------------------- */}
+
+        {/* -------------Sign Up Input Box Start---------------------- */}
         <div className={s.input_box}>
-          <input
-            type="text"
-            name="username"
-            className={s.input}
-            required
-            onChange={(e) => (nameRef.current = e.target.value)}
-          />
+          <input type="text" name="username" className={s.input} required />
           <label htmlFor="username" className={s.label}>
             Name
           </label>
@@ -103,13 +113,7 @@ function Index() {
           </span>
         </div>
         <div className={s.input_box}>
-          <input
-            type="email"
-            name="email"
-            className={s.input}
-            required
-            onChange={(e) => (emailref.current = e.target.value)}
-          />
+          <input type="email" name="email" className={s.input} required />
           <label htmlFor="email" className={s.label}>
             Email
           </label>
@@ -118,13 +122,7 @@ function Index() {
           </span>
         </div>
         <div className={s.input_box}>
-          <input
-            type="password"
-            name="password"
-            className={s.input}
-            required
-            onChange={(e) => (passwordRef.current = e.target.value)}
-          />
+          <input type="password" name="password" className={s.input} required />
           <label htmlFor="password" className={s.label}>
             Password
           </label>
@@ -132,16 +130,24 @@ function Index() {
             <RiLockPasswordLine />
           </span>
         </div>
-        <div className={s.btn_box}>
+        {/* -------------Sign Up Input Box End---------------------- */}
+
+        {/* -------------Remember Me And Forget Password Start---------------------- */}
+        <div className={s.remember_me}>
           <span>
             {' '}
             <input type="checkbox" />
-            <p>Remember me</p>
+            <span>Remember me</span>
           </span>
-
-          <a>Forgot Password</a>
+          <Link to="/sendOtp" style={{ textDecoration: 'none' }}>
+            {' '}
+            <span className={s.forget_password}> Forgot Password</span>
+          </Link>
         </div>
-        <div className={s.btn}>
+        {/* -------------Remember Me And Forget Password End---------------------- */}
+
+        {/* -------------Sign Up Button Start---------------------- */}
+        <div className={s.sign_up_btn}>
           <button
             className={s.button}
             style={{
@@ -151,12 +157,49 @@ function Index() {
             <span>Sign Up</span>
           </button>
         </div>
-        <div className={s.acc_exist}>
+        {/* -------------Sign Up Button End---------------------- */}
+
+        {/* -------------Account exist Start---------------------- */}
+        <div className={s.account_exist}>
           <Link to={'/logIn'} style={{ textDecoration: 'none', color: 'black' }}>
-            <p>Already Account exist ? </p>
+            <p className={s.account_exist_}>Already Account exist ? </p>
           </Link>
         </div>
+        {/* -------------Account exist End---------------------- */}
+
+        {/* -------------Social Media Sign UP---------------------- */}
+
+        <div className={s.social_media_signUP}>
+          <ul className={s.icon_group}>
+            <li className={s.icon_list}>
+              <a href="#">
+                <span>
+                  <BsFacebook size={20} />
+                </span>
+              </a>
+            </li>
+
+            <li className={s.icon_list}>
+              <a href="#">
+                <span>
+                  <AiFillGoogleCircle size={20} />
+                </span>
+              </a>
+            </li>
+            <li className={s.icon_list}>
+              <a href="#">
+                <span>
+                  {' '}
+                  <AiFillLinkedin size={20} />
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {/* -------------Social Media Sign UP End---------------------- */}
       </div>
+      {/* -------------Form Box Start---------------------- */}
     </div>
   )
 }
