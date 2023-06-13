@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { CProgress, CProgressBar } from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 function Provider({ children }) {

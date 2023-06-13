@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { CProgress, CProgressBar } from '@coreui/react'
+import { Progress, Box } from '@chakra-ui/react'
 import { wave, bg, avatar } from '../../../assets'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { AiOutlineMail, AiOutlineUserAdd } from 'react-icons/ai'
@@ -6,17 +8,85 @@ import s from '../../../css/sign_up.module.css'
 import { Link } from 'react-router-dom'
 import { BsFacebook } from 'react-icons/bs'
 import { AiFillGoogleCircle, AiFillLinkedin } from 'react-icons/ai'
-
+import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
+import { storage } from 'src/firebase/firebaseSdk'
+import validator from '../../../middleware/validator'
 function Index() {
   const [userInput, setUserInput] = useState({
     name: '',
     email: '',
     password: '',
   })
+
   const [userProfileUrl, setUserProfileUrl] = useState('')
-  const [error, setError] = useState({
-    message: '',
-  })
+  const [fileTransformed, setFileTransFormed] = useState(0)
+  const [progressBarActive, setProgressBarActive] = useState(false)
+  const [userProfilePhoto, setUserProfilePhoto] = useState(null)
+  const [error, setError] = useState('')
+
+  const handelFieldChange = (e) => {
+    setUserInput((prev) => {
+      return { ...prev, [e.target.name]: e.target.value }
+    })
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*               Upload File In The Firebase and Download Url              */
+  /* -------------------------------------------------------------------------- */
+  const handelProfileChange = (e) => {
+    try {
+      setUserProfilePhoto(e.target.files[0])
+      const storageRef = ref(storage, `images/profile/${e.target.files[0].name}`)
+
+      const uploadTask = uploadBytesResumable(storageRef, e.target.files[0])
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          setFileTransFormed(progress)
+          console.log('Upload is ' + progress + '% done')
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused')
+              break
+            case 'running':
+              setProgressBarActive(true)
+              console.log('Upload is running')
+              break
+          }
+        },
+        (error) => {
+          setUserProfilePhoto(null)
+          setProgressBarActive(false)
+          console.log(error, 'Error In File Upload')
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setUserProfileUrl(downloadURL)
+            setProgressBarActive(false)
+            // console.log('File available at', downloadURL)
+          })
+        },
+      )
+    } catch (e) {
+      setUserProfilePhoto(null)
+      console.log('Error In Upload File', e)
+    }
+  }
+
+  const handelSubmit = async () => {
+    try {
+      const validateData = validator.signUp({
+        name: userInput.name,
+        email: userInput.email,
+        password: userInput.password,
+        profile: userProfileUrl,
+      })
+    } catch (e) {
+      console.log(e, 'Error In Handel Submit Form')
+    }
+  }
   // const toast = useToast();
   // const auth = useAuth();
   //@ts-ignore
@@ -84,6 +154,14 @@ function Index() {
 
   return (
     <div className={s.container}>
+      {progressBarActive ? (
+        <CProgress className="mb-3">
+          <CProgressBar color="danger" variant="striped" animated value={fileTransformed} />
+        </CProgress>
+      ) : (
+        <></>
+      )}
+
       {/* -------------Left Wave Image ---------------------- */}
       <img src={wave} alt="wave" className={s.wave} />
       {/* -------------Middle Background Image ---------------------- */}
@@ -93,7 +171,11 @@ function Index() {
       <div className={s.from_box}>
         {/* -------------User Profile Start---------------------- */}
         <span className={s.user_profile}>
-          <input type="file" className={s.user_input_image} />
+          <input
+            type="file"
+            className={s.user_input_image}
+            onChange={(e) => handelProfileChange(e)}
+          />
           <img src={userProfileUrl ? userProfileUrl : avatar} alt="avatar" className={s.avatar} />
         </span>
         {/* -------------User Profile End ---------------------- */}
@@ -104,7 +186,13 @@ function Index() {
 
         {/* -------------Sign Up Input Box Start---------------------- */}
         <div className={s.input_box}>
-          <input type="text" name="username" className={s.input} required />
+          <input
+            type="text"
+            name="name"
+            className={s.input}
+            required
+            onChange={(e) => handelFieldChange(e)}
+          />
           <label htmlFor="username" className={s.label}>
             Name
           </label>
@@ -113,7 +201,13 @@ function Index() {
           </span>
         </div>
         <div className={s.input_box}>
-          <input type="email" name="email" className={s.input} required />
+          <input
+            type="email"
+            name="email"
+            className={s.input}
+            required
+            onChange={(e) => handelFieldChange(e)}
+          />
           <label htmlFor="email" className={s.label}>
             Email
           </label>
@@ -122,7 +216,13 @@ function Index() {
           </span>
         </div>
         <div className={s.input_box}>
-          <input type="password" name="password" className={s.input} required />
+          <input
+            type="password"
+            name="password"
+            className={s.input}
+            required
+            onChange={(e) => handelFieldChange(e)}
+          />
           <label htmlFor="password" className={s.label}>
             Password
           </label>
@@ -153,6 +253,7 @@ function Index() {
             style={{
               verticalAlign: 'middle',
             }}
+            onClick={handelSubmit}
           >
             <span>Sign Up</span>
           </button>

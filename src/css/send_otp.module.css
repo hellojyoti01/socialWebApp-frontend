@@ -1,0 +1,77 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+form {
+  margin-top: 30px;
+}
+
+.otp_input_container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.otp_input {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  margin-right: 10px;
+  font-size: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.otp_input:focus,
+.otp_input:hover {
+  border-color: #007bff;
+}
+
+.otp_input:last-child {
+  margin-right: 0;
+}
+
+.button_row {
+  margin-top: 20px;
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.back_button {
+  background-color: #555;
+}
+
+.resend_button {
+  background-color: #007bff;
+}
+
+.verify_button {
+  background-color: #dc3545;
+}
