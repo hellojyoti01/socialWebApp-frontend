@@ -2,7 +2,7 @@ import API from './API'
 import Route from './apiUrl'
 
 const authService = {
-  Register() {
+  Register(params) {
     return new Promise((resolve, reject) => {
       API.post(`${Route.register}`, params, {
         headers: {

@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import AuthProvider from '../src/context/authContext/Provider'
 import { BrowserRouter } from 'react-router-dom'
 import { ChakraBaseProvider } from '@chakra-ui/react'
-
+import 'react-toastify/dist/ReactToastify.css'
 import store from './store'
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>

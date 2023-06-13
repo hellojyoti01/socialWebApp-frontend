@@ -1,16 +1,26 @@
+//3rd Party import
 import React, { useState } from 'react'
 import { CProgress, CProgressBar } from '@coreui/react'
-import { Progress, Box } from '@chakra-ui/react'
-import { wave, bg, avatar } from '../../../assets'
-import { RiLockPasswordLine } from 'react-icons/ri'
-import { AiOutlineMail, AiOutlineUserAdd } from 'react-icons/ai'
-import s from '../../../css/sign_up.module.css'
+import { toast, ToastContainer } from 'react-toastify'
 import { Link } from 'react-router-dom'
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
+import { storage } from 'src/firebase/firebaseSdk'
+
+//Asset Import
+import { wave, bg, avatar } from '../../../assets'
+//Icon Import
+import { RiLockPasswordLine } from 'react-icons/ri'
 import { BsFacebook } from 'react-icons/bs'
 import { AiFillGoogleCircle, AiFillLinkedin } from 'react-icons/ai'
-import { ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
-import { storage } from 'src/firebase/firebaseSdk'
+import { AiOutlineMail, AiOutlineUserAdd } from 'react-icons/ai'
+//css Import
+import s from '../../../css/sign_up.module.css'
+
+//Local File Import
 import validator from '../../../middleware/validator'
+import costumError from '../../../middleware/costumError'
+
+import authService from 'src/Api/authService' //API Request
 function Index() {
   const [userInput, setUserInput] = useState({
     name: '',
@@ -20,6 +30,7 @@ function Index() {
 
   const [userProfileUrl, setUserProfileUrl] = useState('')
   const [fileTransformed, setFileTransFormed] = useState(0)
+  const [toastActive, setToastActive] = useState(false)
   const [progressBarActive, setProgressBarActive] = useState(false)
   const [userProfilePhoto, setUserProfilePhoto] = useState(null)
   const [error, setError] = useState('')
@@ -45,14 +56,12 @@ function Index() {
         (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           setFileTransFormed(progress)
-          console.log('Upload is ' + progress + '% done')
+          // console.log('Upload is ' + progress + '% done')
           switch (snapshot.state) {
             case 'paused':
-              console.log('Upload is paused')
               break
             case 'running':
               setProgressBarActive(true)
-              console.log('Upload is running')
               break
           }
         },
@@ -75,88 +84,88 @@ function Index() {
     }
   }
 
+  /* -------------------------------------------------------------------------- */
+  /*             Request To DataBase               */
+  /* -------------------------------------------------------------------------- */
   const handelSubmit = async () => {
+    setToastActive(true)
     try {
-      const validateData = validator.signUp({
+      setError('')
+      const validateData = await validator.signUp({
         name: userInput.name,
         email: userInput.email,
         password: userInput.password,
         profile: userProfileUrl,
       })
+      authService
+        .Register(validateData)
+        .then((res) => {
+          toast.success(res.message, {
+            position: 'bottom-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+
+          setTimeout(() => {
+            setToastActive(false)
+          }, 3000)
+        })
+        .catch((e) => {
+          const { data } = e.response
+
+          setError(data.message)
+          toast.warning(data.message, {
+            position: 'bottom-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+
+          setTimeout(() => {
+            setToastActive(false)
+          }, 3000)
+        })
     } catch (e) {
-      console.log(e, 'Error In Handel Submit Form')
+      const errorMsg = costumError.signUp(JSON.stringify(e.message))
+      setError(errorMsg)
+      console.log(e)
+      toast.error(errorMsg, {
+        position: 'bottom-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+
+      setTimeout(() => {
+        setToastActive(false)
+      }, 3000)
     }
   }
-  // const toast = useToast();
-  // const auth = useAuth();
-  //@ts-ignore
-  // const { signUp } = auth;
-
-  //Joi Schema For Validation
-  // const schema = joi.object({
-  // 	name: joi.string().alphanum().min(4).max(10).required(),
-  // 	email: joi
-  // 		.string()
-  // 		.email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
-  // 		.required(),
-  // 	password: joi.string().min(6).max(15).required(),
-  // });
-
-  //Sign UP
-  // const handelSignUp = async () => {
-  // 	let name = nameRef.current;
-  // 	let email = emailref.current;
-  // 	let password = passwordRef.current + "";
-  // 	try {
-  // 		const value = await schema.validateAsync({ name, email, password });
-
-  // 		//If Value Call DataBase
-  // 		if (value) {
-  // 			const error = await signUp(value.name, value.email, value.password);
-  // 			if (error) {
-  // 				setError({ message: error });
-  // 			}
-  // 		}
-  // 	} catch (e) {
-  // 		//Setup Error scham
-  // 		setError({ message: e.message });
-  // 	}
-  // };
-
-  //Debounceing Implement
-  // function debounce(func, timeout = 3000) {
-  // 	let timer;
-  // 	return () => {
-  // 		clearTimeout(timer);
-  // 		timer = setTimeout(() => {
-  // 			func();
-  // 		}, timeout);
-  // 	};
-  // }
-
-  //Change Regular executing process
-  // const processChange = debounce(() => handelSignUp());
-
-  // useEffect(() => {
-  // 	//If error Toast
-  // 	if (error?.message) {
-  // 		toast({
-  // 			title: error?.message,
-  // 			status: "error",
-  // 			isClosable: true,
-  // 			duration: 1000,
-  // 		});
-  // 		setError({
-  // 			message: "",
-  // 		});
-  // 	}
-  // }, [error]);
 
   return (
     <div className={s.container}>
       {progressBarActive ? (
         <CProgress className="mb-3">
-          <CProgressBar color="danger" variant="striped" animated value={fileTransformed} />
+          <CProgressBar
+            color="danger"
+            variant="striped"
+            animated
+            value={fileTransformed}
+            aria-valuenow={fileTransformed}
+          />
         </CProgress>
       ) : (
         <></>
@@ -252,6 +261,7 @@ function Index() {
             className={s.button}
             style={{
               verticalAlign: 'middle',
+              pointerEvents: toastActive ? 'none' : 'auto',
             }}
             onClick={handelSubmit}
           >
@@ -297,7 +307,7 @@ function Index() {
             </li>
           </ul>
         </div>
-
+        <ToastContainer />
         {/* -------------Social Media Sign UP End---------------------- */}
       </div>
       {/* -------------Form Box Start---------------------- */}
