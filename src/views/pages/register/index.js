@@ -91,12 +91,16 @@ function Index() {
     setToastActive(true)
     try {
       setError('')
-      const validateData = await validator.signUp({
+
+      //Validate Data
+      const validateData = await validator.SignUp({
         name: userInput.name,
         email: userInput.email,
         password: userInput.password,
         profile: userProfileUrl,
       })
+
+      //Response
       authService
         .Register(validateData)
         .then((res) => {
@@ -248,7 +252,7 @@ function Index() {
             <input type="checkbox" />
             <span>Remember me</span>
           </span>
-          <Link to="/sendOtp" style={{ textDecoration: 'none' }}>
+          <Link to="/sendOTP" style={{ textDecoration: 'none' }}>
             {' '}
             <span className={s.forget_password}> Forgot Password</span>
           </Link>

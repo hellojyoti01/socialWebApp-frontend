@@ -1,0 +1,82 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper {
+  max-width: 400px;
+  height: 450px;
+  margin: 0 auto;
+
+  background-color: #d5d3d3;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+h1 {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+form {
+  margin-bottom: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px 0px;
+}
+
+input[type='email'] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type='submit'] {
+  width: 100%;
+  padding-bottom: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.error_message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.info {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.privacy_policy {
+  text-align: center;
+  font-size: 12px;
+}
+
+.privacy_policy a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.privacy_policy a:hover {
+  text-decoration: underline;
+}

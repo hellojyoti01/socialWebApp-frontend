@@ -17,6 +17,51 @@ const authService = {
         })
     })
   },
+  sendOTP(params) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.sendOTP}`, params, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+  verifyOTP(params) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.verifyOTP}`, params, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+  resetPassword(params) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.resetPassword}`, params, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
 }
 
 export default authService
