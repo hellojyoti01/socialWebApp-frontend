@@ -39,7 +39,6 @@ function VerifyOTP() {
       authService
         .verifyOTP(validateData)
         .then((res) => {
-          console.log('Responce', res)
           toast.success(res.message, {
             position: 'bottom-center',
             autoClose: 2000,
@@ -55,7 +54,7 @@ function VerifyOTP() {
             setToastActive(false)
           }, 3000)
           setTimeout(() => {
-            navigate('/newPassword', {
+            navigate('/resetPassword', {
               state: {
                 id: 1,
                 email: validateData.email,
@@ -82,9 +81,6 @@ function VerifyOTP() {
           setTimeout(() => {
             setToastActive(false)
           }, 3000)
-          setTimeout(() => {
-            navigate('/enterEmail')
-          }, 2000)
         })
     } catch (e) {
       setError(e.message)

@@ -1,10 +1,15 @@
+//3rd Party
 import React, { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+//css
+import s from '../../../css/forgot_password.module.css'
+
+//local
 import validator from 'src/middleware/validator'
 import authService from 'src/Api/authService'
-import s from '../../../css/forgot_password.module.css'
+
 function PasswordForgot() {
   const location = useLocation()
   const [error, setError] = useState('')
@@ -15,6 +20,7 @@ function PasswordForgot() {
     confirmPassword: '',
   })
 
+  //password state Change
   const handelChange = (e) => {
     setPassword((prev) => {
       return {
@@ -24,7 +30,7 @@ function PasswordForgot() {
     })
   }
 
-  console.log(location, 'location')
+  //Change password API call
   const handelChangePassword = async (e) => {
     e.preventDefault()
     setToastActive(true)
@@ -37,11 +43,9 @@ function PasswordForgot() {
         confirmPassword: password.confirmPassword,
       })
 
-      console.log(validateData, 'validatedata')
       authService
         .resetPassword(validateData)
         .then((res) => {
-          console.log('Responce', res)
           toast.success(res.message, {
             position: 'bottom-center',
             autoClose: 2000,
@@ -79,7 +83,7 @@ function PasswordForgot() {
             setToastActive(false)
           }, 3000)
           setTimeout(() => {
-            navigate('/enterEmail')
+            navigate('/sendOTP')
           }, 2000)
         })
     } catch (e) {
@@ -103,8 +107,10 @@ function PasswordForgot() {
   }
   return (
     <div className={s.container}>
+      {/* -------------Password change Wrapper Start--------------------------------- */}
       <div className={s.wrapper}>
         <h1>Change Password</h1>
+        {/* -------------From Wrapper Start--------------------------------- */}
         <form>
           <input
             type="password"
@@ -122,6 +128,8 @@ function PasswordForgot() {
               handelChange(e)
             }}
           />
+
+          {/* ------------- change password and cancel password Wrapper Start--------------------------------- */}
           <div className={s.button_row}>
             <button
               className={s.change_button}
@@ -141,8 +149,13 @@ function PasswordForgot() {
               Cancel
             </button>
           </div>
+          {/* ------------- change password and cancel password Wrapper Start--------------------------------- */}
         </form>
+        {/* -------------From Wrapper Start--------------------------------- */}
       </div>
+      {/* -------------Password change Wrapper Start--------------------------------- */}
+
+      {/* -------------Toast--------------------------------- */}
       <ToastContainer />
     </div>
   )
