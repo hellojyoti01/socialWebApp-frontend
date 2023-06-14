@@ -102,7 +102,7 @@ function Index() {
 
       //Response
       authService
-        .Register(validateData)
+        .Register({ ...validateData, signInMode: 'ideal' })
         .then((res) => {
           toast.success(res.message, {
             position: 'bottom-center',
