@@ -105,6 +105,11 @@ function PasswordForgot() {
       }, 3000)
     }
   }
+
+  const handelCancelPassword = async (e) => {
+    e.preventDefault()
+    navigate('/login')
+  }
   return (
     <div className={s.container}>
       {/* -------------Password change Wrapper Start--------------------------------- */}
@@ -145,6 +150,7 @@ function PasswordForgot() {
               style={{
                 pointerEvents: toastActive ? 'none' : 'auto',
               }}
+              onClick={handelCancelPassword}
             >
               Cancel
             </button>

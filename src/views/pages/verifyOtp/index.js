@@ -108,6 +108,12 @@ function VerifyOTP() {
     navigate('/sendOTP')
   }
 
+  //!Resend Not Implement
+  const handelResend = async (e) => {
+    e.preventDefault()
+    navigate('/sendOTP')
+  }
+
   //Change OTP In State
   const handelChange = (e) => {
     setOTP((prev) => {
@@ -184,6 +190,7 @@ function VerifyOTP() {
               style={{
                 pointerEvents: toastActive ? 'none' : 'auto',
               }}
+              onClick={handelResend}
             >
               Resend
             </button>

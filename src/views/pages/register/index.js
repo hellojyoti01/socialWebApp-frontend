@@ -311,8 +311,8 @@ function Index() {
             </li>
           </ul>
         </div>
-        <ToastContainer />
         {/* -------------Social Media Sign UP End---------------------- */}
+        <ToastContainer />
       </div>
       {/* -------------Form Box Start---------------------- */}
     </div>

@@ -1,89 +1,135 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { wave, bg, avatar } from '../../../assets'
+//3rd Party
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
+import axios from 'axios'
+//icon
+
 import { RiLockPasswordLine } from 'react-icons/ri'
-import { AiOutlineMail } from 'react-icons/ai'
+import { BsFacebook } from 'react-icons/bs'
+import { AiFillGoogleCircle, AiFillLinkedin, AiOutlineMail } from 'react-icons/ai'
+
+//Assets
+import { wave, bg, avatar } from '../../../assets'
+
+//csss
 //@ts-ignore
 import s from '../../../css/sign_in.module.css'
-import { Link } from 'react-router-dom'
-// import { useAuth } from "../../context/Auth.provider";
-// import { useToast } from "@chakra-ui/react";
-// import joi from "joi";
+
+//local
+
+import authService from 'src/Api/authService'
+import validator from 'src/middleware/validator'
+import { useAuth } from 'src/context/authContext/Provider'
 function Index() {
-  const passwordRef = useRef('')
-  const emailref = useRef('')
-  const [error, setError] = useState({
-    message: '',
+  const [userInput, setUserInput] = useState({
+    email: '',
+    password: '',
   })
-  // const toast = useToast();
-  //@ts-ignore
-  // const { signIn } = useAuth();
+  const [toastActive, setToastActive] = useState(false)
+  const [error, setError] = useState('')
+  const authContext = useAuth()
+  console.log('authcontext', authContext)
 
-  //Joi Schema For Validation
-  // const schema = joi.object({
-  // 	email: joi
-  // 		.string()
-  // 		.email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
-  // 		.required(),
-  // 	password: joi.string().min(6).max(15).required(),
-  // });
+  //User Input State Change
+  const handelFieldChange = (e) => {
+    setUserInput((prev) => {
+      return { ...prev, [e.target.name]: e.target.value }
+    })
+  }
 
-  //Sign In
-  // const handelSignIn = async () => {
-  // 	setError({ message: "" });
-  // 	let password = passwordRef.current + "";
-  // 	let email = emailref.current;
-
-  // 	try {
-  // 		const value = await schema.validateAsync({ email, password });
-
-  // 		//If Value Call DataBase
-  // 		if (value) {
-  // 			const error = await signIn(value.email, value.password);
-  // 			if (error) {
-  // 				setError({ message: error });
-  // 			}
-  // 		}
-  // 	} catch (e) {
-  // 		//Setup Error scham
-  // 		setError({ message: e.message });
-  // 	}
-  // };
-
-  // //Debounceing Implement
-  // function debounce(func, timeout = 3000) {
-  // 	let timer;
-  // 	return () => {
-  // 		clearTimeout(timer);
-  // 		timer = setTimeout(() => {
-  // 			func();
-  // 		}, timeout);
-  // 	};
-  // }
-
-  // //Change Regular executing process
-  // const processChange = debounce(() => handelSignIn());
-
-  // useEffect(() => {
-  // 	if (error?.message) {
-  // 		toast({
-  // 			title: error?.message,
-  // 			status: "error",
-  // 			isClosable: true,
-  // 			duration: 1000,
-  // 		});
-  // 		setError({
-  // 			message: "",
-  // 		});
-  // 	}
-  // }, [error]);
+  /* -------------------------------------------------------------------------- */
+  /*             Request To DataBase               */
+  /* -------------------------------------------------------------------------- */
+  const handelSubmit = async () => {
+    setToastActive(true)
+    try {
+      setError('')
+      //Validate Data
+      const validateData = await validator.SignIn({
+        email: userInput.email,
+        password: userInput.password,
+      })
+      console.log(validateData, 'validate data')
+      // Response
+      authService
+        .SignIn(validateData)
+        .then((res) => {
+          console.log('response', res)
+          authContext.setToken(res.data)
+          axios.defaults.headers.common['Authorization'] = res.data
+          localStorage.setItem('SocialWeb_Token', res.data)
+          toast.success(res.message, {
+            position: 'bottom-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+          setTimeout(() => {
+            setToastActive(false)
+          }, 3000)
+        })
+        .catch((e) => {
+          console.log(e, 'catch')
+          const { data } = e.response
+          setError(data.message)
+          toast.warning(data.message, {
+            position: 'bottom-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+          setTimeout(() => {
+            setToastActive(false)
+          }, 3000)
+        })
+    } catch (e) {
+      console.log(e, 'validate')
+      setError(e.message)
+      toast.error(e.message, {
+        position: 'bottom-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+      setTimeout(() => {
+        setToastActive(false)
+      }, 3000)
+    }
+  }
 
   return (
     <div className={s.container}>
+      {/* -------------Left Wave Image ---------------------- */}
       <img src={wave} alt="wave" className={s.wave} />
+      {/* -------------Middle Background Image ---------------------- */}
       <img src={bg} alt="bg" className={s.bg} />
+
+      {/* -------------Form Box Start---------------------- */}
       <div className={s.from_box}>
-        <img src={avatar} alt="avatar" className={s.avatar} />
-        <h1 className={s.sign_up_heading}>WELCOME</h1>
+        {/* -------------User Profile Start---------------------- */}
+        <span className={s.user_profile}>
+          <img src={avatar} alt="avatar" className={s.avatar} />
+        </span>
+        {/* -------------User Profile End ---------------------- */}
+
+        {/* -------------Sign In Heading Start---------------------- */}
+        <h1 className={s.sign_up_heading}>Log In</h1>
+        {/* -------------Sign In Heading End---------------------- */}
+
+        {/* -------------Sign In Input Box Start---------------------- */}
 
         <div className={s.input_box}>
           <input
@@ -91,7 +137,7 @@ function Index() {
             name="email"
             className={s.input}
             required
-            onChange={(e) => (emailref.current = e.target.value)}
+            onChange={(e) => handelFieldChange(e)}
           />
           <label htmlFor="email" className={s.label}>
             Email
@@ -106,7 +152,7 @@ function Index() {
             name="password"
             className={s.input}
             required
-            onChange={(e) => (passwordRef.current = e.target.value)}
+            onChange={(e) => handelFieldChange(e)}
           />
           <label htmlFor="password" className={s.label}>
             Password
@@ -115,32 +161,78 @@ function Index() {
             <RiLockPasswordLine />
           </span>
         </div>
-        <div className={s.btn_box}>
+        {/* -------------Sign Up Input Box End---------------------- */}
+
+        {/* -------------Remember Me And Forget Password Start---------------------- */}
+        <div className={s.remember_me}>
           <span>
             {' '}
             <input type="checkbox" />
-            <p>Remember me</p>
+            <span>Remember me</span>
           </span>
-
-          <a>Forgot Password</a>
+          <Link to="/sendOTP" style={{ textDecoration: 'none' }}>
+            {' '}
+            <span className={s.forget_password}> Forgot Password</span>
+          </Link>
         </div>
-        <div className={s.btn}>
+        {/* -------------Remember Me And Forget Password End---------------------- */}
+
+        {/* -------------Sign Up Button Start---------------------- */}
+        <div className={s.sign_up_btn}>
           <button
             className={s.button}
             style={{
               verticalAlign: 'middle',
+              pointerEvents: toastActive ? 'none' : 'auto',
             }}
-            // onClick={processChange}
+            onClick={handelSubmit}
           >
             <span>Sign In</span>
           </button>
         </div>
-        <div className={s.acc_exist}>
-          <Link to={'/sign_up'} style={{ textDecoration: 'none', color: 'black' }}>
-            <p>Create New Account ? </p>
+        {/* -------------Sign Up Button End---------------------- */}
+
+        {/* -------------Account exist Start---------------------- */}
+        <div className={s.account_exist}>
+          <Link to={'/register'} style={{ textDecoration: 'none', color: 'black' }}>
+            <p className={s.account_exist_}>Created Account ? </p>
           </Link>
         </div>
+        {/* -------------Account exist End---------------------- */}
+
+        {/* -------------Social Media Sign UP---------------------- */}
+
+        <div className={s.social_media_signUP}>
+          <ul className={s.icon_group}>
+            <li className={s.icon_list}>
+              <a href="#">
+                <span>
+                  <BsFacebook size={20} />
+                </span>
+              </a>
+            </li>
+
+            <li className={s.icon_list}>
+              <a href="#">
+                <span>
+                  <AiFillGoogleCircle size={20} />
+                </span>
+              </a>
+            </li>
+            <li className={s.icon_list}>
+              <a href="#">
+                <span>
+                  {' '}
+                  <AiFillLinkedin size={20} />
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        {/* -------------Social Media Sign UP End---------------------- */}
+        <ToastContainer />
       </div>
+      {/* -------------Form Box Start---------------------- */}
     </div>
   )
 }

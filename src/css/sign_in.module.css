@@ -1,16 +1,15 @@
 .container {
-  /* background-color: red; */
   height: 100vh;
   width: 100vw;
-  /* position: relative; */
-  /* background-image: linear-gradient(
-			to bottom,
-			rgba(245, 246, 252, 0.52),
-			rgba(110, 55, 97, 0.73)
-		),
-		url("../asset/todo_back_ground.jpg"); */
-
-  color: #fef2f4;
+  position: relative;
+  overflow: hidden;
+}
+.progress_bar {
+  z-index: 100;
+  width: 100vw;
+  height: 50px;
+  position: absolute;
+  /* background-color: #00aced; */
 }
 
 .wave {
@@ -29,20 +28,44 @@
 }
 .from_box {
   width: 40%;
-  height: 70%;
+  height: 80%;
   position: absolute;
   top: 100px;
   right: 60px;
-  /* background-color: red; */
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* gap: 15px 0px; */
+}
+.user_profile {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  /* background-color: aquamarine; */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user_input_image {
+  z-index: 2;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  opacity: 0;
 }
 .avatar {
   width: 80px;
   height: 80px;
+  position: absolute;
+  border-radius: 100%;
+  border: 4px solid linear-gradient(to right, darkblue, darkorchid);
+
+  /* border-radius: 100%;
+  border-width: 4px;
+  border-style: solid;
+  border-image: linear-gradient(to right, darkblue, darkorchid) 1; */
 }
 .sign_up_heading {
   color: black;
@@ -54,19 +77,20 @@
   height: 40px;
 
   margin-top: 20px;
-  /* background-color: blue; */
+
   position: relative;
 }
 .input {
   width: 100%;
   height: 40px;
-  color: black;
+
   background-color: transparent;
   border-bottom: 2px solid black;
   border-top: none;
   border-left: none;
   border-right: none;
   outline: none;
+  color: black;
 }
 .input:focus,
 .input:valid {
@@ -97,6 +121,7 @@
 .label:hover {
   top: -10px;
   left: 0;
+  color: black;
 }
 .icon {
   background-color: transparent;
@@ -111,11 +136,11 @@
   color: blue;
 }
 
-.btn_box {
+.remember_me {
   width: 50%;
-  height: 10px;
+  height: 13px;
   margin-top: 10px;
-  /* background-color: aqua; */
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -124,14 +149,18 @@
   font-weight: 300;
   color: black;
 }
-.btn_box > span {
+.forget_password {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.remember_me > span {
   width: 50%;
-
+  height: 13px;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
-.btn_box > span > input {
+.remember_me > span > input {
   display: inline-block;
   width: 12px;
   height: 12px;
@@ -139,10 +168,13 @@
   border: 2px solid black;
   border-radius: 100%;
 }
-.btn {
+
+.sign_up_btn {
   width: 50%;
   margin-top: 18px;
   height: 30px;
+
+  /* background-color: chartreuse; */
 }
 
 .button {
@@ -159,7 +191,6 @@
   height: 35px;
   transition: all 0.5s;
   cursor: pointer;
-  margin: 5px;
 }
 
 .button span {
@@ -186,21 +217,26 @@
   opacity: 1;
   right: 0;
 }
-.acc_exist {
+.account_exist {
   width: 100%;
-  margin-top: 16px;
+
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
 
   cursor: pointer;
 }
-.acc_exist > p {
-  font-size: 14px;
-  font-weight: 400;
+.account_exist_ {
+  margin-top: 9px;
+  width: fit-content;
+  height: fit-content;
+  font-size: 0.9rem;
+  font-weight: 300;
   color: black;
+  cursor: pointer;
 }
-.acc_exist > p:hover {
+.account_exist > p:hover {
   color: blue;
 }
 
@@ -289,4 +325,68 @@
     top: 30%;
     /* background-color: aqua; */
   }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                              Social Icon Style                             */
+/* -------------------------------------------------------------------------- */
+.social_media_signUP {
+  width: 100%;
+  height: 85px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon_group {
+  display: flex;
+}
+
+.icon_list {
+  list-style: none;
+  margin-right: 20px;
+}
+
+.icon_group > .icon_list > a {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: block;
+  text-align: center;
+  box-sizing: border-box;
+
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(0deg, #ddd, #fff);
+  transition: 0.5s;
+}
+
+.icon_group > .icon_list a:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+}
+
+.icon_group > .icon_list a span {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: linear-gradient(0deg, #fff, #ddd);
+  border-radius: 50%;
+  line-height: calc(60px - 12px);
+  font-size: 24px;
+  color: #262626;
+  transition: 0.5s;
+}
+
+.icon_group > .icon_list:nth-child(1) a:hover span {
+  color: #3b5998;
+}
+
+.icon_group > .icon_list:nth-child(2) a:hover span {
+  color: #00aced;
+}
+
+.icon_group > .icon_list:nth-child(3) a:hover span {
+  color: #dd4b39;
 }

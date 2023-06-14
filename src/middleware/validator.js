@@ -3,7 +3,6 @@ import joi from 'joi'
 const validator = {
   SignUp(parameter) {
     return new Promise((resolve, reject) => {
-      console.log(parameter)
       const { name, email, password, profile } = parameter
 
       //Joi Schema For Validation
@@ -28,6 +27,32 @@ const validator = {
           email,
           password,
           profile,
+        })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((e) => {
+          reject(e)
+        })
+    })
+  },
+  SignIn(parameter) {
+    return new Promise((resolve, reject) => {
+      const { email, password } = parameter
+
+      //Joi Schema For Validation
+      const schema = joi.object({
+        email: joi
+          .string()
+          .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+          .required(),
+        password: joi.string().min(6).max(15).required(),
+      })
+
+      schema
+        .validateAsync({
+          email,
+          password,
         })
         .then((res) => {
           resolve(res)

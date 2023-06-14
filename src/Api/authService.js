@@ -17,6 +17,21 @@ const authService = {
         })
     })
   },
+  SignIn(params) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.logIn}`, params, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
   sendOTP(params) {
     return new Promise((resolve, reject) => {
       API.post(`${Route.sendOTP}`, params, {
@@ -54,6 +69,26 @@ const authService = {
           'Content-Type': 'application/json',
         },
       })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+  WhoAmI(token) {
+    return new Promise((resolve, reject) => {
+      API.post(
+        `${Route.WhoAmI}`,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${token}`,
+          },
+        },
+      )
         .then((res) => {
           resolve(res.data)
         })
