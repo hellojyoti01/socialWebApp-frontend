@@ -148,7 +148,6 @@ function Index() {
 
       const credential = GoogleAuthProvider.credentialFromResult(result)
       const { providerData } = result.user
-      console.log(providerData[0], 'user')
 
       //Api Request to Database
       //Validate Data

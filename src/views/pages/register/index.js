@@ -189,6 +189,7 @@ function Index() {
       authService
         .socialSign({ ...validateData, signInMode: providerData[0].providerId })
         .then((res) => {
+          console.log(res, 'responce In')
           authContext.setToken(res.data)
           axios.defaults.headers.common['Authorization'] = res.data
           localStorage.setItem('SocialWeb_Token', res.data)
@@ -224,6 +225,7 @@ function Index() {
           }, 3000)
         })
     } catch (e) {
+      console.log('ERRor', e)
       setError(e.message)
       toast.error(e.message, {
         position: 'bottom-center',

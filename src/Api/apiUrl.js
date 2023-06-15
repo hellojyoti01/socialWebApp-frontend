@@ -6,5 +6,8 @@ const routeUrl = {
   verifyOTP: '/auth/verifyOTP',
   resetPassword: '/auth/resetPassword',
   WhoAmI: '/auth/WhoAmI',
+
+  findAllPost: '/post/findAll',
+  findAllFriend: '/connection/getFriend',
 }
 export default routeUrl

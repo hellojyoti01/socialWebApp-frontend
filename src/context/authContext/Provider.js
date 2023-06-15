@@ -9,9 +9,7 @@ const authContext = createContext(null)
 function Provider({ children }) {
   //Token Get From Local Storage
   const [token, setToken] = useState(() => {
-    let webToken = localStorage.getItem('SocialWeb_Token')
-
-    const token = JSON.parse(webToken)
+    let token = localStorage.getItem('SocialWeb_Token')
 
     if (token) {
       axios.defaults.headers.common['Authorization'] = token
@@ -45,7 +43,7 @@ function Provider({ children }) {
     whoAmI()
   }, [token])
 
-  const value = { user, setToken }
+  const value = { user, setToken, token }
   return <authContext.Provider value={value}>{children}</authContext.Provider>
 }
 
