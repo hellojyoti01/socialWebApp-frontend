@@ -23,7 +23,7 @@ import s from '../../../css/sign_in.module.css'
 
 import authService from 'src/Api/authService'
 import validator from 'src/middleware/validator'
-import { useAuth } from 'src/context/authContext/Provider'
+import { useAuth } from 'src/context/AuthProvider'
 function Index() {
   const [userInput, setUserInput] = useState({
     email: '',
@@ -82,7 +82,7 @@ function Index() {
                   token: resToken.data,
                 },
               })
-            }, 2000)
+            }, 1000)
           })
         })
         .catch((e) => {

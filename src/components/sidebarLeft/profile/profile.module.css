@@ -15,7 +15,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* background-color: aliceblue; */
+  cursor: pointer;
+  /* background- /* background-color: aliceblue;color: aliceblue; */
 }
 
 .profile_info {

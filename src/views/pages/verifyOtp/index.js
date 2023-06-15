@@ -14,7 +14,7 @@ import s from '../../../css/send_otp.module.css'
 //local
 import validator from 'src/middleware/validator'
 import authService from 'src/Api/authService'
-import { useAuth } from 'src/context/authContext/Provider'
+import { useAuth } from 'src/context/AuthProvider'
 function VerifyOTP() {
   const location = useLocation()
   const [OTP, setOTP] = useState({
@@ -72,7 +72,7 @@ function VerifyOTP() {
             } else if (location.state.id == 2) {
               authContext.setToken(location.state.token)
               axios.defaults.headers.common['Authorization'] = JSON.stringify(location.state.token)
-              localStorage.setItem('SocialWeb_Token', JSON.stringify(location.state.token))
+              localStorage.setItem('SocialWeb_Token', location.state.token)
             } else {
               setToastActive(true)
               setError('Server Down')

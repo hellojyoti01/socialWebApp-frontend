@@ -8,6 +8,7 @@ const routeUrl = {
   WhoAmI: '/auth/WhoAmI',
 
   findAllPost: '/post/findAll',
+  createPost: '/post/create',
   findAllFriend: '/connection/getFriend',
 }
 export default routeUrl

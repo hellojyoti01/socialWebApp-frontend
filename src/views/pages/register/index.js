@@ -23,7 +23,7 @@ import validator from '../../../middleware/validator'
 import costumError from '../../../middleware/costumError'
 
 import authService from 'src/Api/authService' //API Request
-import { useAuth } from 'src/context/authContext/Provider'
+import { useAuth } from 'src/context/AuthProvider'
 
 function Index() {
   const [userInput, setUserInput] = useState({
