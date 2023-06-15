@@ -1,9 +1,10 @@
 //3rd Party
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import axios from 'axios'
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '../../../firebase/firebaseSdk'
 //icon
 
@@ -31,7 +32,7 @@ function Index() {
   const [toastActive, setToastActive] = useState(false)
   const [error, setError] = useState('')
   const authContext = useAuth()
-
+  const navigate = useNavigate()
   //User Input State Change
   const handelFieldChange = (e) => {
     setUserInput((prev) => {
@@ -51,16 +52,43 @@ function Index() {
         email: userInput.email,
         password: userInput.password,
       })
-      console.log(validateData, 'validate data')
+
       // Response
       authService
         .SignIn(validateData)
-        .then((res) => {
-          console.log('response', res)
-          authContext.setToken(res.data)
-          axios.defaults.headers.common['Authorization'] = res.data
-          localStorage.setItem('SocialWeb_Token', res.data)
-          toast.success(res.message, {
+        .then((resToken) => {
+          authService.sendOTP(validateData).then((res) => {
+            // authContext.setToken(res.data)
+            // axios.defaults.headers.common['Authorization'] = res.data
+            // localStorage.setItem('SocialWeb_Token', res.data)
+            toast.success(res.message, {
+              position: 'bottom-center',
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            })
+            setTimeout(() => {
+              setToastActive(false)
+            }, 3000)
+            setTimeout(() => {
+              navigate('/verifyOTP', {
+                state: {
+                  id: 2,
+                  email: validateData.email,
+                  token: resToken.data,
+                },
+              })
+            }, 2000)
+          })
+        })
+        .catch((e) => {
+          const { data } = e.response
+          setError(data.message)
+          toast.warning(data.message, {
             position: 'bottom-center',
             autoClose: 2000,
             hideProgressBar: false,
@@ -111,30 +139,80 @@ function Index() {
     }
   }
 
-  const handelGoogleSignIn = (e) => {
-    console.log('function call')
-    const provider = new GoogleAuthProvider()
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result)
-        const token = credential.accessToken
-        // The signed-in user info.
-        const { providerData } = result.user
-        console.log(providerData[0], 'user')
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+  const handelGoogleSignIn = async (e) => {
+    setToastActive(true)
+    try {
+      setError('')
+      const provider = new GoogleAuthProvider()
+      const result = await signInWithPopup(auth, provider)
+
+      const credential = GoogleAuthProvider.credentialFromResult(result)
+      const { providerData } = result.user
+      console.log(providerData[0], 'user')
+
+      //Api Request to Database
+      //Validate Data
+      const validateData = await validator.socialSign({
+        email: providerData[0].email,
+        name: providerData[0].displayName,
+        profile: providerData[0].photoURL,
+        uid: providerData[0].uid,
       })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        // The email of the user's account used.
-        const email = error.customData.email
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error)
-        // ...
+
+      // Response
+      authService
+        .socialSign({ ...validateData, signInMode: providerData[0].providerId })
+        .then((res) => {
+          authContext.setToken(res.data)
+          axios.defaults.headers.common['Authorization'] = res.data
+          localStorage.setItem('SocialWeb_Token', res.data)
+          toast.success(res.message, {
+            position: 'bottom-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+          setTimeout(() => {
+            setToastActive(false)
+          }, 3000)
+        })
+        .catch((e) => {
+          const { data } = e.response
+          setError(data.message)
+          toast.warning(data.message, {
+            position: 'bottom-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+          setTimeout(() => {
+            setToastActive(false)
+          }, 3000)
+        })
+    } catch (e) {
+      setError(e.message)
+      toast.error(e.message, {
+        position: 'bottom-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
       })
+      setTimeout(() => {
+        setToastActive(false)
+      }, 3000)
+    }
   }
 
   return (
@@ -232,7 +310,12 @@ function Index() {
         <div className={s.social_media_signUP}>
           <ul className={s.icon_group}>
             <li className={s.icon_list}>
-              <a href="#">
+              <a
+                href="#"
+                style={{
+                  pointerEvents: toastActive ? 'none' : 'auto',
+                }}
+              >
                 <span>
                   <BsFacebook size={20} />
                 </span>
@@ -240,14 +323,24 @@ function Index() {
             </li>
 
             <li className={s.icon_list} onClick={handelGoogleSignIn}>
-              <a href="#">
+              <a
+                href="#"
+                style={{
+                  pointerEvents: toastActive ? 'none' : 'auto',
+                }}
+              >
                 <span>
                   <AiFillGoogleCircle size={20} />
                 </span>
               </a>
             </li>
             <li className={s.icon_list}>
-              <a href="#">
+              <a
+                href="#"
+                style={{
+                  pointerEvents: toastActive ? 'none' : 'auto',
+                }}
+              >
                 <span>
                   {' '}
                   <AiFillLinkedin size={20} />

@@ -5,7 +5,9 @@ import { toast, ToastContainer } from 'react-toastify'
 import { Link } from 'react-router-dom'
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
 import { storage } from 'src/firebase/firebaseSdk'
-
+import axios from 'axios'
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
+import { auth } from '../../../firebase/firebaseSdk'
 //Asset Import
 import { wave, bg, avatar } from '../../../assets'
 //Icon Import
@@ -21,6 +23,8 @@ import validator from '../../../middleware/validator'
 import costumError from '../../../middleware/costumError'
 
 import authService from 'src/Api/authService' //API Request
+import { useAuth } from 'src/context/authContext/Provider'
+
 function Index() {
   const [userInput, setUserInput] = useState({
     name: '',
@@ -34,6 +38,8 @@ function Index() {
   const [progressBarActive, setProgressBarActive] = useState(false)
   const [userProfilePhoto, setUserProfilePhoto] = useState(null)
   const [error, setError] = useState('')
+
+  const authContext = useAuth()
 
   const handelFieldChange = (e) => {
     setUserInput((prev) => {
@@ -153,6 +159,82 @@ function Index() {
         theme: 'light',
       })
 
+      setTimeout(() => {
+        setToastActive(false)
+      }, 3000)
+    }
+  }
+
+  const handelGoogleSignIn = async (e) => {
+    setToastActive(true)
+    try {
+      setError('')
+      const provider = new GoogleAuthProvider()
+      const result = await signInWithPopup(auth, provider)
+
+      const credential = GoogleAuthProvider.credentialFromResult(result)
+      const { providerData } = result.user
+      console.log(providerData[0], 'user')
+
+      //Api Request to Database
+      //Validate Data
+      const validateData = await validator.socialSign({
+        email: providerData[0].email,
+        name: providerData[0].displayName,
+        profile: providerData[0].photoURL,
+        uid: providerData[0].uid,
+      })
+
+      // Response
+      authService
+        .socialSign({ ...validateData, signInMode: providerData[0].providerId })
+        .then((res) => {
+          authContext.setToken(res.data)
+          axios.defaults.headers.common['Authorization'] = res.data
+          localStorage.setItem('SocialWeb_Token', res.data)
+          toast.success(res.message, {
+            position: 'bottom-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+          setTimeout(() => {
+            setToastActive(false)
+          }, 3000)
+        })
+        .catch((e) => {
+          const { data } = e.response
+          setError(data.message)
+          toast.warning(data.message, {
+            position: 'bottom-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+          setTimeout(() => {
+            setToastActive(false)
+          }, 3000)
+        })
+    } catch (e) {
+      setError(e.message)
+      toast.error(e.message, {
+        position: 'bottom-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
       setTimeout(() => {
         setToastActive(false)
       }, 3000)
@@ -287,22 +369,37 @@ function Index() {
         <div className={s.social_media_signUP}>
           <ul className={s.icon_group}>
             <li className={s.icon_list}>
-              <a href="#">
+              <a
+                href="#"
+                style={{
+                  pointerEvents: toastActive ? 'none' : 'auto',
+                }}
+              >
                 <span>
                   <BsFacebook size={20} />
                 </span>
               </a>
             </li>
 
-            <li className={s.icon_list}>
-              <a href="#">
+            <li className={s.icon_list} onClick={handelGoogleSignIn}>
+              <a
+                href="#"
+                style={{
+                  pointerEvents: toastActive ? 'none' : 'auto',
+                }}
+              >
                 <span>
                   <AiFillGoogleCircle size={20} />
                 </span>
               </a>
             </li>
             <li className={s.icon_list}>
-              <a href="#">
+              <a
+                href="#"
+                style={{
+                  pointerEvents: toastActive ? 'none' : 'auto',
+                }}
+              >
                 <span>
                   {' '}
                   <AiFillLinkedin size={20} />

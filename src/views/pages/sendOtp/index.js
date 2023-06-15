@@ -69,7 +69,7 @@ function SendOtp() {
         })
     } catch (e) {
       setError(e.message)
-      console.log(e)
+
       toast.error(e.message, {
         position: 'bottom-center',
         autoClose: 2000,

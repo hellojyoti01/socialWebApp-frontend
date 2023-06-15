@@ -9,7 +9,9 @@ const authContext = createContext(null)
 function Provider({ children }) {
   //Token Get From Local Storage
   const [token, setToken] = useState(() => {
-    let token = localStorage.getItem('SocialWeb_Token')
+    let webToken = localStorage.getItem('SocialWeb_Token')
+
+    const token = JSON.parse(webToken)
 
     if (token) {
       axios.defaults.headers.common['Authorization'] = token
@@ -26,6 +28,7 @@ function Provider({ children }) {
       authService
         .WhoAmI(token)
         .then((res) => {
+          console.log('Who Am I', res.data)
           setUser(res.data)
           navigate('/')
         })

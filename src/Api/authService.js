@@ -32,6 +32,21 @@ const authService = {
         })
     })
   },
+  socialSign(params) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.socialSign}`, params, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
   sendOTP(params) {
     return new Promise((resolve, reject) => {
       API.post(`${Route.sendOTP}`, params, {

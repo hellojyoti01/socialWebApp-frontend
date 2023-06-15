@@ -62,9 +62,43 @@ const validator = {
         })
     })
   },
+  socialSign(parameter) {
+    return new Promise((resolve, reject) => {
+      const { email, profile, name, uid } = parameter
+
+      //Joi Schema For Validation
+      const schema = joi.object({
+        email: joi
+          .string()
+          .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+          .required(),
+        name: joi
+          .string()
+          .regex(/^[A-Za-z\s]+$/)
+          .min(4)
+          .max(30)
+          .required(),
+        profile: joi.string().uri().required(),
+        uid: joi.string().required(),
+      })
+
+      schema
+        .validateAsync({
+          email,
+          name,
+          profile,
+          uid,
+        })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((e) => {
+          reject(e)
+        })
+    })
+  },
   Email(parameter) {
     return new Promise((resolve, reject) => {
-      console.log(parameter)
       const { email } = parameter
 
       //Joi Schema For Validation

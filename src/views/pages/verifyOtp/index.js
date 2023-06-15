@@ -1,16 +1,20 @@
+/* -------------------------------------------------------------------------- */
+/* //! Loction Rendering 6 time                                  */
+/* -------------------------------------------------------------------------- */
+
 //3rd party lib
 import React, { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-
+import axios from 'axios'
 //css
 import s from '../../../css/send_otp.module.css'
 
 //local
 import validator from 'src/middleware/validator'
 import authService from 'src/Api/authService'
-
+import { useAuth } from 'src/context/authContext/Provider'
 function VerifyOTP() {
   const location = useLocation()
   const [OTP, setOTP] = useState({
@@ -24,6 +28,7 @@ function VerifyOTP() {
   const [error, setError] = useState('')
   const [toastActive, setToastActive] = useState(false)
   const navigate = useNavigate()
+  const authContext = useAuth()
 
   //Verify OTP
   const handelVerify = async (e) => {
@@ -54,13 +59,37 @@ function VerifyOTP() {
             setToastActive(false)
           }, 3000)
           setTimeout(() => {
-            navigate('/resetPassword', {
-              state: {
-                id: 1,
-                email: validateData.email,
-                OTP: validateData.OTP,
-              },
-            })
+            if (location.state.id == 1) {
+              setTimeout(() => {
+                navigate('/resetPassword', {
+                  state: {
+                    id: 1,
+                    email: validateData.email,
+                    OTP: validateData.OTP,
+                  },
+                })
+              }, 2000)
+            } else if (location.state.id == 2) {
+              authContext.setToken(location.state.token)
+              axios.defaults.headers.common['Authorization'] = JSON.stringify(location.state.token)
+              localStorage.setItem('SocialWeb_Token', JSON.stringify(location.state.token))
+            } else {
+              setToastActive(true)
+              setError('Server Down')
+              toast.error('Server Down', {
+                position: 'bottom-center',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'light',
+              })
+              setTimeout(() => {
+                setToastActive(false)
+              }, 3000)
+            }
           }, 2000)
         })
         .catch((e) => {
