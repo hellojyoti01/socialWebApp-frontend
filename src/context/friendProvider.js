@@ -12,9 +12,9 @@ function Provider({ children }) {
   const [pending, setPending] = useState([])
 
   //find All Friend
-  async function findAllFriends(token) {
+  async function findAllFriends(param, token) {
     friendService
-      .totalFriend({}, token)
+      .totalFriend({ user_id: param }, token)
       .then((res) => {
         if (res.data.length > 0) {
           setFriends([...res.data])

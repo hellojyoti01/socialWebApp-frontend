@@ -1,6 +1,7 @@
 //3rd party
 import React, { useState, useEffect } from 'react'
 import { CAvatar } from '@coreui/react'
+import { useNavigate, useLocation } from 'react-router-dom'
 //css
 import s from './profile.module.css'
 //assets
@@ -15,10 +16,12 @@ export default function Profile(...props) {
   const postContext = usePost()
   const friendContext = useFriend()
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     if (authContext.token) {
       postContext.findAllPost(authContext.user._id, authContext.token)
-      friendContext.findAllFriends(authContext.token)
+      friendContext.findAllFriends(authContext.user._id, authContext.token)
     }
   }, [authContext.token])
 
@@ -26,13 +29,16 @@ export default function Profile(...props) {
     <div className={s.container}>
       <div className={s.wrapper}>
         {/* ---Profile Icon----- */}
-        <Link to="/profile" style={{ textDecoration: 'none' }}>
-          <CAvatar
-            src={authContext.user?.profile ? authContext.user.profile : avatar}
-            status="success"
-            size="xl"
-          />
-        </Link>
+
+        <CAvatar
+          src={authContext.user?.profile ? authContext.user.profile : avatar}
+          status="success"
+          size="xl"
+          onClick={() => {
+            navigate('/profile', { state: { id: 1, user: authContext.user } })
+          }}
+        />
+
         {/* ---Address Start----- */}
         <div className={s.profile_info}>
           <h4>{authContext.user?.name ? authContext.user.name : '--'} </h4>
