@@ -43,6 +43,7 @@ function Index() {
   /* -------------------------------------------------------------------------- */
   /*             Request To DataBase               */
   /* -------------------------------------------------------------------------- */
+
   const handelSubmit = async () => {
     setToastActive(true)
     try {
@@ -180,9 +181,10 @@ function Index() {
           }, 3000)
         })
         .catch((e) => {
-          const { data } = e.response
-          setError(data.message)
-          toast.warning(data.message, {
+          console.log('errr', e)
+          // const { data } = e.response
+          // setError(data.message)
+          toast.warning(e.message, {
             position: 'bottom-center',
             autoClose: 2000,
             hideProgressBar: false,

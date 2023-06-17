@@ -18,6 +18,7 @@ function Provider({ children }) {
   })
   //User Object
   const [user, setUser] = useState({})
+  const [profile, setProfile] = useState({})
   const navigate = useNavigate()
 
   //Current User Info
@@ -26,6 +27,7 @@ function Provider({ children }) {
       authService
         .WhoAmI(token)
         .then((res) => {
+          console.log(res.data)
           setUser(res.data)
           navigate('/')
         })
@@ -37,12 +39,25 @@ function Provider({ children }) {
     }
   }
 
+  function findOneProfile(param, token) {
+    try {
+      authService
+        .findOneProfile({ _id: param }, token)
+        .then((res) => {
+          setProfile(res.data)
+        })
+        .catch((e) => {
+          console.log('Some Error In FindAll')
+        })
+    } catch (e) {}
+  }
+
   useEffect(() => {
     if (!token) return navigate('/register')
     whoAmI()
   }, [token])
 
-  const value = { user, setToken, token }
+  const value = { user, setToken, token, findOneProfile, profile }
   return <authContext.Provider value={value}>{children}</authContext.Provider>
 }
 

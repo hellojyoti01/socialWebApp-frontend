@@ -10,5 +10,8 @@ const routeUrl = {
   findAllPost: '/post/findAll',
   createPost: '/post/create',
   findAllFriend: '/connection/getFriend',
+
+  profileUpdate: '/auth/profileUpdate',
+  findOneProfile: '/auth/findOneProfile',
 }
 export default routeUrl

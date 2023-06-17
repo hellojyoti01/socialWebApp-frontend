@@ -185,6 +185,46 @@ const validator = {
         })
     })
   },
+  updateProfile(parameter) {
+    return new Promise((resolve, reject) => {
+      const { name, profile, dateOfBirth, phoneNo, gender, bio, address } = parameter
+
+      //Joi Schema For Validation
+      const schema = joi.object({
+        name: joi
+          .string()
+          .regex(/^[A-Za-z\s]+$/)
+          .min(4)
+          .max(30),
+        profile: joi.string().uri(),
+        dateOfBirth: joi.date(),
+        phoneNo: joi
+          .string()
+          .regex(/^[0-9]{10}$/)
+          .messages({ 'string.pattern.base': `Phone number must have 10 digits.` }),
+        gender: joi.string(),
+        bio: joi.string().min(9).max(100),
+        address: joi.string(),
+      })
+
+      schema
+        .validateAsync({
+          name,
+          profile,
+          dateOfBirth,
+          phoneNo,
+          gender,
+          bio,
+          address,
+        })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((e) => {
+          reject(e)
+        })
+    })
+  },
 }
 
 export default validator

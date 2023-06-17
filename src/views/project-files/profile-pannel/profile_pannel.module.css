@@ -112,6 +112,9 @@ header ul li strong {
   display: block;
 }
 
+.info ul {
+  list-style-type: circle;
+}
 .bio {
   margin-top: 10px;
 }
