@@ -69,7 +69,7 @@ function Search() {
     postService
       .createPost({ post: userProfileUrl }, authContext.token)
       .then((res) => {
-        postContext.findAllPost(authContext.user._id, authContext.token)
+        postContext.findAllPostSingleUser(authContext.user._id, authContext.token)
         toast.success(res.message, {
           position: 'bottom-center',
           autoClose: 2000,

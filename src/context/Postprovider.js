@@ -7,10 +7,10 @@ const postContext = createContext(null)
 
 function Provider({ children }) {
   const [post, setPost] = useState([])
-  //find All Post
-  async function findAllPost(posted_by, token) {
+  //find All Post of a single User........
+  async function findAllPostSingleUser(posted_by, token) {
     postService
-      .totalPost({ posted_by: posted_by }, token)
+      .findAllPostSingleUser({ posted_by: posted_by }, token)
       .then((res) => {
         if (res.data.length > 0) {
           setPost([...res.data])
@@ -20,7 +20,7 @@ function Provider({ children }) {
         console.log('Error In Profile fun', e)
       })
   }
-  const value = { findAllPost, post }
+  const value = { findAllPostSingleUser, post }
   return (
     <>
       <postContext.Provider value={value}>{children}</postContext.Provider>

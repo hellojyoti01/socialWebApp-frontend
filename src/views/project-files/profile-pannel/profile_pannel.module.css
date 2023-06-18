@@ -152,3 +152,38 @@ header ul li strong {
   overflow: hidden;
   border-radius: 10px;
 }
+
+/*not found */
+.not_found {
+  width: 350px;
+  /* height: 100%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.icon {
+  width: 100px; /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+  background-color: transparent; /* Replace with your desired background color */
+  /* Add any additional styling for the icon */
+  cursor: pointer;
+}
+
+h1 {
+  margin: 10px 0;
+  font-size: 48px;
+}
+
+p {
+  margin: 0;
+}
+
+/* Add hover effect */
+.icon:hover {
+  transform: rotate(360deg);
+  transition: transform 0.5s ease-in-out;
+}

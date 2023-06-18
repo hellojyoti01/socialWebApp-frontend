@@ -7,6 +7,8 @@ import { Route, Routes } from 'react-router-dom'
 import MessagePanel from 'src/views/project-files/message-pannel'
 import ProfilePanel from '../views/project-files/profile-pannel'
 import EditProfilePanel from '../views/project-files/edit-profile-pannel'
+import EditPostPanel from '../views/project-files/edit-post-pannel'
+import Post from '../components/content/post'
 import Model from '../model'
 const AppContent = () => {
   return (
@@ -42,6 +44,13 @@ const AppContent = () => {
           path="/edit-profile"
           name="Profile Edit  Page"
           element={<Model rander={() => <EditProfilePanel />} />}
+        />
+
+        <Route
+          exact
+          path="/edit-post"
+          name="Post Edit  Page"
+          element={<Model rander={() => <EditPostPanel post={Post} />} />}
         />
       </Routes>
     </div>

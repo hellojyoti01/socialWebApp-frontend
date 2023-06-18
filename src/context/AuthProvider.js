@@ -27,7 +27,6 @@ function Provider({ children }) {
       authService
         .WhoAmI(token)
         .then((res) => {
-          console.log(res.data)
           setUser(res.data)
           navigate('/')
         })

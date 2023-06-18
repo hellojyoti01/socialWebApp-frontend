@@ -225,6 +225,33 @@ const validator = {
         })
     })
   },
+
+  updatePost(parameter) {
+    return new Promise((resolve, reject) => {
+      const { post_id, caption, userTag, hashTag } = parameter
+
+      const schema = joi.object({
+        post_id: joi.string().required(),
+        caption: joi.string().required(),
+        userTag: joi.array().items(joi.string()),
+        hashTag: joi.array().items(joi.string().pattern(/#[a-zA-Z0-9]+/)),
+      })
+
+      schema
+        .validateAsync({
+          post_id,
+          caption,
+          userTag,
+          hashTag,
+        })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((e) => {
+          reject(e)
+        })
+    })
+  },
 }
 
 export default validator

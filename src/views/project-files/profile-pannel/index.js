@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import moment from 'moment/moment'
+
+//icons
+import { AiFillStop } from 'react-icons/ai'
 //css
 import s from './profile_pannel.module.css'
 
@@ -25,10 +28,15 @@ function Index() {
     }
   }
 
+  //navigate
+  const handelNavigate = (e, el) => {
+    e.preventDefault()
+    navigate('/edit-post', { state: { id: 1, post: el } })
+  }
   //Compunent Mount Function Call
   useEffect(() => {
     if (location.state.user._id) {
-      postContext.findAllPost(location.state.user._id, authContext.token)
+      postContext.findAllPostSingleUser(location.state.user._id, authContext.token)
       friendContext.findAllFriends(location.state.user._id, authContext.token)
       authContext.findOneProfile(location.state.user._id, authContext.token)
     }
@@ -101,15 +109,27 @@ function Index() {
         </ul>
       </section>
       <section className={s.posts}>
-        {postContext.post.length !== 0
-          ? postContext.post.map((el, idx) => {
-              return (
-                <div className={s.post} key={idx}>
-                  <img src={el.post} alt={'post not Support'} />
-                </div>
-              )
-            })
-          : 'No Post Plz Create Fast Post'}
+        {postContext.post.length !== 0 ? (
+          postContext.post.map((el, idx) => {
+            return (
+              <div className={s.post} key={idx}>
+                <img
+                  src={el.post}
+                  alt={'post not Support'}
+                  onClick={(e) => handelNavigate(e, el)}
+                />
+              </div>
+            )
+          })
+        ) : (
+          <div className={s.not_found}>
+            <div className={s.icon}>
+              <AiFillStop size={100} />
+            </div>
+            <h1>404</h1>
+            <p>Post Not Found Created Now !</p>
+          </div>
+        )}
       </section>{' '}
     </div>
   )

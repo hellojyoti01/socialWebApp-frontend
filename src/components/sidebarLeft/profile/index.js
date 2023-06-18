@@ -20,7 +20,7 @@ export default function Profile(...props) {
 
   useEffect(() => {
     if (authContext.token) {
-      postContext.findAllPost(authContext.user._id, authContext.token)
+      postContext.findAllPostSingleUser(authContext.user._id, authContext.token)
       friendContext.findAllFriends(authContext.user._id, authContext.token)
     }
   }, [authContext.token])
