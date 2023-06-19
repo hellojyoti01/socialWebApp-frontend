@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { CAvatar } from '@coreui/react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 //css
 import s from './profile.module.css'
 //assets
@@ -9,7 +10,6 @@ import { avatar } from 'src/assets'
 import { useAuth } from 'src/context/AuthProvider'
 import { useFriend } from 'src/context/friendProvider'
 import { usePost } from 'src/context/Postprovider'
-import { Link } from 'react-router-dom'
 
 export default function Profile(...props) {
   const authContext = useAuth()

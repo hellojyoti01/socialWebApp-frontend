@@ -3,7 +3,7 @@
 /* -------------------------------------------------------------------------- */
 
 //3rd party lib
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
@@ -17,14 +17,17 @@ import authService from 'src/Api/authService'
 import { useAuth } from 'src/context/AuthProvider'
 function VerifyOTP() {
   const location = useLocation()
-  const [OTP, setOTP] = useState({
-    otpInput1: '',
-    otpInput2: '',
-    otpInput3: '',
-    otpInput4: '',
-    otpInput5: '',
-    otpInput6: '',
-  })
+  // const [OTP, setOTP] = useState({
+  //   otpInput1: '',
+  //   otpInput2: '',
+  //   otpInput3: '',
+  //   otpInput4: '',
+  //   otpInput5: '',
+  //   otpInput6: '',
+  // })
+  const [OTP, setOTP] = useState(new Array(6).fill(''))
+  const [activeOtpIndex, setActiveOtpIndex] = useState(0)
+  const otpRef = useRef(null)
   const [error, setError] = useState('')
   const [toastActive, setToastActive] = useState(false)
   const navigate = useNavigate()
@@ -37,7 +40,7 @@ function VerifyOTP() {
     try {
       setError('')
       const validateData = await validator.OTP({
-        OTP: `${OTP.otpInput1}${OTP.otpInput2}${OTP.otpInput3}${OTP.otpInput4}${OTP.otpInput5}${OTP.otpInput6}`,
+        OTP: OTP.join(''),
         email: location.state.email,
       })
 
@@ -94,7 +97,7 @@ function VerifyOTP() {
         })
         .catch((e) => {
           const { data } = e.response
-          console.log('error', data)
+
           setError(data.message)
           toast.warning(data.message, {
             position: 'bottom-center',
@@ -144,12 +147,28 @@ function VerifyOTP() {
   }
 
   //Change OTP In State
-  const handelChange = (e) => {
-    setOTP((prev) => {
-      return { ...prev, [e.target.id]: e.target.value }
-    })
+  const handelChange = (e, index) => {
+    const { value } = e.target
+    const newOtp = [...OTP]
+    newOtp[index] = value
+    setOTP(newOtp)
+    if (!value) {
+      if (index !== 0) {
+        return setActiveOtpIndex(index - 1)
+      }
+      if (index === 0) {
+        setActiveOtpIndex(index)
+      }
+      return
+    }
+    if (index < 5) {
+      setActiveOtpIndex(index + 1)
+    }
   }
 
+  useEffect(() => {
+    otpRef.current.focus()
+  }, [activeOtpIndex])
   return (
     <div className={s.container}>
       {/* -------------VerifyOtp Wrapper Start--------------------------------- */}
@@ -159,17 +178,25 @@ function VerifyOTP() {
         {/* -------------VerifyOtp Form Start--------------------------------- */}
         <form>
           <div className={s.otp_input_container}>
-            <input
-              type="text"
-              id="otpInput1"
-              maxLength="1"
-              className={s.otp_input}
-              onChange={(e) => handelChange(e)}
-            />
-            <input
+            {OTP.map((el, idx) => {
+              return (
+                <input
+                  type="text"
+                  ref={activeOtpIndex == idx ? otpRef : null}
+                  key={idx}
+                  id="otpInput1"
+                  maxLength="1"
+                  className={s.otp_input}
+                  onChange={(e) => handelChange(e, idx)}
+                />
+              )
+            })}
+
+            {/* <input
               type="text"
               id="otpInput2"
               maxLength="1"
+              autoFocus={true}
               className={s.otp_input}
               onChange={(e) => handelChange(e)}
             />
@@ -200,7 +227,7 @@ function VerifyOTP() {
               maxLength="1"
               className={s.otp_input}
               onChange={(e) => handelChange(e)}
-            />
+            /> */}
           </div>
 
           {/* -------------VerifyOtp Button Back , Verify , resend Start--------------------------------- */}

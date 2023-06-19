@@ -17,7 +17,7 @@ import AuthProvider from './context/AuthProvider'
 import PostProvider from './context/Postprovider'
 import FriendProvider from './context/friendProvider'
 //Redux Store
-import store from './store'
+import store from '../src/redux/store'
 
 //Fast Render Start Here
 createRoot(document.getElementById('root')).render(
