@@ -110,6 +110,7 @@ function Search() {
       authService
         .findUser(validateData, authContext.token)
         .then((res) => {
+          console.log(res, 'responce')
           setSearchData([...res.data])
           setModalOpen(true)
           setsearchBoxReadOnly(false)

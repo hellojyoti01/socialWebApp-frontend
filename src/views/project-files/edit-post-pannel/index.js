@@ -125,7 +125,6 @@ function Index() {
       postService
         .deletePost(data, authContext.token)
         .then((res) => {
-          console.log(res, 'responec')
           toast.success(res.message, {
             position: 'bottom-center',
             autoClose: 2000,

@@ -19,5 +19,10 @@ const routeUrl = {
   //!User Profile Route
   profileUpdate: '/auth/profileUpdate',
   findOneProfile: '/auth/findOneProfile',
+
+  //!connection\
+  getAllPendingrequest: '/connection/pendingRequest',
+  acceptRequest: '/connection/acceptRequest',
+  sendRequest: '/connection/sendRequest',
 }
 export default routeUrl

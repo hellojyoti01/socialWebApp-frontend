@@ -24,7 +24,22 @@ function Provider({ children }) {
         console.log('Error In Profile fun', e)
       })
   }
-  const value = { findAllFriends, friends }
+
+  //get all pending request
+  async function getAllPendingRequest(token) {
+    friendService
+      .getAllPendingRequest(token)
+      .then((res) => {
+        if (res.data.length > 0) {
+          setPending([...pending, ...res.data])
+        }
+      })
+      .catch((e) => {
+        console.log('Error In Profile fun', e)
+      })
+  }
+
+  const value = { findAllFriends, friends, pending, getAllPendingRequest }
   return (
     <>
       <friendContext.Provider value={value}>{children}</friendContext.Provider>

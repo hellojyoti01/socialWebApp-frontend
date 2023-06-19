@@ -18,6 +18,58 @@ const friendService = {
         })
     })
   },
+  getAllPendingRequest(token) {
+    return new Promise((resolve, reject) => {
+      API.post(
+        `${Route.getAllPendingrequest}`,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+        },
+      )
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+  acceptRequest(param, token) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.acceptRequest}`, param, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+  sendRequest(param, token) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.sendRequest}`, param, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
 }
 
 export default friendService
