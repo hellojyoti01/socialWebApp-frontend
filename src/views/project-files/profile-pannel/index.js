@@ -15,6 +15,7 @@ import { useFriend } from 'src/context/friendProvider'
 import { usePost } from 'src/context/Postprovider'
 
 function Index() {
+  const [userProfile, setUserProfile] = useState({})
   const navigate = useNavigate()
   const location = useLocation()
   const authContext = useAuth()
@@ -33,7 +34,7 @@ function Index() {
     e.preventDefault()
     navigate('/edit-post', { state: { id: 1, post: el } })
   }
-  //Compunent Mount Function Call
+  //Component Mount Function Call
   useEffect(() => {
     if (location.state.user._id) {
       postContext.findAllPostSingleUser(location.state.user._id, authContext.token)

@@ -22,7 +22,7 @@ function Index() {
   })
   const authContext = useAuth()
   const location = useLocation()
-  console.log(location)
+
   const navigate = useNavigate()
 
   const handelEdit = (e) => {
@@ -75,8 +75,6 @@ function Index() {
         bio: userInput.bio,
         address: userInput.address,
       })
-
-      console.log(validateData)
 
       // Response
       authService

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
+import { useNavigate } from 'react-router-dom'
 //css
 import s from './search.module.css'
 
@@ -14,16 +15,22 @@ import { storage } from 'src/firebase/firebaseSdk'
 import { useAuth } from 'src/context/AuthProvider'
 import postService from 'src/Api/postService'
 import { usePost } from 'src/context/Postprovider'
-
+import validator from 'src/middleware/validator'
+import authService from 'src/Api/authService'
 function Search() {
   const [userProfileUrl, setUserProfileUrl] = useState('')
   // const [fileTransformed, setFileTransFormed] = useState(0)
   const [toastActive, setToastActive] = useState(false)
   const [progressBarActive, setProgressBarActive] = useState(false)
-
+  const [searchBoxReadOnly, setsearchBoxReadOnly] = useState(false)
+  const [modelOpen, setModalOpen] = useState(false)
+  const [name, setName] = useState('')
+  const [searchData, setSearchData] = useState([])
+  const [error, setError] = useState('false')
   //context Api
   const authContext = useAuth()
   const postContext = usePost()
+  const navigate = useNavigate()
 
   //Upload Post In Firebase/ multer
   const handelUploadPost = (e) => {
@@ -88,6 +95,38 @@ function Search() {
         console.log('Error In Profile fun', e)
       })
   }
+
+  // search
+  const handelSearch = async () => {
+    setsearchBoxReadOnly(true)
+
+    try {
+      //Validate Data
+      const validateData = await validator.findUser({
+        name,
+      })
+
+      // Response
+      authService
+        .findUser(validateData, authContext.token)
+        .then((res) => {
+          setSearchData([...res.data])
+          setModalOpen(true)
+          setsearchBoxReadOnly(false)
+        })
+        .catch((e) => {
+          setError(true)
+          setsearchBoxReadOnly(false)
+        })
+    } catch (e) {
+      setError(true)
+      setsearchBoxReadOnly(false)
+    }
+  }
+
+  const handelNavigateProfile = async (e, el) => {
+    navigate('/profile', { state: { id: 1, user: el } })
+  }
   useEffect(() => {
     if (userProfileUrl) {
       cretePost()
@@ -106,13 +145,35 @@ function Search() {
 
       {/* ---Search Box Wrapper Start----- */}
       <div className={s.searchBox}>
-        <input className={s.searchInput} type="text" name="" placeholder="Search ....." />
-        <button className={s.searchButton} href="#">
+        <input
+          className={s.searchInput}
+          type="text"
+          name=""
+          value={name}
+          placeholder="Search ....."
+          readOnly={searchBoxReadOnly}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button className={s.searchButton} onClick={handelSearch}>
           <i className={s.material_icons}>
             <CiSearch />
           </i>
         </button>
       </div>
+      {modelOpen ? (
+        <div className={s.modelOpen}>
+          {searchData.map((el, idx) => {
+            return (
+              <ul key={idx}>
+                <li onClick={(e) => handelNavigateProfile(e, el)}>{el.name}</li>
+              </ul>
+            )
+          })}
+        </div>
+      ) : (
+        <></>
+      )}
+
       {/* ---Search Box Wrapper End----- */}
 
       {/* ---Create Post Wrapper Start----- */}

@@ -7,6 +7,7 @@ const routeUrl = {
   verifyOTP: '/auth/verifyOTP',
   resetPassword: '/auth/resetPassword',
   WhoAmI: '/auth/WhoAmI',
+  findUser: '/auth/findUser',
 
   //! Post Route
   findAllPostSingleUser: '/post/findAllPostSingleUser',

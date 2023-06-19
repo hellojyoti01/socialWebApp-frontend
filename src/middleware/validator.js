@@ -252,6 +252,30 @@ const validator = {
         })
     })
   },
+  findUser(parameter) {
+    return new Promise((resolve, reject) => {
+      const { name } = parameter
+
+      const schema = joi.object({
+        name: joi
+          .string()
+          .regex(/^[A-Za-z\s]+$/)
+          .min(5)
+          .required(),
+      })
+
+      schema
+        .validateAsync({
+          name,
+        })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((e) => {
+          reject(e)
+        })
+    })
+  },
 }
 
 export default validator

@@ -144,6 +144,22 @@ const authService = {
         })
     })
   },
+  findUser(param, token) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.findUser}`, param, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `${token}`,
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
 }
 
 export default authService

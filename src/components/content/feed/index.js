@@ -1,8 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import s from './feed.module.css'
 import Posts from '../post/index'
-
+import { usePost } from '../../../context/Postprovider'
+import { useAuth } from 'src/context/AuthProvider'
 function Feed() {
+  const [post, setPost] = useState([])
+  const postContent = usePost()
+  const authContext = useAuth()
+
+  useEffect(() => {
+    if (postContent.post.length) {
+      const newPost = postContent.post.map((el) => {
+        return {
+          ...el,
+          profile: authContext.user.profile,
+        }
+      })
+
+      setPost((prev) => {
+        return [...prev, ...newPost]
+      })
+    }
+  }, [postContent.post.length])
   return (
     <div className={s.container}>
       <div className={s.top}>
@@ -25,7 +44,7 @@ function Feed() {
         </div>
       </div>
       <div className={s.button}>
-        <Posts />
+        <Posts post={post} />
       </div>
     </div>
   )

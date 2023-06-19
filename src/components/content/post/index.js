@@ -8,64 +8,10 @@ import {
 
 import { BsFillBookmarksFill } from 'react-icons/bs'
 import s from './post.module.css'
-function Posts() {
-  const arrr = [
-    {
-      profile: 'https://cdn.statusqueen.com/dpimages/thumbnail/Boy_Stylish__Dp_Image-2277.jpg',
-      userName: 'Roman Roy',
-      post: 'https://cdn.statusqueen.com/dpimages/thumbnail/dp%20image90-702.jpg',
-      caption:
-        'Passionate developers are always curious and have unending enthusiasm for solving problems.',
-      hashTag: ['#coder', '#hackeing'],
-      totalLike: 34,
-      totalComment: 450,
-    },
-    {
-      profile: 'https://achishayari.com/wp-content/uploads/2023/05/Whatsapp-DP-1536x1536.webp',
-      userName: 'Roman Roy',
-      post: 'https://cdn.statusqueen.com/dpimages/thumbnail/cute%20girl%20-298.jpg',
-      caption:
-        'Passionate developers are always curious and have unending enthusiasm for solving problems.',
-      hashTag: ['#coder', '#hackeing'],
-      totalLike: 14,
-      totalComment: 45,
-    },
-    {
-      profile: 'https://cdn.statusqueen.com/dpimages/thumbnail/cat-111.jpg',
-      userName: 'Somya shen',
-      post: 'https://cdn.statusqueen.com/dpimages/thumbnail/cute%20girl1-299.jpg',
-      caption:
-        'Passionate developers are always curious and have unending enthusiasm for solving problems.',
-      hashTag: ['#coder', '#hackeing'],
-      totalLike: 34,
-      totalComment: 900,
-    },
-    {
-      profile: 'https://cdn.statusqueen.com/dpimages/thumbnail/sweet%20girl-261.jpg',
-      userName: 'liza liza',
-      post: 'https://cdn.statusqueen.com/dpimages/thumbnail/cute7-195.jpg',
-      caption:
-        'Passionate developers are always curious and have unending enthusiasm for solving problems.',
-      hashTag: ['#coder', '#hackeing'],
-      totalLike: 4,
-      totalComment: 40,
-    },
-    {
-      profile:
-        'https://upload.wikimedia.org/wikipedia/commons/7/70/Mahendra_Singh_Dhoni_January_2016_%28cropped%29.jpg',
-      userName: 'Mahi Mahi',
-      post: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fencrypted-tbn1.gstatic.com%2Flicensed-image%3Fq%3Dtbn%3AANd9GcTc43ZFcnoe29O2oetJtDAYimX8rtk-8Oke1HDZ97k85nab5qqr6lECi8YlNNv1hZYiXrGcRy7qkRJnItQ&psig=AOvVaw1tt6xi8Vp83WeI3CZ7hcwf&ust=1686397746162000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLiXjqiPtv8CFQAAAAAdAAAAABAE',
-      caption:
-        'Passionate developers are always curious and have unending enthusiasm for solving problems.',
-      hashTag: ['#coder', '#hackeing'],
-      totalLike: 34,
-      totalComment: 450,
-    },
-  ]
-  const l = []
+function Posts({ post }) {
   return (
     <>
-      {arrr.map((el, idx) => {
+      {post.map((el, idx) => {
         return (
           <div className={s.post_card} key={idx}>
             <div className={s.post_header}>
