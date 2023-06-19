@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import s from './friend_list.module.css'
 import { CAvatar } from '@coreui/react'
 import { FiDivideSquare, FiMessageCircle } from 'react-icons/fi'
@@ -7,7 +7,11 @@ import { useFriend } from 'src/context/friendProvider'
 import { useAuth } from 'src/context/AuthProvider'
 function FriendsList() {
   const friendContext = useFriend()
+  const authContext = useAuth()
 
+  useEffect(() => {
+    friendContext.findAllFriends(authContext.user._id, authContext.token)
+  }, [])
   return (
     <div className={s.container}>
       <h4>Friends</h4>

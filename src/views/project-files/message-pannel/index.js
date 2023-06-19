@@ -5,7 +5,8 @@ function MessagePanel() {
   return (
     <div className={s.messaging_panel}>
       {/* -------------------------------- userlist -------------------------------- */}
-      <div className={s.user_list}>
+      <div className={s.chat_menu}>
+        <input type="text" className={s.search_input} placeholder="Search Friends...." />
         <div className={`${s.user} ${s.active}`}>
           <img
             src="https://cdn.statusqueen.com/dpimages/thumbnail/sad%20baby%20girl-67.jpg"
@@ -54,11 +55,16 @@ function MessagePanel() {
 
         {/* ------------------------------ Message Area ------------------------------ */}
         <div className={s.friend}>
-          <div className={`${s.message} ${s.incoming}`}>
-            <p>Hello!</p>
-          </div>
-          <div className={`${s.message} ${s.outgoing}`}>
-            <p>Hi! How are you?</p>
+          <div className={`${s.message} ${s.own}`}>
+            <span>
+              <img
+                src="https://cdn.statusqueen.com/dpimages/thumbnail/sad%20baby%20girl-67.jpg"
+                alt="User 1 Avatar"
+                className={s.chat_avtar}
+              />
+              <p>Hello!</p>
+            </span>
+            <p>1 hour ago</p>
           </div>
         </div>
 

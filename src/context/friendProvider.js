@@ -13,9 +13,11 @@ function Provider({ children }) {
 
   //find All Friend
   async function findAllFriends(param, token) {
+    console.log('function Call')
     friendService
       .totalFriend({ user_id: param }, token)
       .then((res) => {
+        console.log(res, 'responce')
         if (res.data.length > 0) {
           setFriends([...res.data])
         }
