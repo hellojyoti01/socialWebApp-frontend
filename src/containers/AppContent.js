@@ -4,7 +4,7 @@ import Search from 'src/components/content/searchBar'
 import Story from 'src/components/content/story'
 import Feed from 'src/components/content/feed'
 import { Route, Routes } from 'react-router-dom'
-import MessagePanel from 'src/views/project-files/message-pannel'
+import MessengerPanel from 'src/views/project-files/messenger-pannel'
 import ProfilePanel from '../views/project-files/profile-pannel'
 import EditProfilePanel from '../views/project-files/edit-profile-pannel'
 import EditPostPanel from '../views/project-files/edit-post-pannel'
@@ -30,7 +30,7 @@ const AppContent = () => {
           exact
           path="/message"
           name="Message Page "
-          element={<Model rander={() => <MessagePanel />} />}
+          element={<Model rander={() => <MessengerPanel />} />}
         />
         <Route
           exact

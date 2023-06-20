@@ -24,5 +24,10 @@ const routeUrl = {
   getAllPendingrequest: '/connection/pendingRequest',
   acceptRequest: '/connection/acceptRequest',
   sendRequest: '/connection/sendRequest',
+
+  //! conversation
+  getConversation: '/conversation/get',
+  getMessage: '/message/get',
+  sendMessage: '/message/send',
 }
 export default routeUrl
