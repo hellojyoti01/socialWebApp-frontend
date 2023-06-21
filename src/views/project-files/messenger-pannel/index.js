@@ -1,5 +1,5 @@
 //3rd party lib
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react'
 //icon
 import { BsCameraVideo } from 'react-icons/bs'
 //css
@@ -14,16 +14,22 @@ import conversationService from 'src/Api/conversationService'
 import messageService from '../../../Api/messageService'
 import authService from 'src/Api/authService'
 
+//socket
+import { io } from 'socket.io-client'
 function MessagePanel() {
   const [conversation, setConversation] = useState([])
   const [loading, setLoading] = useState(true)
   const [currentChat, setCurrentChat] = useState(null)
   const [message, setMessage] = useState(null)
   const [newMessage, setNewMessage] = useState('')
+  const [arrivalMessage, setArrivalMessage] = useState('')
   const [friend, setFriend] = useState(null)
   const [toastActive, setToastActive] = useState(false)
-  const scrollRef = useRef()
+
+  const socket = useRef()
+  const divRef = useRef()
   const authContext = useAuth()
+
   const handelCurrentChat = (e, el) => {
     setCurrentChat(el)
   }
@@ -34,6 +40,15 @@ function MessagePanel() {
   const handelSubmit = (e) => {
     e.preventDefault()
     setToastActive(true)
+
+    const receiverId = currentChat.members.find((el) => el != authContext.user._id)
+
+    socket.current.emit('send_message', {
+      senderId: authContext.user._id,
+      receiverId: receiverId,
+      text: newMessage,
+    })
+
     messageService
       .sendMessage(
         {
@@ -57,6 +72,31 @@ function MessagePanel() {
       })
   }
 
+  //Socket Connection and Automatic set message
+  useEffect(() => {
+    socket.current = io('ws://localhost:6050')
+    socket.current.on('get_message', (data) => {
+      console.log(data, 'arrival message')
+      setArrivalMessage({
+        senderId: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      })
+    })
+  }, [])
+
+  //Add new come ing message to old message array
+
+  //!Write Logic
+  useEffect(() => {
+    // console.log(message, 'message')
+    // console.log(arrivalMessage, 'arrivalmessage')
+    // arrivalMessage &&
+    //   currentChat?.members.includes(arrivalMessage.senderId) &&
+    //   setMessage([...message, ...arrivalMessage])
+  }, [arrivalMessage, currentChat])
+
+  //get all conversation
   useEffect(() => {
     if (authContext.token) {
       ;(async function () {
@@ -74,6 +114,7 @@ function MessagePanel() {
     }
   }, [authContext.token])
 
+  //when active current chat
   useEffect(() => {
     if (currentChat) {
       ;(async function () {
@@ -106,8 +147,17 @@ function MessagePanel() {
   }, [currentChat])
 
   useEffect(() => {
-    scrollRef?.current?.scrollIntoView({ behavior: 'smooth' })
+    setTimeout(() => divRef.current?.scrollIntoView({ behavior: 'smooth' }), 1000)
   }, [message])
+
+  //add user to socket and get user
+  useEffect(() => {
+    socket?.current.emit('add_user', authContext.user)
+    socket?.current?.on('get_user', (message) => {
+      console.log(message, 'user')
+    })
+  }, [socket])
+
   return (
     <div className={s.messaging_panel}>
       {/* -------------------------------- user list -------------------------------- */}
@@ -133,7 +183,7 @@ function MessagePanel() {
                 {message && friend
                   ? message.map((el, idx) => {
                       return (
-                        <div key={idx} ref={scrollRef}>
+                        <div key={idx} ref={divRef}>
                           {el.senderId.toString() == authContext.user._id.toString() ? (
                             <Message
                               message={el}

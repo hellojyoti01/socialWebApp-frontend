@@ -181,9 +181,6 @@ function Index() {
           }, 3000)
         })
         .catch((e) => {
-          console.log('errr', e)
-          // const { data } = e.response
-          // setError(data.message)
           toast.warning(e.message, {
             position: 'bottom-center',
             autoClose: 2000,
