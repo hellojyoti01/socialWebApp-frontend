@@ -24,6 +24,7 @@ const routeUrl = {
   getAllPendingrequest: '/connection/pendingRequest',
   acceptRequest: '/connection/acceptRequest',
   sendRequest: '/connection/sendRequest',
+  checkRelationShipStatus: '/connection/checkRelationShip',
 
   //! conversation
   getConversation: '/conversation/get',

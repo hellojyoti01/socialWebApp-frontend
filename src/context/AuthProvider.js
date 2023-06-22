@@ -23,7 +23,7 @@ function Provider({ children }) {
   const socket = useRef()
   //User Object
   const [user, setUser] = useState(null)
-  const [profile, setProfile] = useState({})
+  const [userProfile, setUserProfile] = useState({})
   const navigate = useNavigate()
 
   //Current User Info
@@ -43,13 +43,13 @@ function Provider({ children }) {
     }
   }
 
-  //Find One Profile Of Any User
+  // //Find One Profile Of Any User
   function findOneProfile(param, token) {
     try {
       authService
         .findOneProfile({ _id: param }, token)
         .then((res) => {
-          setProfile(res.data)
+          setUserProfile(res.data)
         })
         .catch((e) => {
           console.log('Some Error In FindAll')
@@ -79,7 +79,8 @@ function Provider({ children }) {
       })
     }
   }, [socket.current])
-  const value = { user, setToken, token, findOneProfile, profile, socket }
+
+  const value = { user, setToken, token, findOneProfile, userProfile, socket }
   return <authContext.Provider value={value}>{children}</authContext.Provider>
 }
 

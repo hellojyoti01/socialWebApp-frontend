@@ -70,6 +70,23 @@ const friendService = {
         })
     })
   },
+
+  checkRelationShipStatus(param, token) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.checkRelationShipStatus}`, param, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
 }
 
 export default friendService
