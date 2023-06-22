@@ -8,7 +8,7 @@ import friendService from 'src/Api/friendServices'
 
 import { useAuth } from 'src/context/AuthProvider'
 import { useFriend } from 'src/context/friendProvider'
-import { element } from 'prop-types'
+
 function PendingFriendsList() {
   const [toastActive, setToastActive] = useState(false)
   const authContext = useAuth()

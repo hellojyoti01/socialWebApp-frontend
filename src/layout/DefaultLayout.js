@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { AppContent, AppSidebarRight, AppSidebarLeft } from '../containers/index'
 
 import s from '../css/layout.module.css'

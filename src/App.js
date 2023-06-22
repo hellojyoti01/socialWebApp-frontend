@@ -43,7 +43,8 @@ const App = () => {
         {/* -------------Route not Found --------------------------------- */}
         <Route exact path="/404" name="Page 404" element={<Page404 />} />
 
-        {/* -------------Server not Found --------------------------------- */}
+        {/* -------------Server not Found -----------￼
+---------------------- */}
         <Route exact path="/500" name="Page 500" element={<Page500 />} />
 
         {/* -------------Home Route --------------------------------- */}

@@ -14,36 +14,37 @@ import conversationService from 'src/Api/conversationService'
 import messageService from '../../../Api/messageService'
 import authService from 'src/Api/authService'
 
-//socket
-import { io } from 'socket.io-client'
 function MessagePanel() {
   const [conversation, setConversation] = useState([])
   const [loading, setLoading] = useState(true)
   const [currentChat, setCurrentChat] = useState(null)
   const [message, setMessage] = useState(null)
   const [newMessage, setNewMessage] = useState('')
-  const [arrivalMessage, setArrivalMessage] = useState('')
+  const [arrivalMessage, setArrivalMessage] = useState(null)
   const [friend, setFriend] = useState(null)
   const [toastActive, setToastActive] = useState(false)
 
-  const socket = useRef()
   const divRef = useRef()
   const authContext = useAuth()
 
+  // chat box onChange set
   const handelCurrentChat = (e, el) => {
     setCurrentChat(el)
   }
+
+  // if new message send by user
   const handelNewMessageChange = (e) => {
     setNewMessage(e.target.value)
   }
 
+  // when user click send button
   const handelSubmit = (e) => {
     e.preventDefault()
     setToastActive(true)
 
     const receiverId = currentChat.members.find((el) => el != authContext.user._id)
 
-    socket.current.emit('send_message', {
+    authContext.socket.current.emit('send_message', {
       senderId: authContext.user._id,
       receiverId: receiverId,
       text: newMessage,
@@ -72,28 +73,13 @@ function MessagePanel() {
       })
   }
 
-  //Socket Connection and Automatic set message
-  useEffect(() => {
-    socket.current = io('ws://localhost:6050')
-    socket.current.on('get_message', (data) => {
-      console.log(data, 'arrival message')
-      setArrivalMessage({
-        senderId: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      })
-    })
-  }, [])
-
   //Add new come ing message to old message array
-
   //!Write Logic
+  //! show arrival message in a particular profile
   useEffect(() => {
-    // console.log(message, 'message')
-    // console.log(arrivalMessage, 'arrivalmessage')
-    // arrivalMessage &&
-    //   currentChat?.members.includes(arrivalMessage.senderId) &&
-    //   setMessage([...message, ...arrivalMessage])
+    arrivalMessage &&
+      currentChat?.members.includes(arrivalMessage.senderId) &&
+      setMessage([...message, arrivalMessage])
   }, [arrivalMessage, currentChat])
 
   //get all conversation
@@ -128,9 +114,7 @@ function MessagePanel() {
           })
       })()
 
-      const friendIdx = currentChat.members.find(
-        (el) => el.toString() !== authContext.user._id.toString(),
-      )
+      const friendIdx = currentChat.members.find((el) => el !== authContext.user._id)
 
       async function getUser() {
         authService
@@ -150,13 +134,16 @@ function MessagePanel() {
     setTimeout(() => divRef.current?.scrollIntoView({ behavior: 'smooth' }), 1000)
   }, [message])
 
-  //add user to socket and get user
-  useEffect(() => {
-    socket?.current.emit('add_user', authContext.user)
-    socket?.current?.on('get_user', (message) => {
-      console.log(message, 'user')
+  //socket get arrival message
+  authContext.socket.current.on('getMessage', (data) => {
+    setArrivalMessage({
+      senderId: data.senderId,
+      text: data.text,
+      createdAt: Date.now(),
     })
-  }, [socket])
+  })
+
+  //! Add Type Functionality
 
   return (
     <div className={s.messaging_panel}>
@@ -191,11 +178,13 @@ function MessagePanel() {
                               user={authContext.user}
                             />
                           ) : (
-                            <Message
-                              message={el}
-                              own={el.senderId.toString() == authContext.user._id.toString()}
-                              user={friend}
-                            />
+                            <>
+                              <Message
+                                message={el}
+                                own={el.senderId.toString() == authContext.user._id.toString()}
+                                user={friend}
+                              />
+                            </>
                           )}
                         </div>
                       )

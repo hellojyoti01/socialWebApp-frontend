@@ -1,8 +1,11 @@
 //3rd party Api
-import React, { useState, useEffect, createContext, useContext } from 'react'
+import React, { useState, useEffect, createContext, useContext, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import authService from 'src/Api/authService'
+
+//socket
+import { io } from 'socket.io-client'
 //context create
 const authContext = createContext(null)
 
@@ -16,8 +19,10 @@ function Provider({ children }) {
       return token
     }
   })
+
+  const socket = useRef()
   //User Object
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState(null)
   const [profile, setProfile] = useState({})
   const navigate = useNavigate()
 
@@ -57,7 +62,24 @@ function Provider({ children }) {
     whoAmI()
   }, [token])
 
-  const value = { user, setToken, token, findOneProfile, profile }
+  // socket connection when user log in
+  useEffect(() => {
+    if (user) {
+      socket.current = io('ws://localhost:6050')
+    }
+  }, [user])
+
+  //get all connected socket user
+  useEffect(() => {
+    if (socket.current) {
+      console.log('A user Log In')
+      socket.current.emit('add_user', user)
+      socket.current?.on('get_user', (message) => {
+        console.log(message, 'socket user')
+      })
+    }
+  }, [socket.current])
+  const value = { user, setToken, token, findOneProfile, profile, socket }
   return <authContext.Provider value={value}>{children}</authContext.Provider>
 }
 

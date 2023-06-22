@@ -23,6 +23,7 @@ function Index({ conversation, currentUser }) {
     }
     getUser()
   }, [conversation, currentUser])
+
   return (
     <div>
       <div className={`${s.user}`}>
