@@ -8,6 +8,7 @@ import MessengerPanel from 'src/views/project-files/messenger-pannel'
 import ProfilePanel from '../views/project-files/profile-pannel'
 import EditProfilePanel from '../views/project-files/edit-profile-pannel'
 import EditPostPanel from '../views/project-files/edit-post-pannel'
+import ShowPostPanel from '../views/project-files/show-one-post-pannel'
 import Post from '../components/content/post'
 import Model from '../model'
 const AppContent = () => {
@@ -51,6 +52,13 @@ const AppContent = () => {
           path="/edit-post"
           name="Post Edit  Page"
           element={<Model rander={() => <EditPostPanel post={Post} />} />}
+        />
+
+        <Route
+          exact
+          path="/show-post"
+          name="Post Edit  Page"
+          element={<Model rander={() => <ShowPostPanel post={Post} />} />}
         />
       </Routes>
     </div>

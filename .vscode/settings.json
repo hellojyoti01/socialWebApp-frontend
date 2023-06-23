@@ -4,6 +4,7 @@
     "eslint proptype validation off",
     "AUTH SETUP",
     "signUp UI ",
-    "resetpassword and sendotp "
+    "resetpassword and sendotp ",
+    "profile bug fix"
   ]
 }

@@ -27,6 +27,7 @@ const routeUrl = {
   checkRelationShipStatus: '/connection/checkRelationShip',
 
   //! conversation
+  setConversation: '/conversation/set',
   getConversation: '/conversation/get',
   getMessage: '/message/get',
   sendMessage: '/message/send',
