@@ -5,6 +5,10 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 //css
 import s from './profile.module.css'
+
+//Local
+
+import { fetchAllPost } from 'src/redux/postSlice'
 //assets
 import { avatar } from 'src/assets'
 import { useAuth } from 'src/context/AuthProvider'
@@ -12,18 +16,28 @@ import { useFriend } from 'src/context/friendProvider'
 import { usePost } from 'src/context/Postprovider'
 
 export default function Profile(...props) {
+  const [post, setPost] = useState(null)
+
+  //redux
+  const store = useSelector((store) => store)
+  const { postReducer } = store
+
   const authContext = useAuth()
-  const postContext = usePost()
   const friendContext = useFriend()
+  const dispatch = useDispatch()
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (authContext.token) {
-      postContext.findAllPostSingleUser(authContext.user._id, authContext.token)
-      friendContext.findAllFriends(authContext.user._id, authContext.token)
+    if (authContext.token && authContext.user?._id) {
+      dispatch(
+        fetchAllPost({
+          id: authContext.user._id,
+          token: authContext.token,
+        }),
+      )
     }
-  }, [authContext.token])
+  }, [authContext.token, authContext.user])
 
   return (
     <div className={s.container}>
@@ -55,7 +69,7 @@ export default function Profile(...props) {
             <span>friends</span>
           </div>
           <div className={s.posts}>
-            <span>{postContext.post.length !== 0 ? `${postContext.post.length}` : '--'}</span>
+            <span>{postReducer.post.length !== 0 ? `${postReducer.post.length}` : '--'}</span>
             <span>Posts</span>
           </div>
         </div>

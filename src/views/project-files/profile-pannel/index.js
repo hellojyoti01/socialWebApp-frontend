@@ -36,10 +36,10 @@ function Index() {
 
   //Edit Profile
   const handelClick = async (e) => {
-    if (e.target.innerText === 'Edit Profile') {
-      navigate('/edit-profile', { state: { id: 1, user: authContext.profile } })
+    if (relationShip == -1) {
+      navigate('/edit-profile', { state: { id: 1, user: userProfile } })
     }
-    if (e.target.innerText === 'Add Friend' || e.target.innerText === 'Already Requested') {
+    if (relationShip == 0 || relationShip == 1) {
       setToastActive(true)
       // Response
       friendService
@@ -81,7 +81,7 @@ function Index() {
     }
 
     //! Accept Request bug
-    if (e.target.innerText === 'Accept Request') {
+    if (relationShip == 2) {
       setToastActive(true)
       friendService
         .acceptRequest({ user_id: userProfile._id }, authContext.token)
@@ -121,7 +121,7 @@ function Index() {
         })
     }
 
-    if (e.target.innerText === 'Sent Message') {
+    if (relationShip == 3) {
       setToastActive(true)
       conversationService
         .setConversation(
@@ -325,10 +325,11 @@ function Index() {
           {post ? (
             <>
               {post.map((el, idx) => {
+                console.log(el.media[0])
                 return (
                   <div className={s.post} key={idx}>
                     <img
-                      src={el.post}
+                      src={el.media[0]}
                       alt={'post not Support'}
                       onClick={(e) => handelNavigate(e, el)}
                     />

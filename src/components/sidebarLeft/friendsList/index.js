@@ -10,7 +10,7 @@ function FriendsList() {
   const authContext = useAuth()
 
   useEffect(() => {
-    friendContext.findAllFriends(authContext.user._id, authContext.token)
+    // friendContext.findAllFriends(authContext.user._id, authContext.token)
   }, [])
   return (
     <div className={s.container}>

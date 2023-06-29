@@ -1,10 +1,20 @@
+//3rd party
 import React, { useEffect, useState } from 'react'
+
+//css
 import s from './feed.module.css'
+
+//post Component
 import Posts from '../post/index'
+
+//Context Api
 import { usePost } from '../../../context/Postprovider'
 import { useAuth } from 'src/context/AuthProvider'
+
+//Api
+import postService from 'src/Api/postService'
 function Feed() {
-  const [post, setPost] = useState([])
+  const [feed, setFeed] = useState([])
   const postContent = usePost()
   const authContext = useAuth()
 
@@ -22,6 +32,15 @@ function Feed() {
       })
     }
   }, [postContent.post.length])
+
+  const [page, setPage] = useState(1)
+  useEffect(() => {
+    if (authContext.token && page) {
+      postService.findAllPostFeed({ page: page }, authContext.token).then((res) => {
+        setFeed(res.data)
+      })
+    }
+  }, [page])
   return (
     <div className={s.container}>
       <div className={s.top}>
@@ -43,8 +62,11 @@ function Feed() {
           </button>
         </div>
       </div>
-      <div className={s.button}>
-        <Posts post={post} />
+      <div className={s.buttom}>
+        {/* <Posts post={post} /> */}
+        {feed.map((el, idx) => {
+          return <Posts post={el} key={idx} />
+        })}
       </div>
     </div>
   )

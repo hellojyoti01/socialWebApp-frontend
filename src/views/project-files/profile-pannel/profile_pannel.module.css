@@ -125,7 +125,25 @@ header ul li strong {
   grid-gap: 10px;
   padding: 20px;
 
-  overflow: scroll;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.posts::-webkit-scrollbar{
+  width: 12px;
+  background-color: transparent;
+}
+.posts::-webkit-scrollbar-track{
+  /* border: 3px solid #000055; */
+  border: 2px solid rgb(145, 141, 141);
+  border-radius: 5px;
+}
+.posts::-webkit-scrollbar-thumb{
+  background: linear-gradient(transparent, #00ffffff);
+  border-radius: 10px;
+}
+.posts::-webkit-scrollbar-thumb:hover{
+  background: linear-gradient(transparent, #0088ff);
 }
 .post {
   width: 190px;

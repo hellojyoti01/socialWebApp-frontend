@@ -20,6 +20,7 @@ function Index() {
     bio: '',
     address: '',
   })
+
   const authContext = useAuth()
   const location = useLocation()
 
@@ -151,7 +152,8 @@ function Index() {
         }
       })
     }
-  }, [])
+  }, [location.state.user])
+
   return (
     <div className={s.container}>
       <div className={s.img_box}>

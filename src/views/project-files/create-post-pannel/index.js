@@ -186,59 +186,73 @@ function Index() {
   }
 
   return (
-    <div className={s.container}>
-      <div className={s.from_box}>
-        <div className={s.create_btn}>
-          <button
-            style={{
-              pointerEvents: toastActive ? 'none' : 'auto',
-            }}
-            onClick={(e) => createPost(e)}
-          >
-            Posted
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-        <div className={s.input_box}>
-          <input
-            type="text"
-            name="title"
-            value={title}
-            className={s.input}
-            required
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <label htmlFor="title" className={s.label}>
-            Title
-          </label>
-          <span className={s.icon}>
-            <BsChatRightText />
-          </span>
-        </div>
-        <div className={s.input_box}>
-          <input
-            type="text"
-            name="description"
-            value={description}
-            className={s.input}
-            required
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <label htmlFor="description" className={s.label}>
-            Description
-          </label>
-          <span className={s.icon}>
-            <BsChatRightText />
-          </span>
-        </div>
-      </div>
-      <div className={s.image_area}>
-        {file ? <img src={URL.createObjectURL(file)} alt="unknown Image" /> : ''}
-      </div>
-      <ToastContainer />
+    <div
+      className={s.container}
+      style={{
+        backgroundColor: toastActive ? 'black' : '#eff0f2',
+      }}
+    >
+      {toastActive ? (
+        <>
+          <div className={s.ring}></div>
+          <span className={s.loadeing_screen}>Uploading...</span>
+        </>
+      ) : (
+        <>
+          <div className={s.from_box}>
+            <div className={s.create_btn}>
+              <button
+                style={{
+                  pointerEvents: toastActive ? 'none' : 'auto',
+                }}
+                onClick={(e) => createPost(e)}
+              >
+                Posted
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+            <div className={s.input_box}>
+              <input
+                type="text"
+                name="title"
+                value={title}
+                className={s.input}
+                required
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <label htmlFor="title" className={s.label}>
+                Title
+              </label>
+              <span className={s.icon}>
+                <BsChatRightText />
+              </span>
+            </div>
+            <div className={s.input_box}>
+              <input
+                type="text"
+                name="description"
+                value={description}
+                className={s.input}
+                required
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <label htmlFor="description" className={s.label}>
+                Description
+              </label>
+              <span className={s.icon}>
+                <BsChatRightText />
+              </span>
+            </div>
+          </div>
+          <div className={s.image_area}>
+            {file ? <img src={URL.createObjectURL(file)} alt="unknown Image" /> : ''}
+          </div>
+          <ToastContainer />
+        </>
+      )}
     </div>
   )
 }

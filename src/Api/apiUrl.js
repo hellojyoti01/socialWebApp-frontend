@@ -14,6 +14,8 @@ const routeUrl = {
   createPost: '/post/create',
   updatePost: '/post/update',
   deletePost: '/post/delete',
+  findAllPostFeed: '/post/findAllPostFeed',
+
   findAllFriend: '/connection/getFriend',
 
   //!User Profile Route

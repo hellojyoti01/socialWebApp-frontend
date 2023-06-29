@@ -1,28 +1,41 @@
 import { createSlice } from '@reduxjs/toolkit'
-
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import postService from 'src/Api/postService'
 const initialState = {
-  loading: true,
   post: [],
-  error: null,
-  feed: [],
 }
 
-export const counterSlice = createSlice({
+//Fetch All Post In Single User
+const fetchAllPost = createAsyncThunk('post/fetchAllPost', async (parameters, store) => {
+  const data = await postService.findAllPostSingleUser(
+    { posted_by: parameters.id },
+    parameters.token,
+  )
+  return data
+})
+
+export const postSlice = createSlice({
   name: 'post',
   initialState,
   reducers: {
-    increment: (state) => {
+    addPost: (state) => {
       state.value += 1
     },
-    decrement: (state) => {
+    updatePost: (state) => {
       state.value -= 1
     },
-    incrementByAmount: (state, action) => {
+    deletePost: (state, action) => {
       state.value += action.payload
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchAllPost.fulfilled, (state, action) => {
+      // Add user to the state array
+      state.post = [...action.payload.data]
+    })
+  },
 })
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
-
-export default counterSlice.reducer
+export const { addPost, deletePost, updatePost } = postSlice.actions
+export { fetchAllPost }
+export default postSlice.reducer
