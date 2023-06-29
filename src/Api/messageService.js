@@ -19,6 +19,7 @@ const messageService = {
         })
     })
   },
+ 
   sendMessage(params, token) {
     return new Promise((resolve, reject) => {
       API.post(`${Route.sendMessage}`, params, {

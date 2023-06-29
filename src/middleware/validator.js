@@ -276,6 +276,34 @@ const validator = {
         })
     })
   },
+  createPost(parameter) {
+    return new Promise((resolve, reject) => {
+      const { media, title, description, longitude, latitude } = parameter
+
+      const schema = joi.object({
+        title: joi.string().min(5).required(),
+        description: joi.string().min(5).required(),
+        media: joi.string().uri().required(),
+        longitude: joi.number().required(),
+        latitude: joi.number().required(),
+      })
+
+      schema
+        .validateAsync({
+          title,
+          description,
+          media,
+          longitude,
+          latitude,
+        })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((e) => {
+          reject(e)
+        })
+    })
+  },
 }
 
 export default validator

@@ -202,7 +202,7 @@ function Index() {
             draggable: true,
             progress: undefined,
             theme: 'light',
-          })
+          }) 
           setTimeout(() => {
             setToastActive(false)
           }, 3000)

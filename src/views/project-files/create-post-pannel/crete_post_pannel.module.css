@@ -1,0 +1,176 @@
+.container{
+    width: 50%;
+        height: 100vh;
+        display: flex;
+    
+        align-items: center;
+        flex-direction: column;
+    
+        border-radius: 10px;
+        z-index: 30;
+        background-color: #eff0f2;
+    
+        /* background-color: #007bff; */
+        overflow: hidden;
+}
+.from_box {
+    width: 100%;
+    height: 150px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+    position: relative;
+
+}
+
+.create_btn{
+    width: 90px;
+    height: 30px;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+.input_box {
+    width: 80%;
+    height: 40px;
+
+    margin-top: 20px;
+
+    position: relative;
+}
+
+.input {
+    width: 100%;
+    height: 40px;
+
+    background-color: transparent;
+    border-bottom: 2px solid black;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    color: black;
+}
+
+.input:focus,
+.input:valid {
+    background-color: transparent;
+    border-bottom: 2px solid black;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    color: black;
+}
+
+.label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    color: black;
+    /* background-color: rgb(38, 0, 255); */
+
+    font-size: 13px;
+    font-weight: 700;
+
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
+.input:focus~.label,
+.input:valid~.label,
+.label:hover {
+    top: -10px;
+    left: 0;
+    color: black;
+}
+
+.icon {
+    background-color: transparent;
+    color: black;
+
+    position: absolute;
+    top: 10px;
+    right: 5px;
+}
+
+.input:valid~.icon,
+.input:focus~.icon {
+    color: blue;
+}
+
+.image_area{
+    width: 80%;
+    height: 300px;
+    padding-top: 10px;
+
+}
+
+.image_area > img{
+    width: 100%;
+    height: 100%;
+}
+
+.create_btn>button {
+    --c: goldenrod;
+    color: var(--c);
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 0.5em;
+    width: 90px;
+    height: 30px;
+
+    letter-spacing: 0.1rem;
+    text-align: center;
+
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: 0.5s;
+    margin: 1px;
+
+    border: 2px solid rgb(8, 197, 77);
+}
+
+.create_btn>button>span {
+    position: absolute;
+    width: 25%;
+    height: 100%;
+    background-color: var(--c);
+    transform: translateY(150%);
+    border-radius: 50%;
+    left: calc((var(--n) - 1) * 25%);
+    transition: 0.5s;
+    transition-delay: calc((var(--n) - 1) * 0.1s);
+    z-index: -1;
+}
+
+.create_btn>button:hover {
+    color: black;
+}
+
+.create_btn>button:hover span {
+    transform: translateY(0) scale(2);
+}
+
+.create_btn>button span:nth-child(1) {
+    --n: 1;
+}
+
+.create_btn>button span:nth-child(2) {
+    --n: 2;
+}
+
+.create_btn>button span:nth-child(3) {
+    --n: 3;
+}
+
+.create_btn>button span:nth-child(4) {
+    --n: 4;
+}

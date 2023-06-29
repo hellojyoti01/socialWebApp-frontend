@@ -384,9 +384,9 @@
 }
 
 .icon_group > .icon_list:nth-child(2) a:hover span {
-  color: #00aced;
+color: rgb(220, 13, 248);
 }
 
 .icon_group > .icon_list:nth-child(3) a:hover span {
-  color: #dd4b39;
+  color: #395add;
 }

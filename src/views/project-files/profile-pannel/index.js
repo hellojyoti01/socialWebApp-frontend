@@ -324,26 +324,26 @@ function Index() {
         <section className={s.posts}>
           {post ? (
             <>
-              {post && post.length !== 0 ? (
-                post.map((el, idx) => {
-                  return (
-                    <div className={s.post} key={idx}>
-                      <img
-                        src={el.post}
-                        alt={'post not Support'}
-                        onClick={(e) => handelNavigate(e, el)}
-                      />
-                    </div>
-                  )
-                })
-              ) : (
-                <div className={s.not_found}>
-                  <div className={s.icon}>
-                    <AiFillStop size={100} />
+              {post.map((el, idx) => {
+                return (
+                  <div className={s.post} key={idx}>
+                    <img
+                      src={el.post}
+                      alt={'post not Support'}
+                      onClick={(e) => handelNavigate(e, el)}
+                    />
                   </div>
-                  <p>No Post</p>
+                )
+              })}
+            </>
+          ) : post?.length === 0 ? (
+            <>
+              <div className={s.not_found}>
+                <div className={s.icon}>
+                  <AiFillStop size={100} />
                 </div>
-              )}
+                <p>No Post</p>
+              </div>
             </>
           ) : (
             <Skeleton variant="rectangular" width={'190px'} height={'200px'} />

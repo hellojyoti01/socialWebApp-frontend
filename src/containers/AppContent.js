@@ -10,6 +10,8 @@ import EditProfilePanel from '../views/project-files/edit-profile-pannel'
 import EditPostPanel from '../views/project-files/edit-post-pannel'
 import ShowPostPanel from '../views/project-files/show-one-post-pannel'
 import Post from '../components/content/post'
+
+import CreatePostPannel from '../views/project-files/create-post-pannel'
 import Model from '../model'
 const AppContent = () => {
   return (
@@ -59,6 +61,13 @@ const AppContent = () => {
           path="/show-post"
           name="Post Edit  Page"
           element={<Model rander={() => <ShowPostPanel post={Post} />} />}
+        />
+
+        <Route
+          exact
+          path="/create-post"
+          name="Post Edit  Page"
+          element={<Model rander={() => <CreatePostPannel />} />}
         />
       </Routes>
     </div>
