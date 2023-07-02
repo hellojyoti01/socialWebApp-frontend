@@ -36,6 +36,7 @@
     "@pqina/filepond-plugin-image-editor": "^9.0.2",
     "@pqina/pintura": "^8.60.8",
     "@pqina/react-pintura": "^9.0.1",
+    "@react-google-maps/api": "^2.18.1",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "chart.js": "^3.9.1",

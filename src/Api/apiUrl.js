@@ -15,6 +15,10 @@ const routeUrl = {
   updatePost: '/post/update',
   deletePost: '/post/delete',
   findAllPostFeed: '/post/findAllPostFeed',
+  likeAPost: '/post/like',
+  findAllLikeSinglePost: '/post/findAlllike',
+  CheckCurrentUserLike: '/post/checkCurrentLike',
+  FindAllLikePost: '/post/findAlllike',
 
   findAllFriend: '/connection/getFriend',
 

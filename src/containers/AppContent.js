@@ -12,6 +12,10 @@ import ShowPostPanel from '../views/project-files/show-one-post-pannel'
 import Post from '../components/content/post'
 
 import CreatePostPannel from '../views/project-files/create-post-pannel'
+
+//@ts-ignore
+import GoogleMapPannel from '../views/project-files/google-map-pannel'
+import ShowLikesPannel from '../views/project-files/show-likes-pannel'
 import Model from '../model'
 const AppContent = () => {
   return (
@@ -68,6 +72,19 @@ const AppContent = () => {
           path="/create-post"
           name="Post Edit  Page"
           element={<Model rander={() => <CreatePostPannel />} />}
+        />
+
+        <Route
+          exact
+          path="/google-map"
+          name="Google Map  Page"
+          element={<Model rander={() => <GoogleMapPannel />} />}
+        />
+        <Route
+          exact
+          path="/show-likes"
+          name="Show All Likes   Page"
+          element={<Model rander={() => <ShowLikesPannel />} />}
         />
       </Routes>
     </div>

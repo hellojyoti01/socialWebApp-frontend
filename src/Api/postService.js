@@ -82,5 +82,69 @@ const postService = {
         })
     })
   },
+  likeAPost(params, token) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.likeAPost}`, params, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+  findAllLikeSingleUser(params, token) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.findAllLikeSinglePost}`, params, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+  checkCurrentUserLike(params, token) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.CheckCurrentUserLike}`, params, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+  findAllLikePost(params, token) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.FindAllLikePost}`, params, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
 }
 export default postService

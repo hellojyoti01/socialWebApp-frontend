@@ -228,21 +228,19 @@ const validator = {
 
   updatePost(parameter) {
     return new Promise((resolve, reject) => {
-      const { post_id, caption, userTag, hashTag } = parameter
+      const { post_id, title, description } = parameter
 
       const schema = joi.object({
         post_id: joi.string().required(),
-        caption: joi.string().required(),
-        userTag: joi.array().items(joi.string()),
-        hashTag: joi.array().items(joi.string().pattern(/#[a-zA-Z0-9]+/)),
+        title: joi.string().required(),
+        description: joi.string().required(),
       })
 
       schema
         .validateAsync({
           post_id,
-          caption,
-          userTag,
-          hashTag,
+          title,
+          description,
         })
         .then((res) => {
           resolve(res)

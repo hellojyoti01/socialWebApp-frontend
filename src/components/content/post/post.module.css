@@ -1,41 +1,70 @@
 .post_card {
-  /* background-color: #00376b; */
-  width: 450px;
+  width: 520px;
   /* height: 350px; */
   border: 1px solid #dbdbdb;
   border-radius: 3px;
-  margin-bottom: 20px;
+  position: relative;
 }
 
+/* Header*/
 .post_header {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/*Profile*/
+.post_profile {
   display: flex;
   align-items: center;
   padding: 12px;
+  padding-bottom: 0;
 }
-
-.post_header .avatar {
+.post_profile .avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
   margin-right: 8px;
+  cursor: pointer;
 }
 
-.post_header .username {
+.post_profile .username {
   font-size: 14px;
   font-weight: bold;
   flex-grow: 1;
 }
 
-.post_header .settings_btn {
+.post_profile .settings_btn {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.post_header .settings_btn i {
+.post_profile .settings_btn i {
   font-size: 16px;
 }
 
+/*-Location*/
+.post_location {
+  padding-left: 2px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.post_location span {
+  margin-left: 12px;
+  cursor: pointer;
+
+  font-size: 1rem;
+}
+.post_location span .location_icon:hover {
+  color: black;
+  font-size: 24px;
+}
+.post_location .location {
+  margin-left: 5px;
+  font-size: 0.8rem;
+}
 .post_image {
   width: 100%;
   max-height: 400px;
@@ -49,7 +78,7 @@
 .post_icons {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
 }
 
 .post_icons .left_icons {
@@ -75,6 +104,20 @@
   font-size: 14px;
   margin-bottom: 6px;
 }
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Lato', sans-serif;
+  margin-bottom: 7px;
+  word-wrap: break-word;
+}
+.description {
+  font-size: 1rem;
+  font-weight: 300;
+  word-wrap: break-word;
+  font-family: 'Lato', sans-serif;
+  margin-bottom: 7px;
+}
 
 .hashtags {
   margin-bottom: 6px;
@@ -89,4 +132,160 @@
 .likes_comments {
   font-size: 14px;
   color: #8e8e8e;
+}
+
+/* Side Bar toogle For Edit POst*/
+
+.sidebar {
+  position: absolute;
+
+  width: 150px;
+  background-color: #333;
+  color: #fff;
+
+  top: 56px;
+  right: 0;
+  height: 300px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 10px;
+
+  transition: width 0.3s;
+}
+
+.sidebar_closed {
+  width: 0;
+}
+
+/* Sidebar menu styles */
+.sidebar_menu {
+  display: none;
+}
+
+.sidebar_menu {
+  display: block;
+}
+
+.sidebar_menu_item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.sidebar_menu_item:hover {
+  color: cadetblue;
+  background-color: #555;
+
+  border-radius: 50px;
+}
+
+/* Like Button Animation*/
+/* .heart {
+  display: inline-block;
+
+  width: 100px;
+  height: 100px;
+  background: url('https://cssanimation.rocks/images/posts/steps/heart.png') no-repeat;
+  background-position: -35px -35px;
+  /* background-color: #00376b; */
+/* cursor: pointer;
+  transition: background-position 1s steps(28);
+  transition-duration: 0s;
+}
+
+.heart.is_active {
+  width: 50px;
+  height: 50px;
+  transition-duration: 1s;
+  background-position: -2800px 0px;
+} */
+.like_btn,
+.comment_btn,
+.share_btn {
+  position: relative;
+}
+/*Content*/
+.content {
+  display: flex;
+
+  width: 20px;
+  flex-direction: column;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.content.heart_active {
+  border-color: #f9b9c4;
+  background: #fbd0d8;
+}
+.heart {
+  position: absolute;
+  background: url('../../../assets/img.png') no-repeat;
+  background-position: left;
+  background-size: 2900%;
+  height: 90px;
+  width: 90px;
+
+  top: -50px;
+  left: -30px;
+}
+
+.heart.heart_active {
+  animation: animate 0.8s steps(28) 1;
+  background-position: right;
+}
+@keyframes animate {
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
+  }
+}
+.likes_count {
+  position: absolute;
+  top: 10px;
+  left: -1px;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #303131;
+}
+
+/*Comment Style*/
+.comment_icon,
+.share_icon,
+.bookmark_icon {
+  color: #aab8c2;
+}
+
+.comments_count {
+  position: absolute;
+  top: 10px;
+  left: 1px;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #303131;
+}
+.comment_icon {
+  position: absolute;
+  top: -20px;
+  left: 15px;
+  color: #aab8c2;
+}
+
+/*Share Icon*/
+.share_icon {
+  position: absolute;
+  top: -18px;
+  left: 30px;
+  color: #aab8c2;
+}
+.share_count {
+  position: absolute;
+  top: 10px;
+  left: 33px;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #303131;
 }
