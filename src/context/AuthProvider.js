@@ -23,7 +23,7 @@ function Provider({ children }) {
   const socket = useRef()
   //User Object
   const [user, setUser] = useState(null)
-  const [userProfile, setUserProfile] = useState({})
+
   const navigate = useNavigate()
 
   //Current User Info
@@ -37,25 +37,15 @@ function Provider({ children }) {
         })
         .catch((e) => {
           navigate('/login')
+          localStorage.removeItem('SocialWeb_Token')
         })
     } catch (e) {
       navigate('/login')
+      localStorage.removeItem('SocialWeb_Token')
     }
   }
 
   // //Find One Profile Of Any User
-  function findOneProfile(param, token) {
-    try {
-      authService
-        .findOneProfile({ _id: param }, token)
-        .then((res) => {
-          setUserProfile(res.data)
-        })
-        .catch((e) => {
-          console.log('Some Error In FindAll')
-        })
-    } catch (e) {}
-  }
 
   useEffect(() => {
     if (!token) return navigate('/register')
@@ -72,7 +62,6 @@ function Provider({ children }) {
   //get all connected socket user
   useEffect(() => {
     if (socket.current) {
-      console.log('A user Log In')
       socket.current.emit('add_user', user)
       socket.current?.on('get_user', (message) => {
         console.log(message, 'socket user')
@@ -80,7 +69,7 @@ function Provider({ children }) {
     }
   }, [socket.current])
 
-  const value = { user, setToken, token, findOneProfile, userProfile, socket }
+  const value = { user, setToken, token, socket }
   return <authContext.Provider value={value}>{children}</authContext.Provider>
 }
 

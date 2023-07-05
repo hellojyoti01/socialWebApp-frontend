@@ -8,19 +8,18 @@ import s from './profile.module.css'
 
 //Local
 
-import { fetchAllPost } from 'src/redux/postSlice'
+import { fetchAllPostCurrentUser } from 'src/redux/postSlice'
 //assets
 import { avatar } from 'src/assets'
 import { useAuth } from 'src/context/AuthProvider'
 import { useFriend } from 'src/context/friendProvider'
-import { usePost } from 'src/context/Postprovider'
 
 export default function Profile(...props) {
   const [post, setPost] = useState(null)
 
   //redux
   const store = useSelector((store) => store)
-  const { postReducer } = store
+  const { currentUserPost } = store.postReducer
 
   const authContext = useAuth()
   const friendContext = useFriend()
@@ -31,7 +30,7 @@ export default function Profile(...props) {
   useEffect(() => {
     if (authContext.token && authContext.user?._id) {
       dispatch(
-        fetchAllPost({
+        fetchAllPostCurrentUser({
           id: authContext.user._id,
           token: authContext.token,
         }),
@@ -56,7 +55,7 @@ export default function Profile(...props) {
         {/* ---Address Start----- */}
         <div className={s.profile_info}>
           <h4>{authContext.user?.name ? authContext.user.name : '--'} </h4>
-          <p>{authContext.user?.address ? authContext.user.address : 'Kolkata, NewTown , India'}</p>
+          <p>{authContext.user?.address ? authContext.user.address : '__, __ , __'}</p>
         </div>
         {/* ---Address End----- */}
 
@@ -69,7 +68,7 @@ export default function Profile(...props) {
             <span>friends</span>
           </div>
           <div className={s.posts}>
-            <span>{postReducer.post.length !== 0 ? `${postReducer.post.length}` : '--'}</span>
+            <span>{currentUserPost.length !== 0 ? `${currentUserPost.length}` : '--'}</span>
             <span>Posts</span>
           </div>
         </div>

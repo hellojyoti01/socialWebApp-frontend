@@ -1,3 +1,7 @@
+/*======================
+    Main Profile Pannel
+=======================*/
+
 .profile_panel {
   width: 50%;
   height: 100vh;
@@ -7,16 +11,18 @@
   border-radius: 10px;
   z-index: 30;
   background-color: #eff0f2;
-  /* overflow: scroll; */
-  /* background-color: #3897f0; */
 }
+
+/*======================
+    Profile And Action Button
+=======================*/
+
 header {
   width: 60%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  /* background-color: #fafafa; */
 }
 
 .profile img {
@@ -90,6 +96,9 @@ header {
   --n: 4;
 }
 
+/*======================
+    Profile Information Bio
+=======================*/
 .info {
   width: 100%;
   padding: 20px;
@@ -113,36 +122,39 @@ header ul li strong {
 }
 
 .info ul {
-  list-style-type: circle;
+  list-style: none;
 }
 .bio {
   margin-top: 10px;
 }
 
+/*======================
+    If Post Exist Show Post 
+=======================*/
 .posts {
+  width: 100%;
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   padding: 20px;
 
-
   overflow-x: hidden;
-  overflow-y: scroll;
 }
-.posts::-webkit-scrollbar{
+.posts::-webkit-scrollbar {
   width: 12px;
   background-color: transparent;
 }
-.posts::-webkit-scrollbar-track{
+.posts::-webkit-scrollbar-track {
   /* border: 3px solid #000055; */
   border: 2px solid rgb(145, 141, 141);
   border-radius: 5px;
 }
-.posts::-webkit-scrollbar-thumb{
+.posts::-webkit-scrollbar-thumb {
   background: linear-gradient(transparent, #00ffffff);
   border-radius: 10px;
 }
-.posts::-webkit-scrollbar-thumb:hover{
+.posts::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(transparent, #0088ff);
 }
 .post {
@@ -171,18 +183,6 @@ header ul li strong {
   border-radius: 10px;
 }
 
-/*not found */
-.not_found {
-  width: 350px;
-  /* height: 100%; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-}
-
 .icon {
   width: 100px; /* Adjust as needed */
   height: 100px; /* Adjust as needed */
@@ -204,4 +204,49 @@ p {
 .icon:hover {
   transform: rotate(360deg);
   transition: transform 0.5s ease-in-out;
+}
+
+/*======================
+    404 page
+=======================*/
+
+.page_404 {
+  width: 404px;
+
+  padding: 40px 0;
+  margin-inline: 100px;
+  background: #fff;
+
+  border-radius: 20px;
+  font-family: 'Arvo', serif;
+}
+
+.page_404 img {
+  width: 100%;
+}
+
+.four_zero_four_bg {
+  background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+  height: 250px;
+  background-position: center;
+}
+
+.four_zero_four_bg h1 {
+  font-size: 80px;
+}
+
+.four_zero_four_bg h3 {
+  font-size: 80px;
+}
+
+.link_404 {
+  color: #fff !important;
+  padding: 10px 20px;
+  background: #39ac31;
+  margin-inline: 140px;
+  display: inline-block;
+  text-align: center;
+}
+.contant_box_404 {
+  margin-top: -50px;
 }

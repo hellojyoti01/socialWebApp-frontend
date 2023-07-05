@@ -19,6 +19,8 @@ const routeUrl = {
   findAllLikeSinglePost: '/post/findAlllike',
   CheckCurrentUserLike: '/post/checkCurrentLike',
   FindAllLikePost: '/post/findAlllike',
+  getAllCommentPost: '/post/getAllComment',
+  addCommentInPost: '/post/comment',
 
   findAllFriend: '/connection/getFriend',
 

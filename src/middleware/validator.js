@@ -187,7 +187,7 @@ const validator = {
   },
   updateProfile(parameter) {
     return new Promise((resolve, reject) => {
-      const { name, profile, dateOfBirth, phoneNo, gender, bio, address } = parameter
+      const { name, userName, profile, dateOfBirth, phoneNo, gender, bio, address } = parameter
 
       //Joi Schema For Validation
       const schema = joi.object({
@@ -196,6 +196,7 @@ const validator = {
           .regex(/^[A-Za-z\s]+$/)
           .min(4)
           .max(30),
+        userName: joi.string(),
         profile: joi.string().uri(),
         dateOfBirth: joi.date(),
         phoneNo: joi

@@ -289,3 +289,133 @@
   font-weight: 300;
   color: #303131;
 }
+
+/* Comments */
+.comments {
+  width: 100%;
+}
+
+.comment_container {
+  display: flex;
+  align-items: center;
+}
+
+.comment_input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add_comment_button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.comment_list {
+  margin-top: 20px;
+}
+
+.comment_item {
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.comment_item.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.show_more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  cursor: pointer;
+
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  animation: fadeIn 1s;
+}
+
+.show_more p {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Show More */
+.link_wrapper {
+  position: relative;
+}
+
+.show_more > .link_wrapper > button {
+  display: block;
+  width: 150px;
+  height: 30px;
+  line-height: 3px;
+  font-weight: bold;
+  text-decoration: none;
+
+  border-radius: 10px;
+  background: #333;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 3px solid #333;
+  transition: all 0.35s;
+}
+
+.show_more > .link_wrapper > .icon {
+  width: 30px;
+  height: 30px;
+  border: 3px solid transparent;
+  position: absolute;
+  transform: rotate(45deg);
+  right: 0;
+  top: 0;
+  z-index: -1;
+  transition: all 0.35s;
+}
+
+.show_more > .link_wrapper > .icon svg {
+  width: 30px;
+  position: absolute;
+  top: calc(50% - 15px);
+  left: calc(50% - 15px);
+  transform: rotate(-45deg);
+  fill: #2ecc71;
+  transition: all 0.35s;
+}
+
+.show_more > .link_wrapper > button:hover {
+  width: 200px;
+  border: 3px solid #2ecc71;
+  background: transparent;
+  color: #2ecc71;
+}
+
+.show_more > .link_wrapper > button:hover + .icon {
+  border: 3px solid #2ecc71;
+  right: -25%;
+}

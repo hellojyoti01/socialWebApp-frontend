@@ -9,10 +9,12 @@ import { useAuth } from 'src/context/AuthProvider'
 
 import authService from 'src/Api/authService'
 import validator from 'src/middleware/validator'
+
 function Index() {
   const [userInputActive, setUserInputActive] = useState(true)
   const [toastActive, setToastActive] = useState(false)
   const [userInput, setUserInput] = useState({
+    userName: '',
     name: '',
     phoneNo: '',
     gender: '',
@@ -69,6 +71,7 @@ function Index() {
         name: userInput.name,
         profile: userInput.profile,
         dateOfBirth: userInput.dateOfBirth,
+        userName: userInput.userName,
 
         phoneNo: userInput.phoneNo.replace('+91', '').trim(),
         gender: userInput.gender,
@@ -139,6 +142,7 @@ function Index() {
       setUserInput((prev) => {
         return {
           ...prev,
+          userName: location.state.user?.userName ? location.state.user.userName : ``,
           name: location.state.user?.name ? location.state.user.name : ``,
           phoneNo: location.state.user?.phoneNo
             ? `+91 ${location.state.user.phoneNo}`
@@ -166,11 +170,25 @@ function Index() {
           ) : (
             <span className={s.sayHello}>
               <img src={sayHelloGif} alt="👋" /> Hello{' '}
-              {authContext.user.name.toString().split(' ')[0]}
             </span>
           )}
         </h2>
+
         <form>
+          <CRow className="mb-3">
+            <CFormLabel htmlFor="userName" className="col-lg-2 col-form-label">
+              userName
+            </CFormLabel>
+            <CCol sm={10} className="px-5 ">
+              <CFormInput
+                type="text"
+                id="userName"
+                defaultValue={userInput.userName}
+                plainText={userInputActive}
+                onChange={(e) => handelFieldChange(e)}
+              />
+            </CCol>
+          </CRow>
           <CRow className="mb-3">
             <CFormLabel htmlFor="name" className="col-lg-2 col-form-label">
               Name

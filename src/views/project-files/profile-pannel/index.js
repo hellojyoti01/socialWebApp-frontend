@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import moment from 'moment/moment'
+import moment from 'moment'
 
 import { toast, ToastContainer } from 'react-toastify'
 import { CSpinner } from '@coreui/react'
 //icons
 import { AiFillStop } from 'react-icons/ai'
+import { GrContactInfo } from 'react-icons/gr'
 //css
 import s from './profile_pannel.module.css'
 
@@ -24,7 +25,8 @@ import { usePost } from 'src/context/Postprovider'
 //Lode
 import { Skeleton } from '@mui/material'
 function Index() {
-  const [userProfile, setUserProfile] = useState(null)
+  const [user, setUser] = useState(null)
+  const [age, setAge] = useState('')
   const [toastActive, setToastActive] = useState(false)
   const [friends, setFriends] = useState(null)
   const [post, setPost] = useState(null)
@@ -37,7 +39,7 @@ function Index() {
   //Edit Profile
   const handelClick = async (e) => {
     if (relationShip == -1) {
-      navigate('/edit-profile', { state: { id: 1, user: userProfile } })
+      navigate('/edit-profile', { state: { id: 1, user: user } })
     }
     if (relationShip == 0 || relationShip == 1) {
       setToastActive(true)
@@ -84,7 +86,7 @@ function Index() {
     if (relationShip == 2) {
       setToastActive(true)
       friendService
-        .acceptRequest({ user_id: userProfile._id }, authContext.token)
+        .acceptRequest({ user_id: user._id }, authContext.token)
         .then((res) => {
           toast.success(res.message, {
             position: 'bottom-center',
@@ -127,7 +129,7 @@ function Index() {
         .setConversation(
           {
             senderId: authContext.user._id,
-            receiverId: userProfile._id,
+            receiverId: user._id,
           },
           authContext.token,
         )
@@ -161,20 +163,44 @@ function Index() {
     navigate('/show-post', { state: { id: 1, post: el, user: userProfile } })
   }
 
+  // Function for Calculate Age
+
+  function calculateAge(dateOfBirth) {
+    return new Promise((reslove, reject) => {
+      try {
+        const currentDate = moment()
+        const birthDate = moment(dateOfBirth, 'YYYY-MM-DD')
+        const age = currentDate.diff(birthDate, 'years')
+        if (age) {
+          reslove(age)
+        }
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }
+
   //Component Mount Function Call
   useEffect(() => {
     if (location.state.user._id && authContext.token) {
-      authContext.findOneProfile(location.state.user._id, authContext.token)
-
       // find user Profile
       async function findUserProfile(param, token) {
         authService
           .findOneProfile({ _id: param }, token)
           .then((res) => {
-            setUserProfile(res.data)
+            if (res.data?.dateOfBirth) {
+              calculateAge(res.data.dateOfBirth)
+                .then((res) => {
+                  setAge(res)
+                })
+                .catch((err) => {
+                  console.log(err)
+                })
+            }
+            setUser(res.data)
           })
           .catch((e) => {
-            setUserProfile(null)
+            setUser(null)
           })
       }
 
@@ -219,13 +245,16 @@ function Index() {
     }
   }, [location.state.user._id])
 
+  console.log(user, 'user Profile')
+
   return (
     <div className={s.profile_panel}>
       <>
+        {/*  ------------- Profile Avtar and Action Type------------------------------------ */}
         <header>
           <div className={s.profile}>
-            {userProfile ? (
-              <img src={userProfile?.profile} alt="Profile Icon" />
+            {user ? (
+              <img src={user?.profile} alt="Profile Icon" />
             ) : (
               <Skeleton variant="circular" animation="wave" width={'80px'} height={'80px'} />
             )}
@@ -238,14 +267,20 @@ function Index() {
                   {post?.length !== 0 ? `${post?.length}` : '--'}
                 </li>
               ) : (
-                <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                <li>
+                  {' '}
+                  <Skeleton variant="text" sx={{ fontSize: '1rem', width: '40px' }} />
+                </li>
               )}
               {friends ? (
                 <li>
                   <strong>Friends</strong> {friends.length !== 0 ? `${friends.length}` : '--'}
                 </li>
               ) : (
-                <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                <li>
+                  {' '}
+                  <Skeleton variant="text" sx={{ fontSize: '1rem', width: '40px' }} />
+                </li>
               )}
             </ul>
             <div className={s.actions}>
@@ -277,77 +312,137 @@ function Index() {
             </div>
           </div>
         </header>
+        {/*  ------------- profile Info------------------------------------ */}
         <section className={s.info}>
-          <ul>
-            <li>
-              {' '}
-              {userProfile ? (
-                <span className={s.bio}>
-                  {userProfile?.name ? `${authContext?.userProfile.name}` : 'Unknown'}
-                </span>
-              ) : (
-                <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-              )}
-            </li>
-            <li>
-              {' '}
-              {userProfile ? (
-                <span className={s.bio}>{userProfile?.bio ? `${userProfile.bio}` : ''}</span>
-              ) : (
-                <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-              )}
-            </li>
-            <li>
-              {' '}
-              {userProfile ? (
-                <span className={s.bio}>
-                  {userProfile?.dateOfBirth
-                    ? `${moment(userProfile?.dateOfBirth).format('MMMM Do YYYY')}`
-                    : ''}
-                </span>
-              ) : (
-                <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-              )}
-            </li>
-            <li>
-              {' '}
-              {userProfile ? (
-                <span className={s.bio}>
-                  {userProfile?.phoneNo ? `${userProfile?.phoneNo}` : ''}
-                </span>
-              ) : (
-                <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-              )}
-            </li>
-          </ul>
+          {user ? (
+            <>
+              <ul>
+                <li
+                  style={{
+                    display: user?.name ? 'block' : 'none',
+                  }}
+                >
+                  <span className={s.bio}>
+                    {user?.name ? (
+                      <>
+                        <GrContactInfo size={'20px'} />
+                        {user.name}
+                      </>
+                    ) : (
+                      ''
+                    )}
+                  </span>
+                </li>
+                <li
+                  style={{
+                    display: user?.name ? 'block' : 'none',
+                  }}
+                >
+                  {' '}
+                  <span className={s.bio}>
+                    {user?.bio ? (
+                      <>
+                        <GrContactInfo size={'20px'} />
+                        {user.bio}
+                      </>
+                    ) : (
+                      ''
+                    )}
+                  </span>
+                </li>
+                <li
+                  style={{
+                    display: user?.name ? 'block' : 'none',
+                  }}
+                >
+                  <span className={s.bio}>
+                    {user?.dateOfBirth && age > 0 ? (
+                      <>
+                        <GrContactInfo size={'20px'} />
+                        {`${age} Years Old`}
+                      </>
+                    ) : (
+                      ''
+                    )}
+                  </span>
+                </li>
+                <li
+                  style={{
+                    display: user?.name ? 'block' : 'none',
+                  }}
+                >
+                  <span className={s.bio}>
+                    {user?.address ? (
+                      <>
+                        <GrContactInfo size={'20px'} />
+                        {user.address}
+                      </>
+                    ) : (
+                      ''
+                    )}
+                  </span>
+                </li>
+              </ul>
+            </>
+          ) : (
+            <>
+              <ul>
+                {[1, 2, 3, 4].map((el) => (
+                  <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                ))}
+              </ul>
+            </>
+          )}
         </section>
+        {/* /* -------------Post Section------------------------------------ */}
         <section className={s.posts}>
           {post ? (
             <>
-              {post.map((el, idx) => {
-                console.log(el.media[0])
-                return (
-                  <div className={s.post} key={idx}>
-                    <img
-                      src={el.media[0]}
-                      alt={'post not Support'}
-                      onClick={(e) => handelNavigate(e, el)}
-                    />
-                  </div>
-                )
-              })}
-            </>
-          ) : post?.length === 0 ? (
-            <>
-              <div className={s.not_found}>
-                <div className={s.icon}>
-                  <AiFillStop size={100} />
-                </div>
-                <p>No Post</p>
-              </div>
+              {post.length >= 1 ? (
+                <>
+                  {' '}
+                  {post.map((el, idx) => {
+                    return (
+                      <div className={s.post} key={idx}>
+                        <img
+                          src={el.media[0]}
+                          alt={'post not Support'}
+                          onClick={(e) => handelNavigate(e, el)}
+                        />
+                      </div>
+                    )
+                  })}
+                </>
+              ) : (
+                <>
+                  <section className={s.page_404}>
+                    <div className={s.page_404_container}>
+                      <div className={s.row}>
+                        <div class="col-sm-12 ">
+                          <div class="col-sm-10 col-sm-offset-1  text-center">
+                            <div className={s.four_zero_four_bg}>
+                              <h1 class="text-center "></h1>
+                            </div>
+
+                            <div className={s.contant_box_404}>
+                              <h3 class="h2">No Post Exist In Your Profile</h3>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </>
+              )}
             </>
           ) : (
-            <Skeleton variant="rectangular" width={'190px'} height={'200px'} />
+            <>
+              {[1, 2, 3, 4, 5, 6].map((el, idx) => (
+                <div className={s.post} key={idx}>
+                  <Skeleton variant="rectangular" width={'190px'} height={'200px'} />
+                </div>
+              ))}
+            </>
           )}
         </section>{' '}
         <ToastContainer />

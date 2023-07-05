@@ -14,6 +14,7 @@ import {
   AiOutlineHeart,
   AiOutlineComment,
   AiOutlineShareAlt,
+  AiOutlineArrowRight,
 } from 'react-icons/ai'
 import { BsFillBookmarksFill, BsBookmarks } from 'react-icons/bs'
 import { CiLocationOn } from 'react-icons/ci'
@@ -26,7 +27,12 @@ import postService from 'src/Api/postService'
 import authService from 'src/Api/authService'
 
 import validator from 'src/middleware/validator'
+
+//Context api
 import { useAuth } from 'src/context/AuthProvider'
+
+// Container
+import Comment from './Comment.js'
 
 function Posts({ post }) {
   const [toggler, setToggler] = useState(false)
@@ -41,8 +47,15 @@ function Posts({ post }) {
   })
   const [pic, setPic] = useState(null)
   const [location, setLocation] = useState(null)
-  const [comment, setComment] = useState(null)
   const [page, setPage] = useState(1)
+
+  //comment
+  const [comment, setComment] = useState(null)
+  const [newComment, setNeWComment] = useState(null)
+
+  const [commentPage, setCommentPage] = useState(1)
+  // Less Or More
+  const [showMore, setShowMore] = useState(false)
 
   const authContext = useAuth()
   const navigate = useNavigate()
@@ -107,6 +120,13 @@ function Posts({ post }) {
           setLikeToggle(!likeToggle)
         }
       })
+
+      // postService
+      //   .getAllComment({ post_id: post._id, page: 1, per_page: 2 }, authContext.token)
+      //   .then((res) => {
+      //     console.log(res, 'responce')
+      //     setComment(res.data)
+      //   })
     }
   }, [authContext.token, post])
 
@@ -120,6 +140,36 @@ function Posts({ post }) {
     }
   }
 
+  // Toggle Show More
+  const handelShowMoreToggle = (e) => {
+    e.preventDefault()
+  }
+  const handelAddComment = (e) => {
+    setToastActive(true)
+    e.preventDefault()
+    postService
+      .addComment({ post_id: post._id, comment: newComment }, authContext.token)
+      .then((res) => {
+        console.log(res, 'responce')
+
+        setComment([res.data, ...comment])
+        setInputBoxActive(false)
+        setNeWComment('')
+        toast.success(res.message, {
+          position: 'bottom-center',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        })
+        setTimeout(() => {
+          setToastActive(false)
+        }, 3000)
+      })
+  }
   //Edit
   const handelEdit = () => {
     setInputBoxActive(true)
@@ -498,9 +548,57 @@ function Posts({ post }) {
             <a href="#">#photography</a>
             <a href="#">#nature</a>
           </div>
-          <div className={s.likes_comments}>
-            <span className={s.likes}>0 likes</span>
-            <span className={s.comments}>0 comments</span>
+
+          {/*Comment Page*/}
+          <div className={s.comments}>
+            <div className={s.comment_container}>
+              <input
+                type="text"
+                className={s.comment_input}
+                placeholder="Write your comment here..."
+                value={newComment}
+                onChange={(e) => setNeWComment(e.target.value)}
+              />
+              <button
+                className={s.add_comment_button}
+                onClick={(e) => handelAddComment(e)}
+                style={{
+                  pointerEvents: toastActive ? 'none' : 'auto',
+                }}
+              >
+                Add Comment
+              </button>
+            </div>
+
+            <div className={s.comment_list}>
+              {comment ? (
+                comment?.map((el, idx) => {
+                  return <Comment comment={el} />
+                })
+              ) : (
+                <></>
+              )}
+            </div>
+            {showMore ? (
+              <div className={s.show_more}>
+                <div className={s.link_wrapper}>
+                  <button
+                    onClick={(e) => {
+                      handelShowMoreToggle(e)
+                    }}
+                  >
+                    Show More
+                  </button>
+                  <div className={s.icon}>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268.832 268.832">
+                      <path d="M265.17 125.577l-80-80c-4.88-4.88-12.796-4.88-17.677 0-4.882 4.882-4.882 12.796 0 17.678l58.66 58.66H12.5c-6.903 0-12.5 5.598-12.5 12.5 0 6.903 5.597 12.5 12.5 12.5h213.654l-58.66 58.662c-4.88 4.882-4.88 12.796 0 17.678 2.44 2.44 5.64 3.66 8.84 3.66s6.398-1.22 8.84-3.66l79.997-80c4.883-4.882 4.883-12.796 0-17.678z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
