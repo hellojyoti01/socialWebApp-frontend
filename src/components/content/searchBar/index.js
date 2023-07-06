@@ -124,8 +124,11 @@ function Search() {
       authService
         .findUser(validateData, authContext.token)
         .then((res) => {
-          setSearchData([...res.data])
-          setModalOpen(true)
+          if (res.data.length) {
+            setSearchData([...res.data])
+            setModalOpen(true)
+            setsearchBoxReadOnly(false)
+          }
           setsearchBoxReadOnly(false)
         })
         .catch((e) => {

@@ -127,7 +127,9 @@ header ul li strong {
 .bio {
   margin-top: 10px;
 }
-
+.user_bio_info {
+  padding-inline: 20px;
+}
 /*======================
     If Post Exist Show Post 
 =======================*/

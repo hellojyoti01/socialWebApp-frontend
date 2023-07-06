@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage'
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-
+import { useSelector, useDispatch } from 'react-redux'
 //icon
 
 import { BsChatRightText } from 'react-icons/bs'
@@ -15,6 +15,9 @@ import postService from 'src/Api/postService'
 import { useAuth } from 'src/context/AuthProvider'
 //css
 import s from './crete_post_pannel.module.css'
+
+//redux
+import { fetchAllPostCurrentUser } from 'src/redux/postSlice'
 
 function Index() {
   const [file, setFile] = useState('')
@@ -30,6 +33,7 @@ function Index() {
   const location = useLocation()
   const navigate = useNavigate()
   const authContext = useAuth()
+  const dispatch = useDispatch()
 
   // Function to retrieve the user's location
   const getLocation = () => {
@@ -135,6 +139,14 @@ function Index() {
       postService
         .createPost(validateData, authContext.token)
         .then((res) => {
+          // Current User Post Updated
+          dispatch(
+            fetchAllPostCurrentUser({
+              id: authContext.user._id,
+              token: authContext.token,
+            }),
+          )
+
           toast.success(res.message, {
             position: 'bottom-center',
             autoClose: 2000,

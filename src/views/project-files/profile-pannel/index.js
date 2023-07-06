@@ -326,7 +326,7 @@ function Index() {
                     {user?.name ? (
                       <>
                         <GrContactInfo size={'20px'} />
-                        {user.name}
+                        <span className={s.user_bio_info}> {user.name}</span>
                       </>
                     ) : (
                       ''
@@ -343,7 +343,7 @@ function Index() {
                     {user?.bio ? (
                       <>
                         <GrContactInfo size={'20px'} />
-                        {user.bio}
+                        <span className={s.user_bio_info}> {user.bio}</span>
                       </>
                     ) : (
                       ''
@@ -359,7 +359,7 @@ function Index() {
                     {user?.dateOfBirth && age > 0 ? (
                       <>
                         <GrContactInfo size={'20px'} />
-                        {`${age} Years Old`}
+                        <span className={s.user_bio_info}> {`${age} Years Old`}</span>
                       </>
                     ) : (
                       ''
@@ -375,7 +375,7 @@ function Index() {
                     {user?.address ? (
                       <>
                         <GrContactInfo size={'20px'} />
-                        {user.address}
+                        <span className={s.user_bio_info}>{user.address}</span>
                       </>
                     ) : (
                       ''
@@ -387,8 +387,8 @@ function Index() {
           ) : (
             <>
               <ul>
-                {[1, 2, 3, 4].map((el) => (
-                  <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+                {[1, 2, 3, 4].map((el, idx) => (
+                  <Skeleton key={idx} variant="text" sx={{ fontSize: '1rem' }} />
                 ))}
               </ul>
             </>
@@ -418,14 +418,14 @@ function Index() {
                   <section className={s.page_404}>
                     <div className={s.page_404_container}>
                       <div className={s.row}>
-                        <div class="col-sm-12 ">
-                          <div class="col-sm-10 col-sm-offset-1  text-center">
+                        <div className="col-sm-12 ">
+                          <div className="col-sm-10 col-sm-offset-1  text-center">
                             <div className={s.four_zero_four_bg}>
-                              <h1 class="text-center "></h1>
+                              <h1 className="text-center "></h1>
                             </div>
 
                             <div className={s.contant_box_404}>
-                              <h3 class="h2">No Post Exist In Your Profile</h3>
+                              <h3 className="h2">No Post Exist In Your Profile</h3>
                             </div>
                           </div>
                         </div>

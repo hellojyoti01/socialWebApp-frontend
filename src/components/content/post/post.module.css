@@ -80,7 +80,17 @@
   align-items: center;
   margin-bottom: 40px;
 }
-
+.icon_group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.left_icon_skeletone {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
 .post_icons .left_icons {
   flex-grow: 1;
 }

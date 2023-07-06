@@ -12,6 +12,7 @@ import ShowPostPanel from '../views/project-files/show-one-post-pannel'
 import Post from '../components/content/post'
 
 import CreatePostPannel from '../views/project-files/create-post-pannel'
+import HomePannel from '../views/project-files/home-content-pannen'
 
 //@ts-ignore
 import GoogleMapPannel from '../views/project-files/google-map-pannel'
@@ -21,18 +22,7 @@ const AppContent = () => {
   return (
     <div className={s.content_container}>
       <Routes>
-        <Route
-          exact
-          path="/"
-          name="main Page "
-          element={
-            <>
-              <Search />
-              <Story />
-              <Feed />
-            </>
-          }
-        />
+        <Route exact path="/" name="main Page " element={<HomePannel />} />
         <Route
           exact
           path="/message"

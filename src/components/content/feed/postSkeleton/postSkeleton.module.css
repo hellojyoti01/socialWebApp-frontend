@@ -1,0 +1,64 @@
+.post_card {
+  width: 520px;
+  /* height: 350px; */
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  position: relative;
+}
+
+/* Header*/
+.post_header {
+  width: 100%;
+}
+
+/*Profile*/
+.post_profile {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  padding-bottom: 0;
+}
+.post_avtar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/*-Location*/
+.post_location {
+  padding-left: 2px;
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.icon_group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.left_icon {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.post_footer {
+  padding: 12px;
+}
+
+.hashtags {
+  margin-bottom: 6px;
+}
+
+.hashtags {
+  color: #00376b;
+  text-decoration: none;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

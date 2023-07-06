@@ -1,22 +1,19 @@
 .container {
   width: 100%;
   height: 80px;
-  /* background-color: rgb(0, 255, 34); */
+  background-color: rgb(232, 234, 234);
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  position: relative;
+  position: sticky;
+  top: 0;
 }
 
 .searchBox {
-  /* width: 350px; */
   background: #2f3640;
   height: 40px;
   border-radius: 40px;
-
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
 }
 .modelOpen {
   position: absolute;
@@ -191,7 +188,6 @@
   color: black;
 }
 
-
-.uploder_model{
+.uploder_model {
   background-color: #111;
 }

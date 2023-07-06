@@ -51,7 +51,7 @@ function Posts({ post }) {
 
   //comment
   const [comment, setComment] = useState(null)
-  const [newComment, setNeWComment] = useState(null)
+  const [newComment, setNeWComment] = useState('')
 
   const [commentPage, setCommentPage] = useState(1)
   // Less Or More
@@ -398,7 +398,10 @@ function Posts({ post }) {
                 </button>
               </>
             ) : (
-              <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+              <Skeleton
+                variant="text"
+                sx={{ fontSize: '1rem', width: '100px', marginInline: '10px' }}
+              />
             )}
           </div>
           <div className={s.post_location}>
@@ -414,7 +417,7 @@ function Posts({ post }) {
               </>
             ) : (
               <>
-                <Skeleton variant="text" sx={{ fontSize: '0.8rem' }} />
+                <Skeleton variant="text" sx={{ fontSize: '0.8rem', width: '150px' }} />
               </>
             )}
           </div>
@@ -467,7 +470,7 @@ function Posts({ post }) {
               height: 190,
             }}
             animation="wave"
-            variant="rectangular"
+            variant="rounded"
           />
         )}
 
@@ -507,7 +510,32 @@ function Posts({ post }) {
               </button>
             </div>
           ) : (
-            <Skeleton animation="wave" variant="text" style={{ fontSize: '24px', width: '20px' }} />
+            <span className={s.icon_group}>
+              {' '}
+              <span className={s.left_icon_skeletone}>
+                {' '}
+                <Skeleton
+                  animation="wave"
+                  variant="text"
+                  style={{ fontSize: '24px', width: '20px' }}
+                />
+                <Skeleton
+                  animation="wave"
+                  variant="text"
+                  style={{ fontSize: '24px', width: '20px' }}
+                />
+                <Skeleton
+                  animation="wave"
+                  variant="text"
+                  style={{ fontSize: '24px', width: '20px' }}
+                />
+              </span>
+              <Skeleton
+                animation="wave"
+                variant="circular"
+                style={{ height: '20pxs', width: '20px' }}
+              />
+            </span>
           )}
 
           {pic ? (
@@ -524,7 +552,7 @@ function Posts({ post }) {
               )}
             </p>
           ) : (
-            <Skeleton animation="wave" variant="text" style={{ fontSize: '1rem' }} />
+            <Skeleton animation="wave" variant="text" style={{ fontSize: '1rem', width: '100%' }} />
           )}
           {pic ? (
             <p className={s.description}>
@@ -540,7 +568,7 @@ function Posts({ post }) {
               )}
             </p>
           ) : (
-            <Skeleton animation="wave" variant="text" style={{ fontSize: '1rem' }} />
+            <Skeleton animation="wave" variant="text" style={{ fontSize: '1rem', width: '100%' }} />
           )}
 
           <div className={s.hashtags}>

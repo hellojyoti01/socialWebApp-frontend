@@ -15,8 +15,6 @@ import { useAuth } from 'src/context/AuthProvider'
 import { useFriend } from 'src/context/friendProvider'
 
 export default function Profile(...props) {
-  const [post, setPost] = useState(null)
-
   //redux
   const store = useSelector((store) => store)
   const { currentUserPost } = store.postReducer

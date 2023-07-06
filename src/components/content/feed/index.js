@@ -1,29 +1,20 @@
 //3rd party
-import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect, useState, useRef } from 'react'
 
 //css
 import s from './feed.module.css'
 
 //post Component
 import Posts from '../post/index'
+import PostSkeleton from '../feed/postSkeleton'
 
 //Context Api
-import { usePost } from '../../../context/Postprovider'
+
 import { useAuth } from 'src/context/AuthProvider'
 
-//Redux
-import { fetchAllPostFeed } from '../../../redux/postSlice'
+import postService from 'src/Api/postService'
 
-function Feed() {
-  const [feedPost, setFeedPost] = useState([])
-  const authContext = useAuth()
-
-  const [page, setPage] = useState(1)
-  useEffect(() => {
-    if (authContext.token && page) {
-    }
-  }, [page])
+function Feed({ feedPost, setFeedPost }) {
   return (
     <div className={s.container}>
       <div className={s.top}>
@@ -46,10 +37,23 @@ function Feed() {
         </div>
       </div>
       <div className={s.buttom}>
-        {/* <Posts post={post} /> */}
-        {/* {feed.map((el, idx) => {
-          return <Posts post={el} key={idx} />
-        })} */}
+        {feedPost ? (
+          <>
+            {feedPost.length >= 1 ? (
+              feedPost.map((el, idx) => {
+                return <Posts post={el} key={idx} setFeedPost={setFeedPost} />
+              })
+            ) : (
+              <></>
+            )}
+          </>
+        ) : (
+          <>
+            {[1, 2].map((el, idx) => (
+              <PostSkeleton key={idx} />
+            ))}
+          </>
+        )}
       </div>
     </div>
   )
