@@ -1,20 +1,13 @@
 //3rd party
-import React, { useEffect, useState, useRef } from 'react'
+import React from 'react'
 
 //css
 import s from './feed.module.css'
 
 //post Component
 import Posts from '../post/index'
-import PostSkeleton from '../feed/postSkeleton'
 
-//Context Api
-
-import { useAuth } from 'src/context/AuthProvider'
-
-import postService from 'src/Api/postService'
-
-function Feed({ feedPost, setFeedPost }) {
+function Feed({ feedPost }) {
   return (
     <div className={s.container}>
       <div className={s.top}>
@@ -37,22 +30,12 @@ function Feed({ feedPost, setFeedPost }) {
         </div>
       </div>
       <div className={s.buttom}>
-        {feedPost ? (
-          <>
-            {feedPost.length >= 1 ? (
-              feedPost.map((el, idx) => {
-                return <Posts post={el} key={idx} setFeedPost={setFeedPost} />
-              })
-            ) : (
-              <></>
-            )}
-          </>
+        {feedPost.length >= 1 ? (
+          feedPost.map((el, idx) => {
+            return <Posts post={el} key={idx} />
+          })
         ) : (
-          <>
-            {[1, 2].map((el, idx) => (
-              <PostSkeleton key={idx} />
-            ))}
-          </>
+          <>No Post In Feed</>
         )}
       </div>
     </div>

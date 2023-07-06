@@ -1,7 +1,7 @@
 //3rd party
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { CAvatar } from '@coreui/react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 //css
 import s from './profile.module.css'

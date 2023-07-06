@@ -1,9 +1,7 @@
 //3rd Party
 import React, { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
-
 import { useNavigate } from 'react-router-dom'
-import { Uploader } from 'uploader'
 
 //css
 import s from './search.module.css'
@@ -15,9 +13,7 @@ import { CiSearch } from 'react-icons/ci'
 //local
 
 import { useAuth } from 'src/context/AuthProvider'
-import { usePost } from 'src/context/Postprovider'
 import validator from 'src/middleware/validator'
-
 import authService from 'src/Api/authService'
 
 // react-pintura
@@ -68,7 +64,7 @@ const editorDefaults = {
   },
 }
 
-function Search() {
+function Search({ setFeedPost }) {
   //Media Upload
   const [visibleEditor, setVisibleEditor] = useState(false)
   const [inputFile, setInputFile] = useState('')
@@ -80,7 +76,6 @@ function Search() {
   const [searchData, setSearchData] = useState([])
   //context Api
   const authContext = useAuth()
-  const postContext = usePost()
   const navigate = useNavigate()
 
   //Upload Post In Firebase/ multer
@@ -219,7 +214,14 @@ function Search() {
             src={inputFile}
             onLoad={(res) => console.log('')}
             onHide={() => setVisibleEditor(false)}
-            onProcess={({ dest }) => navigate('/create-post', { state: { id: 1, url: dest } })}
+            onProcess={({ dest }) =>
+              navigate('/create-post', {
+                state: {
+                  id: 1,
+                  url: dest,
+                },
+              })
+            }
           />
         )}
       </div>

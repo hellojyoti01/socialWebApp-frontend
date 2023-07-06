@@ -18,6 +18,7 @@ import s from './crete_post_pannel.module.css'
 
 //redux
 import { fetchAllPostCurrentUser } from 'src/redux/postSlice'
+import { addPostToFeed } from 'src/redux/postSlice'
 
 function Index() {
   const [file, setFile] = useState('')
@@ -140,6 +141,8 @@ function Index() {
         .createPost(validateData, authContext.token)
         .then((res) => {
           // Current User Post Updated
+          console.log(res, 'responce')
+          dispatch(addPostToFeed(res.data))
           dispatch(
             fetchAllPostCurrentUser({
               id: authContext.user._id,

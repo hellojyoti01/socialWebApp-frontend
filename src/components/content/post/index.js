@@ -2,20 +2,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
-import { CSpinner, CFormInput } from '@coreui/react'
+import { CFormInput } from '@coreui/react'
 import { Skeleton } from '@mui/material'
-import axios from 'axios'
-
+import { useDispatch } from 'react-redux'
 //Free Location
 // import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 //icon
-import {
-  AiOutlineSetting,
-  AiOutlineHeart,
-  AiOutlineComment,
-  AiOutlineShareAlt,
-  AiOutlineArrowRight,
-} from 'react-icons/ai'
+import { AiOutlineSetting, AiOutlineComment, AiOutlineShareAlt } from 'react-icons/ai'
 import { BsFillBookmarksFill, BsBookmarks } from 'react-icons/bs'
 import { CiLocationOn } from 'react-icons/ci'
 
@@ -25,7 +18,6 @@ import s from './post.module.css'
 //api
 import postService from 'src/Api/postService'
 import authService from 'src/Api/authService'
-
 import validator from 'src/middleware/validator'
 
 //Context api
@@ -33,6 +25,8 @@ import { useAuth } from 'src/context/AuthProvider'
 
 // Container
 import Comment from './Comment.js'
+import { fetchAllPostCurrentUser } from 'src/redux/postSlice'
+import { deletePostInFeed } from 'src/redux/postSlice'
 
 function Posts({ post }) {
   const [toggler, setToggler] = useState(false)
@@ -47,18 +41,19 @@ function Posts({ post }) {
   })
   const [pic, setPic] = useState(null)
   const [location, setLocation] = useState(null)
-  const [page, setPage] = useState(1)
 
   //comment
   const [comment, setComment] = useState(null)
   const [newComment, setNeWComment] = useState('')
 
   const [commentPage, setCommentPage] = useState(1)
+
   // Less Or More
   const [showMore, setShowMore] = useState(false)
 
   const authContext = useAuth()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   // Fast Load Componet
   useEffect(() => {
@@ -271,7 +266,19 @@ function Posts({ post }) {
       postService
         .deletePost(data, authContext.token)
         .then((res) => {
+          // Feed Filter Deleted Post
+          dispatch(deletePostInFeed(res.data))
           setToggler(!toggler)
+
+          //Filter Deleted Post
+
+          //Current User Post
+          dispatch(
+            fetchAllPostCurrentUser({
+              id: authContext.user._id,
+              token: authContext.token,
+            }),
+          )
           toast.success(res.message, {
             position: 'bottom-center',
             autoClose: 2000,
