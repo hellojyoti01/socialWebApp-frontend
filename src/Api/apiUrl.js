@@ -19,18 +19,22 @@ const routeUrl = {
   findAllLikeSinglePost: '/post/findAlllike',
   CheckCurrentUserLike: '/post/checkCurrentLike',
   FindAllLikePost: '/post/findAlllike',
-  getAllCommentPost: '/post/getAllComment',
+  getAllCommentPost: '/post/getAllPerentComment',
   addCommentInPost: '/post/comment',
-
-  findAllFriend: '/connection/getFriend',
+  updatedComment: '/post/updatedComment',
+  deleteComment: '/post/deleteComment',
 
   //!User Profile Route
   profileUpdate: '/auth/profileUpdate',
   findOneProfile: '/auth/findOneProfile',
 
   //!connection\
+  findAllFriend: '/connection/getAllFriend',
+  findFriend: '/connection/getFriend',
+  getAllSentRequests: '/connection/getAllSentRequest',
   getAllPendingrequest: '/connection/pendingRequest',
   acceptRequest: '/connection/acceptRequest',
+  declineRequest: '/connection/declineRequest',
   sendRequest: '/connection/sendRequest',
   checkRelationShipStatus: '/connection/checkRelationShip',
 

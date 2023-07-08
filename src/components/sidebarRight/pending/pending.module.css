@@ -1,111 +1,101 @@
 .container {
   width: 100%;
   height: 370px;
-
-  /* background-color: #00d7c3; */
 }
 .container > h4 {
   font-size: 1rem;
   padding-left: 10px;
 
   padding-top: 10px;
-  /* background-color: blueviolet; */
 }
 
 .wrapper {
   width: 100%;
-  /* background-color: blue; */
+  height: 75%;
 }
 .item {
-  /* background-color: coral; */
   width: 100%;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 5px;
+
   padding-left: 30px;
+  margin-top: 10px;
 }
 .profile {
-  /* background-color: rgb(72, 255, 0); */
-  width: 80%;
+  width: 70%;
+  height: 100%;
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
 .icon {
-  width: 30%;
+  width: 33%;
 
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
   color: rgba(7, 8, 7, 0.17);
-  /* background-color: aqua; */
 }
 .icon > .success {
-  width: 70px;
-  height: 20px;
-  display: inline-block;
+  width: 30px;
+  height: 30px;
+  display: block;
   outline: none;
   cursor: pointer;
-  font-size: 0.6rem;
-  line-height: 1;
-  border-radius: 500px;
-  transition-property: background-color, border-color, color, box-shadow, filter;
-  transition-duration: 0.3s;
-  border: 1px solid transparent;
-  letter-spacing: 2px;
+  border-radius: 100%;
 
-  text-transform: uppercase;
-  white-space: normal;
-  font-weight: 400;
-  text-align: center;
-
-  color: #616467;
   box-shadow: inset 0 0 0 2px #608fbe;
-  background-color: transparent;
+  background-image: url('../../../assets/accepected_icon.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .icon > .reject {
-  width: 70px;
-  height: 20px;
-  display: inline-block;
+  width: 30px;
+  height: 30px;
+  display: block;
   outline: none;
   cursor: pointer;
-  font-size: 0.6rem;
-  line-height: 1;
-  border-radius: 500px;
-  transition-property: background-color, border-color, color, box-shadow, filter;
-  transition-duration: 0.3s;
-  border: 1px solid transparent;
-  letter-spacing: 2px;
-
-  text-transform: uppercase;
-  white-space: normal;
-  font-weight: 400;
-  text-align: center;
-
-  color: #616467;
+  border-radius: 100%;
   box-shadow: inset 0 0 0 2px #616467;
-  background-color: transparent;
+  background-image: url('../../../assets/reject_cross_icon.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
 .icon > .reject:hover {
   color: #fff;
   background-color: #616467;
+  background-image: url('../../../assets/reject_cross_icon_hover.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .icon > .success:hover {
   color: #fff;
-  background-color: #0ed557;
+
+  background-image: url('../../../assets/accepced_icon_hover.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .each_item {
+  width: 100%;
+  height: 100%;
   list-style-type: none;
   font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
-.each_item > span {
-  padding-left: 10px;
-
-  word-wrap: break-word;
+.userName {
+  display: block;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-/* :hover {
-  color: #fff;
-  background-color: #616467;
-} */
 
 .view_all {
   height: 50px;
@@ -116,7 +106,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  /* background-color: RED; */
 }
 
 .view_all > button {
@@ -130,4 +119,46 @@
 .view_all > button:hover {
   box-shadow: 0 0 10px 0 #00d7c3 inset, 0 0 20px 2px #00d7c3;
   border: 3px solid #00d7c3;
+}
+
+/*======================
+    404 page
+=======================*/
+
+/* Not Found*/
+
+.noRequestContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.noRequestText {
+  width: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #1877f2; /* Facebook blue color */
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  word-wrap: break-word;
+}
+
+.noRequestImage {
+  max-width: 200px;
+  animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

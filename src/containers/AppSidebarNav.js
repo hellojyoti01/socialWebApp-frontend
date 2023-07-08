@@ -7,10 +7,20 @@ import s from '../css/app_sidebar_nav.module.css'
 export const AppSidebarNav = ({ items }) => {
   const navigate = useNavigate()
 
+  const navigateToName = (path, name) => {
+    console.log(name, 'name Naviage')
+    if (name == 'logOut') {
+      localStorage.removeItem('SocialWeb_Token')
+      navigate(path)
+      return
+    }
+    navigate(to)
+  }
+
   /* ------------------------ Side Bar Menu Url Modify ------------------------ */
   const navLink = (name, icon, to) => {
     return (
-      <div className={s.item} onClick={() => navigate(to)}>
+      <div className={s.item} onClick={() => navigateToName(to, name)}>
         {icon && icon}
 
         <span>{name}</span>

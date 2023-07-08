@@ -1,3 +1,9 @@
+.comment_unorder_list {
+  list-style: none;
+}
+.nested_comment_unorder_list {
+  list-style: none;
+}
 .comment {
   margin: 10px;
   padding: 10px;
@@ -15,13 +21,25 @@
 }
 
 .comment_author {
-  font-weight: bold;
-  margin-right: 5px;
+  font-size: 0.7rem;
+  margin-inline: 10px;
+  margin-block: 3px;
+
   color: #385898; /* Facebook blue color */
+}
+.date_time {
+  font-size: 0.7rem;
+  margin-inline: 20px;
+}
+.comment_text {
+  font-size: 1rem;
+  margin-inline: 35px;
+  word-wrap: break-word;
 }
 
 .comment_actions {
-  margin-top: 5px;
+  margin-top: 10px;
+  margin-inline: 200px;
   display: flex;
   gap: 5px;
 }
@@ -75,6 +93,22 @@
 }
 
 .edit_input button:hover {
+  background-color: #2d4f88;
+}
+
+.show_nested_count_comment {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+}
+.show_nested_count_comment > span {
+  font-size: 1rem;
+
+  cursor: pointer;
+  color: #385898; /* Facebook blue color */
+}
+.show_nested_count_comment > span:hover {
   background-color: #2d4f88;
 }
 

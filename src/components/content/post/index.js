@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import { CFormInput } from '@coreui/react'
 import { Skeleton } from '@mui/material'
 import { useDispatch } from 'react-redux'
+
 //Free Location
 // import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 //icon
@@ -12,6 +13,7 @@ import { AiOutlineSetting, AiOutlineComment, AiOutlineShareAlt } from 'react-ico
 import { BsFillBookmarksFill, BsBookmarks } from 'react-icons/bs'
 import { CiLocationOn } from 'react-icons/ci'
 
+import { avatar } from '../../../assets'
 //css
 import s from './post.module.css'
 
@@ -34,7 +36,7 @@ function Posts({ post }) {
   const [inputBoxActive, setInputBoxActive] = useState(false)
   const [toastActive, setToastActive] = useState(false)
   const [user, setUser] = useState(null)
-  const [userName, setUserName] = useState(null)
+
   const [coordinates, setCoordinates] = useState({
     longitude: '',
     latitude: '',
@@ -43,13 +45,13 @@ function Posts({ post }) {
   const [location, setLocation] = useState(null)
 
   //comment
-  const [comment, setComment] = useState(null)
+  const [comment, setComment] = useState([])
   const [newComment, setNeWComment] = useState('')
+  const [addCommentActive, setAddCommentActive] = useState(false)
 
-  const [commentPage, setCommentPage] = useState(1)
-
-  // Less Or More
-  const [showMore, setShowMore] = useState(false)
+  const [currentCommentPage, setCurrentCommentPage] = useState(1)
+  const [previousCommentPage, setPreviousCommentPage] = useState(0)
+  const [wasLastComment, setWasLastComment] = useState(false)
 
   const authContext = useAuth()
   const navigate = useNavigate()
@@ -61,16 +63,6 @@ function Posts({ post }) {
       setPic(post)
       authService.findOneProfile({ _id: post.postedBY }, authContext.token).then((res) => {
         setUser(res.data)
-        let arr = res.data.name.split(' ')
-        if (arr.length) {
-          let username = ''
-          if (arr.length >= 2) {
-            username = `❤️༒☬${arr[0]}@${arr[1]}☬༒❤️`
-          } else {
-            username = `❤️༒☬${arr[0]}☬༒❤️`
-          }
-          setUserName(username)
-        }
       })
 
       if (post.location) {
@@ -86,6 +78,7 @@ function Posts({ post }) {
               `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
             )
             const data = await response.json()
+
             let location = ''
             if (data) {
               if (data.address.state_district) {
@@ -115,16 +108,39 @@ function Posts({ post }) {
           setLikeToggle(!likeToggle)
         }
       })
-
-      // postService
-      //   .getAllComment({ post_id: post._id, page: 1, per_page: 2 }, authContext.token)
-      //   .then((res) => {
-      //     console.log(res, 'responce')
-      //     setComment(res.data)
-      //   })
     }
   }, [authContext.token, post])
 
+  const fetchParentComment = () => {
+    postService
+      .getAllComment(
+        {
+          post_id: pic._id,
+          page: currentCommentPage,
+        },
+        authContext.token,
+      )
+      .then((res) => {
+        if (!res.data.length) {
+          setWasLastComment(true)
+          return
+        }
+
+        setPreviousCommentPage(currentCommentPage)
+
+        setComment([...res.data])
+      })
+      .catch((e) => {})
+  }
+
+  // Feed Comment Load
+  useEffect(() => {
+    if (pic) {
+      if (!wasLastComment && previousCommentPage !== currentCommentPage) {
+        fetchParentComment()
+      }
+    }
+  }, [authContext.token, pic, currentCommentPage])
   //! Imp Function Call
 
   //Toggle Setting Button
@@ -135,35 +151,69 @@ function Posts({ post }) {
     }
   }
 
-  // Toggle Show More
-  const handelShowMoreToggle = (e) => {
+  const handelAddComment = async (e) => {
     e.preventDefault()
-  }
-  const handelAddComment = (e) => {
     setToastActive(true)
-    e.preventDefault()
-    postService
-      .addComment({ post_id: post._id, comment: newComment }, authContext.token)
-      .then((res) => {
-        console.log(res, 'responce')
 
-        setComment([res.data, ...comment])
-        setInputBoxActive(false)
-        setNeWComment('')
-        toast.success(res.message, {
-          position: 'bottom-center',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        })
-        setTimeout(() => {
-          setToastActive(false)
-        }, 3000)
+    try {
+      //Validate Data
+      const validateData = await validator.createComment({
+        post_id: pic._id,
+        comment: newComment,
       })
+
+      // Response
+      postService
+        .addComment(validateData, authContext.token)
+        .then((res) => {
+          setAddCommentActive(false)
+          fetchParentComment()
+          setNeWComment('')
+          toast.success(res.message, {
+            position: 'bottom-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+          setTimeout(() => {
+            setToastActive(false)
+          }, 3000)
+        })
+        .catch((e) => {
+          const { data } = e.response
+          toast.warning(data.message, {
+            position: 'bottom-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          })
+          setTimeout(() => {
+            setToastActive(false)
+          }, 3000)
+        })
+    } catch (e) {
+      toast.error(e.message, {
+        position: 'bottom-center',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+      setTimeout(() => {
+        setToastActive(false)
+      }, 3000)
+    }
   }
   //Edit
   const handelEdit = () => {
@@ -269,8 +319,6 @@ function Posts({ post }) {
           // Feed Filter Deleted Post
           dispatch(deletePostInFeed(res.data))
           setToggler(!toggler)
-
-          //Filter Deleted Post
 
           //Current User Post
           dispatch(
@@ -381,6 +429,14 @@ function Posts({ post }) {
     navigate('/show-likes', { state: { id: 1, post: pic } })
   }
 
+  const handelCommentPageIncrese = () => {
+    setCurrentCommentPage(currentCommentPage + 1)
+  }
+
+  const hendelCommentPageDecrese = () => {
+    setCurrentCommentPage(currentCommentPage - 1)
+  }
+
   return (
     <>
       <div className={s.post_card}>
@@ -399,7 +455,7 @@ function Posts({ post }) {
             )}
             {user ? (
               <>
-                <h3 className={s.username}>{userName ? userName : user.name}</h3>
+                <h3 className={s.username}>{user.userName ? user.userName : user.name}</h3>
                 <button className={s.settings_btn} onClick={(e) => handelToggler(e)}>
                   <AiOutlineSetting />
                 </button>
@@ -502,7 +558,7 @@ function Posts({ post }) {
                 <button className={s.comment_btn}>
                   <div className={s.content}>
                     <AiOutlineComment size={'33px'} className={s.comment_icon} />
-                    <span className={s.comments_count}> 10 comments</span>
+                    <span className={s.comments_count}></span>
                   </div>
                 </button>
                 <button className={s.share_btn}>
@@ -587,53 +643,59 @@ function Posts({ post }) {
           {/*Comment Page*/}
           <div className={s.comments}>
             <div className={s.comment_container}>
+              <div className="avatar">
+                <img
+                  className="avatar-img"
+                  src={authContext?.user?.profile ? authContext.user.profile : avatar}
+                  alt="user"
+                />
+              </div>
               <input
                 type="text"
                 className={s.comment_input}
                 placeholder="Write your comment here..."
                 value={newComment}
-                onChange={(e) => setNeWComment(e.target.value)}
-              />
-              <button
-                className={s.add_comment_button}
-                onClick={(e) => handelAddComment(e)}
-                style={{
-                  pointerEvents: toastActive ? 'none' : 'auto',
+                onChange={(e) => {
+                  setAddCommentActive(true)
+                  setNeWComment(e.target.value)
                 }}
-              >
-                Add Comment
-              </button>
+              />
+              {addCommentActive ? (
+                <button
+                  className={s.add_comment_button}
+                  onClick={(e) => handelAddComment(e)}
+                  style={{
+                    pointerEvents: toastActive ? 'none' : 'auto',
+                  }}
+                >
+                  Add Comment
+                </button>
+              ) : (
+                <></>
+              )}
             </div>
 
             <div className={s.comment_list}>
-              {comment ? (
+              {comment.length >= 1 ? (
                 comment?.map((el, idx) => {
-                  return <Comment comment={el} />
+                  return <Comment comment={el} key={idx} setComment={setComment} pic={pic} />
                 })
               ) : (
                 <></>
               )}
             </div>
-            {showMore ? (
-              <div className={s.show_more}>
-                <div className={s.link_wrapper}>
-                  <button
-                    onClick={(e) => {
-                      handelShowMoreToggle(e)
-                    }}
-                  >
-                    Show More
-                  </button>
-                  <div className={s.icon}>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 268.832 268.832">
-                      <path d="M265.17 125.577l-80-80c-4.88-4.88-12.796-4.88-17.677 0-4.882 4.882-4.882 12.796 0 17.678l58.66 58.66H12.5c-6.903 0-12.5 5.598-12.5 12.5 0 6.903 5.597 12.5 12.5 12.5h213.654l-58.66 58.662c-4.88 4.882-4.88 12.796 0 17.678 2.44 2.44 5.64 3.66 8.84 3.66s6.398-1.22 8.84-3.66l79.997-80c4.883-4.882 4.883-12.796 0-17.678z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
+            <div className={s.comment_toogle_container}>
+              {wasLastComment ? (
+                // <button className={s.button_33} onClick={hendelCommentPageDecrese} role="button">
+                //   Show Less
+                // </button>
+                <></>
+              ) : (
+                <button className={s.button_33} onClick={handelCommentPageIncrese} role="button">
+                  Show More
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

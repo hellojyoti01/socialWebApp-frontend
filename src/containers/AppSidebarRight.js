@@ -1,13 +1,12 @@
 import React from 'react'
-import { CSidebar, CSide } from '@coreui/react'
 import s from '../css/sidebar.module.css'
 import PendingFriendsList from 'src/components/sidebarRight/pending'
-import SuggestionFriendsList from '../components/sidebarRight/suggestion'
+import SentRequestList from '../components/sidebarRight/SentRequestList'
 function AppSidebarRight() {
   return (
     <div className={s.sidebarRight_container}>
       <PendingFriendsList />
-      <SuggestionFriendsList />
+      <SentRequestList />
     </div>
   )
 }

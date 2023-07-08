@@ -3,6 +3,7 @@ import { BsHouseDoor } from 'react-icons/bs'
 import { MdOutlineTravelExplore, MdOutlineNotificationsActive } from 'react-icons/md'
 import { CiSaveDown2 } from 'react-icons/ci'
 import { LuMessagesSquare } from 'react-icons/lu'
+import { RiLogoutCircleLine } from 'react-icons/ri'
 
 import { AiOutlineSetting } from 'react-icons/ai'
 import { CNavItem } from '@coreui/react'
@@ -46,9 +47,9 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'setting',
-    to: '/setting',
-    icon: <AiOutlineSetting />,
+    name: 'logOut',
+    to: '/register',
+    icon: <RiLogoutCircleLine />,
     //items:[]
   },
 ]

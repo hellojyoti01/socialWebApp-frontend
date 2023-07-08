@@ -303,6 +303,28 @@ const validator = {
         })
     })
   },
+  createComment(parameter) {
+    return new Promise((resolve, reject) => {
+      const { post_id, comment } = parameter
+
+      const schema = joi.object({
+        post_id: joi.string().required(),
+        comment: joi.string().required(),
+      })
+
+      schema
+        .validateAsync({
+          post_id,
+          comment,
+        })
+        .then((res) => {
+          resolve(res)
+        })
+        .catch((e) => {
+          reject(e)
+        })
+    })
+  },
 }
 
 export default validator

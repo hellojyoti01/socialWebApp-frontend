@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import moment from 'moment'
+import { useDispatch } from 'react-redux'
 
 import { toast, ToastContainer } from 'react-toastify'
 import { CSpinner } from '@coreui/react'
@@ -19,8 +20,7 @@ import postService from 'src/Api/postService'
 import conversationService from 'src/Api/conversationService'
 //Local
 import { useAuth } from 'src/context/AuthProvider'
-import { useFriend } from 'src/context/friendProvider'
-import { usePost } from 'src/context/Postprovider'
+import { fetchAllSentRequests, fetchAllFriends } from 'src/redux/friendSlice'
 
 //Lode
 import { Skeleton } from '@mui/material'
@@ -35,6 +35,7 @@ function Index() {
   const navigate = useNavigate()
   const location = useLocation()
   const authContext = useAuth()
+  const dispatch = useDispatch()
 
   //Edit Profile
   const handelClick = async (e) => {
@@ -47,6 +48,8 @@ function Index() {
       friendService
         .sendRequest({ user_id: location.state.user._id }, authContext.token)
         .then((res) => {
+          //Updated Send Request
+          dispatch(fetchAllSentRequests({ page: 1, token: authContext.token }))
           toast.success(res.message, {
             position: 'bottom-center',
             autoClose: 2000,
@@ -65,8 +68,8 @@ function Index() {
           }, 1000)
         })
         .catch((e) => {
-          const { data } = e.response
-          toast.warning(data.message, {
+          console.log(e, 'Error In Profile Page ')
+          toast.warning('Some Error Occored In Server !', {
             position: 'bottom-center',
             autoClose: 2000,
             hideProgressBar: false,
@@ -88,6 +91,7 @@ function Index() {
       friendService
         .acceptRequest({ user_id: user._id }, authContext.token)
         .then((res) => {
+          dispatch(fetchAllFriends({ id: authContext.user._id, page: 1, token: authContext.token }))
           toast.success(res.message, {
             position: 'bottom-center',
             autoClose: 2000,
@@ -157,10 +161,8 @@ function Index() {
   //! Edit Post And Show Post Bug
   const handelNavigate = (e, el) => {
     e.preventDefault()
-    if (userProfile._id.toString() === authContext.user._id.toString()) {
-      navigate('/edit-post', { state: { id: 1, post: el, user: userProfile } })
-    }
-    navigate('/show-post', { state: { id: 1, post: el, user: userProfile } })
+
+    navigate('/show-post', { state: { id: 1, post: el, user: user } })
   }
 
   // Function for Calculate Age
@@ -218,7 +220,7 @@ function Index() {
 
       async function findAllFriend(param, token) {
         friendService
-          .totalFriend({ user_id: param }, token)
+          .findAllFriend({ user_id: param }, token)
           .then((res) => {
             setFriends([...res.data])
           })
@@ -244,8 +246,6 @@ function Index() {
       checkRelationShipStatus(location.state.user._id, authContext.token)
     }
   }, [location.state.user._id])
-
-  console.log(user, 'user Profile')
 
   return (
     <div className={s.profile_panel}>

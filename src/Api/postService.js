@@ -178,5 +178,37 @@ const postService = {
         })
     })
   },
+  updatedComment(params, token) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.updatedComment}`, params, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+  deleteComment(params, token) {
+    return new Promise((resolve, reject) => {
+      API.post(`${Route.deleteComment}`, params, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          resolve(res.data)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
 }
 export default postService

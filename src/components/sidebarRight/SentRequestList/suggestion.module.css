@@ -1,10 +1,14 @@
 .container {
   width: 100%;
   height: 370px;
+
+  /* background-color: #00d7c3; */
 }
 .container > h4 {
   font-size: 1rem;
   padding-left: 10px;
+  padding-top: 10px;
+  /* background-color: blueviolet; */
 }
 
 .wrapper {
@@ -37,24 +41,6 @@
   color: rgba(7, 8, 7, 0.17);
 }
 
-.icon > .success {
-  width: 30px;
-  height: 30px;
-  display: block;
-  outline: none;
-  cursor: pointer;
-  border-radius: 100%;
-
-  border: none;
-  /* box-shadow: inset 0 0 0 2px #608fbe; */
-  background-image: url('../../../assets/sendMessaeIcon.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.icon > .success:hover {
-  transform: scale(1.2); /* Increase the icon size on hover */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow effect on hover */
-}
 .icon > .reject {
   width: 30px;
   height: 30px;
@@ -62,7 +48,6 @@
   outline: none;
   cursor: pointer;
   border-radius: 100%;
-  border: none;
   box-shadow: inset 0 0 0 2px #616467;
   background-image: url('../../../assets/reject_cross_icon.webp');
   background-repeat: no-repeat;
@@ -118,9 +103,8 @@
   box-shadow: 0 0 10px 0 #00d7c3 inset, 0 0 20px 2px #00d7c3;
   border: 3px solid #00d7c3;
 }
-/*======================
-    404 page
-=======================*/
+
+/* Not Found*/
 
 .noRequestContainer {
   width: 100%;

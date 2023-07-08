@@ -14,8 +14,6 @@ import App from './App'
 
 //Context provider
 import AuthProvider from './context/AuthProvider'
-import PostProvider from './context/Postprovider'
-import FriendProvider from './context/friendProvider'
 //Redux Store
 import store from '../src/redux/store'
 
@@ -23,14 +21,10 @@ import store from '../src/redux/store'
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <AuthProvider>
-      <PostProvider>
-        <FriendProvider>
-          <Provider store={store}>
-            {''}
-            <App />
-          </Provider>
-        </FriendProvider>
-      </PostProvider>
+      <Provider store={store}>
+        {''}
+        <App />
+      </Provider>
     </AuthProvider>
   </BrowserRouter>,
 )

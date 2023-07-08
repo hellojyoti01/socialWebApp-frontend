@@ -12,17 +12,15 @@ import { fetchAllPostCurrentUser } from 'src/redux/postSlice'
 //assets
 import { avatar } from 'src/assets'
 import { useAuth } from 'src/context/AuthProvider'
-import { useFriend } from 'src/context/friendProvider'
 
 export default function Profile(...props) {
   //redux
   const store = useSelector((store) => store)
   const { currentUserPost } = store.postReducer
+  const { friends } = store.friendReducer
 
   const authContext = useAuth()
-  const friendContext = useFriend()
   const dispatch = useDispatch()
-
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -60,9 +58,7 @@ export default function Profile(...props) {
         {/* ---Friends Start----- */}
         <div className={s.followers}>
           <div className={s.friends}>
-            <span>
-              {friendContext.friends.length !== 0 ? `${friendContext.friends.length}` : '--'}
-            </span>
+            <span>{friends.length !== 0 ? `${friends.length}` : '--'}</span>
             <span>friends</span>
           </div>
           <div className={s.posts}>
