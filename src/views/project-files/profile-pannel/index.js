@@ -49,7 +49,7 @@ function Index() {
         .sendRequest({ user_id: location.state.user._id }, authContext.token)
         .then((res) => {
           //Updated Send Request
-          dispatch(fetchAllSentRequests({ page: 1, token: authContext.token }))
+          dispatch(fetchAllSentRequests({ token: authContext.token }))
           toast.success(res.message, {
             position: 'bottom-center',
             autoClose: 2000,
@@ -68,8 +68,7 @@ function Index() {
           }, 1000)
         })
         .catch((e) => {
-          console.log(e, 'Error In Profile Page ')
-          toast.warning('Some Error Occored In Server !', {
+          toast.warning(e?.response?.data?.message, {
             position: 'bottom-center',
             autoClose: 2000,
             hideProgressBar: false,

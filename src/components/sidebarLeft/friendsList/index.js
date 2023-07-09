@@ -67,6 +67,7 @@ function FriendsList() {
       dispatch(fetchAllFriends({ id: authContext.user._id, page: page, token: authContext.token }))
     }
   }, [])
+  console.log(friends)
 
   return (
     <div className={s.container}>

@@ -11,7 +11,7 @@ const initialState = {
 const fetchAllFriends = createAsyncThunk('friend/fetchAllFriends', async (parameters, store) => {
   try {
     const responce = await friendServices.findFriend(
-      { user_id: parameters.id, page: parameters.page },
+      { user_id: parameters.id, page: parameters?.page ? parameters.page : 1 },
       parameters.token,
     )
     return responce
@@ -25,7 +25,7 @@ const fetchAllPendingRequests = createAsyncThunk(
   async (parameters, store) => {
     try {
       const responce = await friendServices.getAllPendingRequest(
-        { page: parameters.page },
+        { page: parameters?.page ? parameters.page : 1 },
         parameters.token,
       )
 
@@ -40,7 +40,7 @@ const fetchAllSentRequests = createAsyncThunk(
   async (parameters, store) => {
     try {
       const responce = await friendServices.getAllSentRequest(
-        { page: parameters.page },
+        { page: parameters?.page ? parameters.page : 1 },
         parameters.token,
       )
       return responce

@@ -17,6 +17,8 @@ import HomePannel from '../views/project-files/home-content-pannen'
 //@ts-ignore
 import GoogleMapPannel from '../views/project-files/google-map-pannel'
 import ShowLikesPannel from '../views/project-files/show-likes-pannel'
+
+import AllSentRequests from '../views/project-files/all-sent-requests-pannel'
 import Model from '../model'
 const AppContent = () => {
   return (
@@ -68,6 +70,12 @@ const AppContent = () => {
           path="/show-likes"
           name="Show All Likes   Page"
           element={<Model rander={() => <ShowLikesPannel />} />}
+        />
+        <Route
+          exact
+          path="/allSentRequests"
+          name="Show All Sent Requests Page"
+          element={<Model rander={() => <AllSentRequests />} />}
         />
       </Routes>
     </div>
