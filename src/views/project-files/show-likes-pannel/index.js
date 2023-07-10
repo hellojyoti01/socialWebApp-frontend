@@ -10,7 +10,7 @@ import { useAuth } from 'src/context/AuthProvider'
 
 //component
 import UserLike from './UserLike'
-function index() {
+function Index() {
   const [post, setPost] = useState(null)
   const [previousPage, setPreviousPageDisable] = useState(false)
   const [likes, setLikes] = useState(null)
@@ -116,4 +116,4 @@ function index() {
   )
 }
 
-export default index
+export default Index

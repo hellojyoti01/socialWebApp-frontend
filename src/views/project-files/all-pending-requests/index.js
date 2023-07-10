@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 //css
-import s from './all_sent_requests.module.css'
+import s from './all-pending-requests.module.css'
 //icon
 
 import { BsArrowUpRight, BsHypnotize } from 'react-icons/bs'
@@ -10,13 +10,13 @@ import { GiNextButton, GiPreviousButton } from 'react-icons/gi'
 // Context API
 import { useAuth } from 'src/context/AuthProvider'
 //redux
-import { fetchAllSentRequests } from '../../../redux/friendSlice'
+import { fetchAllPendingRequests } from '../../../redux/friendSlice'
 
-import SentRequests from 'src/components/sentRequests'
+import PendingRequests from '../../../components/pendingRequests'
 
 function Index() {
-  const sentFriendRequest = useSelector((el) => {
-    return el.friendReducer.sentRequests
+  const pendingFriends = useSelector((el) => {
+    return el.friendReducer.pendingRequests
   })
   const [currentPage, setCurrentPage] = useState(1)
   const authContext = useAuth()
@@ -40,15 +40,15 @@ function Index() {
 
   useEffect(() => {
     if (authContext?.user && authContext?.token) {
-      dispatch(fetchAllSentRequests({ page: currentPage, token: authContext.token }))
+      dispatch(fetchAllPendingRequests({ page: currentPage, token: authContext.token }))
     }
   }, [currentPage])
   return (
     <div className={s.sentRequests_panel}>
       <div className={s.sentRequests}>
-        {sentFriendRequest.length >= 1 ? (
-          sentFriendRequest.map((el, idx) => {
-            return <SentRequests sentRequest={el} key={idx} />
+        {pendingFriends.length >= 1 ? (
+          pendingFriends.map((el, idx) => {
+            return <PendingRequests pendingRequest={el} key={idx} />
           })
         ) : (
           <section className={s.page_404}>

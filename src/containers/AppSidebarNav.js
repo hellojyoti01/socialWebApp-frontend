@@ -8,13 +8,12 @@ export const AppSidebarNav = ({ items }) => {
   const navigate = useNavigate()
 
   const navigateToName = (path, name) => {
-    console.log(name, 'name Naviage')
     if (name == 'logOut') {
       localStorage.removeItem('SocialWeb_Token')
       navigate(path)
       return
     }
-    navigate(to)
+    navigate(path)
   }
 
   /* ------------------------ Side Bar Menu Url Modify ------------------------ */

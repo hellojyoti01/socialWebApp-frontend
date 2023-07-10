@@ -48,7 +48,8 @@ export const postSlice = createSlice({
       })
       .addCase(fetchAllFeedPost.fulfilled, (state, action) => {
         // Add user to the state array
-        if (!action.payload.data.length) {
+        console.log(action.payload)
+        if (!action?.payload?.data?.length) {
           state.wasLastListFeed = true
           return
         }

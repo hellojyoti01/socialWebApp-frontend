@@ -10,11 +10,11 @@ const initialState = {
 
 const fetchAllFriends = createAsyncThunk('friend/fetchAllFriends', async (parameters, store) => {
   try {
-    const responce = await friendServices.findFriend(
+    const res = await friendServices.findFriend(
       { user_id: parameters.id, page: parameters?.page ? parameters.page : 1 },
       parameters.token,
     )
-    return responce
+    return res
   } catch (e) {
     console.log(e, 'Error In FetchAllFriends ')
   }
@@ -24,12 +24,12 @@ const fetchAllPendingRequests = createAsyncThunk(
   'friend/fetchAllPendingRequest',
   async (parameters, store) => {
     try {
-      const responce = await friendServices.getAllPendingRequest(
+      const res = await friendServices.getAllPendingRequest(
         { page: parameters?.page ? parameters.page : 1 },
         parameters.token,
       )
 
-      return responce
+      return res
     } catch (e) {
       console.log(e, 'Error In FetchAllPendingRequests')
     }
@@ -37,13 +37,14 @@ const fetchAllPendingRequests = createAsyncThunk(
 )
 const fetchAllSentRequests = createAsyncThunk(
   'friend/fetchAllSentRequest',
+
   async (parameters, store) => {
     try {
-      const responce = await friendServices.getAllSentRequest(
+      const res = await friendServices.getAllSentRequest(
         { page: parameters?.page ? parameters.page : 1 },
         parameters.token,
       )
-      return responce
+      return res
     } catch (e) {
       console.log(e, 'Error In FetchAllSentRequests')
     }
@@ -57,7 +58,6 @@ export const friendSlice = createSlice({
     //! Find All Post In Current User
     builder
       .addCase(fetchAllPendingRequests.fulfilled, (state, action) => {
-        // Add user to the state array
         state.pendingRequests = [...action.payload.data]
       })
       .addCase(fetchAllFriends.fulfilled, (state, action) => {

@@ -8,7 +8,7 @@ import Feed from 'src/components/content/feed'
 // context
 import { useAuth } from 'src/context/AuthProvider'
 import { fetchAllFeedPost } from 'src/redux/postSlice'
-
+import { fetchAllSentRequests, fetchAllPendingRequests } from 'src/redux/friendSlice'
 //api
 
 //css
@@ -46,7 +46,16 @@ function Index() {
       }
     }
   }, [currPage, wasLastList, prevPage])
-
+  useEffect(() => {
+    if (authContext?.user && authContext?.token) {
+      dispatch(fetchAllSentRequests({ token: authContext.token }))
+      dispatch(
+        fetchAllPendingRequests({
+          token: authContext.token,
+        }),
+      )
+    }
+  }, [])
   return (
     <div className={s.home_pannel} onScroll={onScroll} ref={listInnerRef}>
       <Search />

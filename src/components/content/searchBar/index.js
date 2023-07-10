@@ -64,7 +64,7 @@ const editorDefaults = {
   },
 }
 
-function Search({ setFeedPost }) {
+function Search() {
   //Media Upload
   const [visibleEditor, setVisibleEditor] = useState(false)
   const [inputFile, setInputFile] = useState('')
@@ -127,11 +127,9 @@ function Search({ setFeedPost }) {
           setsearchBoxReadOnly(false)
         })
         .catch((e) => {
-          setError(true)
           setsearchBoxReadOnly(false)
         })
     } catch (e) {
-      setError(true)
       setsearchBoxReadOnly(false)
     }
   }

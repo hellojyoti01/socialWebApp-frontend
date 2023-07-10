@@ -19,6 +19,7 @@ import GoogleMapPannel from '../views/project-files/google-map-pannel'
 import ShowLikesPannel from '../views/project-files/show-likes-pannel'
 
 import AllSentRequests from '../views/project-files/all-sent-requests-pannel'
+import AllPendingRequests from '../views/project-files/all-pending-requests'
 import Model from '../model'
 const AppContent = () => {
   return (
@@ -76,6 +77,12 @@ const AppContent = () => {
           path="/allSentRequests"
           name="Show All Sent Requests Page"
           element={<Model rander={() => <AllSentRequests />} />}
+        />
+        <Route
+          exact
+          path="/allPendingRequests"
+          name="Show All Pending Requests Page"
+          element={<Model rander={() => <AllPendingRequests />} />}
         />
       </Routes>
     </div>
